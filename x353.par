@@ -1,0 +1,451 @@
+Release 10.1.03 par K.39 (lin)
+Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+
+inspiron::  Tue Jan 17 20:24:37 2012
+
+par -w -intstyle ise -pl high -rl high -xe n -t 1 -n 5 -s 5 x353_map.ncd
+/home/andrey/cvs_sync/elphel353-8.0.6.4/elphel353/fpga/x3x3/mppr_result.dir
+x353.pcf 
+
+
+Constraints file: x353.pcf.
+   "x353" is an NCD, version 3.2, device xc3s1200e, package ft256, speed -4
+
+Initializing temperature to 85.000 Celsius. (default - Range: -40.000 to 100.000 Celsius)
+Initializing voltage to 1.140 Volts. (default - Range: 1.140 to 1.320 Volts)
+
+INFO:Timing:3377 - Intersecting Constraints found and resolved.  For more information see the TSI report.
+
+Device speed data version:  "PRODUCTION 1.27 2008-01-09".
+
+
+INFO:Par:252 - The Map -timing placement will be discarded and your design will be placed using the command line options
+   specified in PAR.
+
+Design Summary Report:
+
+ Number of External IOBs                         142 out of 190    74%
+
+   Number of External Input IOBs                 35
+
+      Number of External Input DIFFMIs            1
+        Number of LOCed External Input DIFFMIs    1 out of 1     100%
+
+      Number of External Input DIFFSIs            1
+        Number of LOCed External Input DIFFSIs    1 out of 1     100%
+
+      Number of External Input IBUFs             33
+        Number of LOCed External Input IBUFs     33 out of 33    100%
+
+
+   Number of External Output IOBs                37
+
+      Number of External Output DIFFMs            1
+        Number of LOCed External Output DIFFMs    1 out of 1     100%
+
+      Number of External Output DIFFSs            1
+        Number of LOCed External Output DIFFSs    1 out of 1     100%
+
+      Number of External Output IOBs             35
+        Number of LOCed External Output IOBs     35 out of 35    100%
+
+
+   Number of External Bidir IOBs                 70
+
+      Number of External Bidir IOBs              70
+        Number of LOCed External Bidir IOBs      70 out of 70    100%
+
+
+   Number of BUFGMUXs                        9 out of 24     37%
+   Number of DCMs                            4 out of 8      50%
+   Number of MULT18X18SIOs                  19 out of 28     67%
+   Number of RAMB16s                        22 out of 28     78%
+   Number of Slices                       7247 out of 8672   83%
+      Number of SLICEMs                    460 out of 4336   10%
+
+
+
+Overall effort level (-ol):   Not applicable because -pl and -rl switches are used
+Placer effort level (-pl):    High 
+Placer cost table entry (-t): 2
+Router effort level (-rl):    High 
+Extra effort level (-xe):     Normal 
+
+Starting initial Timing Analysis.  REAL time: 25 secs 
+Finished initial Timing Analysis.  REAL time: 25 secs 
+
+
+Starting Placer
+
+Phase 1.1
+Phase 1.1 (Checksum:1b71b1e) REAL time: 29 secs 
+
+Phase 2.7
+Phase 2.7 (Checksum:1b71b1e) REAL time: 29 secs 
+
+Phase 3.31
+Phase 3.31 (Checksum:1b71b1e) REAL time: 29 secs 
+
+Phase 4.2
+
+......
+.....................
+WARNING:Place:1019 - A clock IOB / clock component pair have been found that are not placed at an optimal clock IOB /
+   clock site pair. The clock component <i_pclk> is placed at site <BUFGMUX_X1Y11>. The IO component <BPF> is placed at
+   site <K5>.  This will not allow the use of the fast path between the IO and the Clock buffer. This is normally an
+   ERROR but the CLOCK_DEDICATED_ROUTE constraint was applied on COMP.PIN <BPF.PAD> allowing your design to continue.
+   This constraint disables all clock placer rules related to the specified COMP.PIN. The use of this override is highly
+   discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in
+   the design.
+Phase 4.2 (Checksum:1b87fb3) REAL time: 34 secs 
+
+.....................
+..........
+Phase 5.30
+Phase 5.30 (Checksum:1b87fb3) REAL time: 2 mins 4 secs 
+
+Phase 6.8
+..................
+...............
+....
+...............
+......
+.....
+....
+Phase 6.8 (Checksum:5102912) REAL time: 3 mins 13 secs 
+
+Phase 7.5
+Phase 7.5 (Checksum:5102912) REAL time: 3 mins 13 secs 
+
+Phase 8.18
+Phase 8.18 (Checksum:5121dbd) REAL time: 3 mins 36 secs 
+
+Phase 9.5
+Phase 9.5 (Checksum:5121dbd) REAL time: 3 mins 37 secs 
+
+REAL time consumed by placer: 3 mins 39 secs 
+CPU  time consumed by placer: 3 mins 35 secs 
+Writing design to file /home/andrey/cvs_sync/elphel353-8.0.6.4/elphel353/fpga/x3x3/mppr_result.dir/H_H_2.ncd
+
+
+Total REAL time to Placer completion: 3 mins 42 secs 
+Total CPU time to Placer completion: 3 mins 38 secs 
+
+Starting Router
+
+Phase 1: 46851 unrouted;       REAL time: 3 mins 53 secs 
+
+Phase 2: 38596 unrouted;       REAL time: 3 mins 55 secs 
+
+Phase 3: 12776 unrouted;       REAL time: 4 mins 7 secs 
+
+Phase 4: 12776 unrouted; (126136)      REAL time: 4 mins 7 secs 
+
+Phase 5: 12895 unrouted; (6322)      REAL time: 4 mins 13 secs 
+
+Phase 6: 12937 unrouted; (1612)      REAL time: 4 mins 13 secs 
+
+Phase 7: 0 unrouted; (3185)      REAL time: 4 mins 36 secs 
+
+Phase 8: 0 unrouted; (3185)      REAL time: 4 mins 45 secs 
+
+Updating file: /home/andrey/cvs_sync/elphel353-8.0.6.4/elphel353/fpga/x3x3/mppr_result.dir/H_H_2.ncd with current fully
+routed design.
+
+Phase 9: 0 unrouted; (3185)      REAL time: 6 mins 29 secs 
+
+Phase 10: 0 unrouted; (2970)      REAL time: 6 mins 41 secs 
+
+Phase 11: 0 unrouted; (2970)      REAL time: 6 mins 51 secs 
+
+Updating file: /home/andrey/cvs_sync/elphel353-8.0.6.4/elphel353/fpga/x3x3/mppr_result.dir/H_H_2.ncd with current fully
+routed design.
+
+Phase 12: 0 unrouted; (2708)      REAL time: 8 mins 23 secs 
+
+Updating file: /home/andrey/cvs_sync/elphel353-8.0.6.4/elphel353/fpga/x3x3/mppr_result.dir/H_H_2.ncd with current fully
+routed design.
+
+Phase 13: 0 unrouted; (2400)      REAL time: 10 mins 29 secs 
+
+Phase 14: 0 unrouted; (2322)      REAL time: 10 mins 40 secs 
+
+Phase 15: 0 unrouted; (2285)      REAL time: 10 mins 47 secs 
+
+Phase 16: 0 unrouted; (1985)      REAL time: 10 mins 52 secs 
+
+Phase 17: 0 unrouted; (1780)      REAL time: 10 mins 57 secs 
+
+Phase 18: 0 unrouted; (0)      REAL time: 13 mins 12 secs 
+
+Phase 19: 0 unrouted; (0)      REAL time: 13 mins 14 secs 
+
+Phase 20: 0 unrouted; (0)      REAL time: 13 mins 25 secs 
+
+WARNING:Route - CLK Net:i_compressor/go_single may have excessive skew because 1 CLK pins and 28 NON_CLK pins failed to
+   route using a CLK template.
+WARNING:Route - CLK Net:i_compressor/done_input may have excessive skew because 1 CLK pins and 4 NON_CLK pins failed to
+   route using a CLK template.
+WARNING:Route - CLK Net:i_sensorpads/fifo_clkin is being routed on general routing resources. If you are trying to use
+   local clocking techniques, evaluate the placement of the clock's source and loads to ensure it meets the guidelines
+   for local clocking. Otherwise, consider placing this clock on a dedicated clock routing resource. For more
+   information on clock routing resources, see the target architecture's user guide.
+WARNING:Route - CLK Net:compressor_eot may have excessive skew because 1 CLK pins and 1 NON_CLK pins failed to route
+   using a CLK template.
+WARNING:Route - CLK Net:i_sensortrig/done may have excessive skew because 1 CLK pins and 2 NON_CLK pins failed to route
+   using a CLK template.
+WARNING:Route - CLK Net:i_compressor/done_compress may have excessive skew because 1 CLK pins and 2 NON_CLK pins failed
+   to route using a CLK template.
+WARNING:Route - CLK Net:trig_irq may have excessive skew because 1 CLK pins and 8 NON_CLK pins failed to route using a
+   CLK template.
+WARNING:Route - CLK Net:i_sensortrig/vacts_out is being routed on general routing resources. If you are trying to use
+   local clocking techniques, evaluate the placement of the clock's source and loads to ensure it meets the guidelines
+   for local clocking. Otherwise, consider placing this clock on a dedicated clock routing resource. For more
+   information on clock routing resources, see the target architecture's user guide.
+
+Total REAL time to Router completion: 13 mins 27 secs 
+Total CPU time to Router completion: 13 mins 16 secs 
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Generating "PAR" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++---------------------+--------------+------+------+------------+-------------+
+|        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++---------------------+--------------+------+------+------------+-------------+
+|                xclk |  BUFGMUX_X3Y8| No   | 2217 |  0.211     |  0.293      |
++---------------------+--------------+------+------+------------+-------------+
+|               sclk0 | BUFGMUX_X2Y11| No   | 3047 |  0.345     |  0.514      |
++---------------------+--------------+------+------+------------+-------------+
+|  i_sysinterface/cwr |  BUFGMUX_X1Y1| No   |   54 |  0.202     |  0.377      |
++---------------------+--------------+------+------+------------+-------------+
+|              pclk2x |  BUFGMUX_X1Y0| No   |  131 |  0.202     |  0.378      |
++---------------------+--------------+------+------+------------+-------------+
+|             sclk270 | BUFGMUX_X2Y10| No   |   60 |  0.158     |  0.373      |
++---------------------+--------------+------+------+------------+-------------+
+|i_sensorpads/i_senso |              |      |      |            |             |
+|  r_phase/gclk_idata |  BUFGMUX_X0Y9| No   |   95 |  0.145     |  0.287      |
++---------------------+--------------+------+------+------------+-------------+
+|   i_dma_fifo1/swclk |  BUFGMUX_X2Y0| No   |    7 |  0.035     |  0.277      |
++---------------------+--------------+------+------+------------+-------------+
+|                pclk | BUFGMUX_X1Y11| No   |  916 |  0.209     |  0.379      |
++---------------------+--------------+------+------+------------+-------------+
+|   i_dma_fifo0/swclk |  BUFGMUX_X2Y1| No   |    7 |  0.102     |  0.300      |
++---------------------+--------------+------+------+------------+-------------+
+|i_compressor/go_sing |              |      |      |            |             |
+|                  le |         Local|      |   29 |  0.000     |  1.094      |
++---------------------+--------------+------+------+------------+-------------+
+|i_compressor/done_in |              |      |      |            |             |
+|                 put |         Local|      |    5 |  0.000     |  1.509      |
++---------------------+--------------+------+------+------------+-------------+
+|i_compressor/done_co |              |      |      |            |             |
+|              mpress |         Local|      |    3 |  0.000     |  1.906      |
++---------------------+--------------+------+------+------------+-------------+
+|i_sensorpads/fifo_cl |              |      |      |            |             |
+|                 kin |         Local|      |    4 |  0.000     |  1.901      |
++---------------------+--------------+------+------+------------+-------------+
+|            trig_irq |         Local|      |    9 |  0.000     |  1.956      |
++---------------------+--------------+------+------+------------+-------------+
+|   i_sensortrig/done |         Local|      |    3 |  0.000     |  2.825      |
++---------------------+--------------+------+------+------------+-------------+
+|i_sensortrig/vacts_o |              |      |      |            |             |
+|                  ut |         Local|      |   18 |  1.288     |  3.322      |
++---------------------+--------------+------+------+------------+-------------+
+|i_sensortrig/xfer_ov |              |      |      |            |             |
+|              er_irq |         Local|      |    1 |  0.000     |  1.033      |
++---------------------+--------------+------+------+------------+-------------+
+|      compressor_eot |         Local|      |    2 |  0.000     |  1.506      |
++---------------------+--------------+------+------+------------+-------------+
+|     i_irq_smart/irq |         Local|      |    1 |  0.000     |  1.412      |
++---------------------+--------------+------+------+------------+-------------+
+|            _mux0002 |         Local|      |    1 |  0.000     |  0.660      |
++---------------------+--------------+------+------+------------+-------------+
+
+* Net Skew is the difference between the minimum and maximum routing
+only delays for the net. Note this is different from Clock Skew which
+is reported in TRCE timing report. Clock Skew is the difference between
+the minimum and maximum path delays which includes logic delays.
+
+Timing Score: 0
+
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no
+   requested value.
+Number of Timing Constraints that were not applied: 4
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+------------------------------------------------------------------------------------------------------
+  Constraint                                |  Check  | Worst Case |  Best Case | Timing |   Timing   
+                                            |         |    Slack   | Achievable | Errors |    Score   
+------------------------------------------------------------------------------------------------------
+  TS_i_iclockios_isclk0 = PERIOD TIMEGRP "i | SETUP   |     0.002ns|     7.098ns|       0|           0
+  _iclockios_isclk0" TS_CLK0 HIGH 50%       | HOLD    |     0.574ns|            |       0|           0
+------------------------------------------------------------------------------------------------------
+  TS_HUFFLATCHES = MAXDELAY FROM TIMEGRP "T | SETUP   |     0.044ns|     4.393ns|       0|           0
+  G_HUFFLATCHES" TO TIMEGRP         "TG_HUF |         |            |            |        |            
+  FFFS" TS_CLK0 * 0.625                     |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_HUFFLATCHESI = MAXDELAY FROM TIMEGRP " | SETUP   |     0.065ns|     4.283ns|       0|           0
+  TG_HUFFFFS" TO TIMEGRP         "TG_HUFFLA |         |            |            |        |            
+  TCHES" TS_CLK0 * 0.6125                   |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_pclk2xi = PERIOD TIMEGRP  | SETUP   |     0.125ns|     5.075ns|       0|           0
+  "i_sensorpads_pclk2xi" TS_CLK1 / 2        | HOLD    |     0.640ns|            |       0|           0
+    HIGH 50%                                |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_CLK1 = PERIOD TIMEGRP "CLK1" 10.4 ns H | SETUP   |     0.134ns|    10.266ns|       0|           0
+  IGH 50%                                   | HOLD    |     0.722ns|            |       0|           0
+------------------------------------------------------------------------------------------------------
+  TS_AXIS_READ = MAXDELAY FROM TIMEGRP "CPU | MAXDELAY|     0.184ns|    16.816ns|       0|           0
+  _ADDRCE" TO TIMEGRP "CPU_DATA" 17 ns      |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_OE_TO_DATA = MAXDELAY FROM TIMEGRP "OE | MAXDELAY|     0.241ns|    11.759ns|       0|           0
+  " TO TIMEGRP "CPU_DATA" 12 ns             |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_dcm2x180 = | SETUP   |     0.313ns|     4.887ns|       0|           0
+   PERIOD TIMEGRP         "i_sensorpads_i_s | HOLD    |     1.020ns|            |       0|           0
+  ensor_phase_dcm2x180" TS_CLK1 / 2 PHASE 2 |         |            |            |        |            
+  .6 ns HIGH         50%                    |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_DOUBLECYCS3 = MAXDELAY FROM TIMEGRP "T | SETUP   |     0.410ns|    13.790ns|       0|           0
+  G_SLOW_SRC3" TO TIMEGRP         "TG_DOUBL |         |            |            |        |            
+  EDEST3" TS_CLK0 * 2                       |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_i_iclockios_isclk270 = PERIOD TIMEGRP  | SETUP   |     0.416ns|     6.268ns|       0|           0
+  "i_iclockios_isclk270" TS_CLK0 PHASE      | HOLD    |     1.373ns|            |       0|           0
+      5.325 ns HIGH 50%                     |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_HUFFRAMS = MAXDELAY FROM TIMEGRP "TG_H | SETUP   |     0.419ns|     5.615ns|       0|           0
+  UFFRAMS" TO TIMEGRP "TG_HUFFLATCHES"      |         |            |            |        |            
+      TS_CLK0 * 0.85                        |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_HUFFRAMSA = MAXDELAY FROM TIMEGRP "TG_ | SETUP   |     1.220ns|     4.903ns|       0|           0
+  HUFFLATCHES" TO TIMEGRP "TG_HUFFRAMS"     |         |            |            |        |            
+       TS_CLK0 * 0.8625                     |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_DACK0 = MAXDELAY FROM TIMEGRP "DACK" T | MAXDELAY|     1.986ns|    15.014ns|       0|           0
+  O TIMEGRP "ALLPADS" 17 ns                 |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_WE = MAXDELAY FROM TIMEGRP "WE" TO TIM | MAXDELAY|     2.987ns|     8.513ns|       0|           0
+  EGRP "TNM_CWR" 11.5 ns                    |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_HIST_DOUBLECYC2 = MAXDELAY FROM TIMEGR | SETUP   |     4.045ns|     6.355ns|       0|           0
+  P "TG_HIST_DOUBLE2_SRC" TO TIMEGRP        |         |            |            |        |            
+    "TG_HIST_DOUBLE2_DST" TS_CLK1           |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_HIST_DOUBLECYC1 = MAXDELAY FROM TIMEGR | SETUP   |     4.239ns|     6.161ns|       0|           0
+  P "FFS(\"*hist_pre*\")" TO TIMEGRP        |         |            |            |        |            
+    "FFS(\"*hist_post*\")" TS_CLK1          |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_DOUBLECYCS2 = MAXDELAY FROM TIMEGRP "T | SETUP   |     5.522ns|     8.678ns|       0|           0
+  G_DOUBLECYCS2" TO TIMEGRP         "TG_ALL |         |            |            |        |            
+  _SYNC" TS_CLK0 * 2                        |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_DOUBLECYC_IDATA = MAXDELAY FROM TIMEGR | SETUP   |     5.759ns|     4.641ns|       0|           0
+  P "TNM_EN_IDATA" TO TIMEGRP         "TNM_ |         |            |            |        |            
+  EN_IDATA" TS_CLK1                         |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_WR_DATA = MAXDELAY FROM TIMEGRP "CPU_D | SETUP   |     6.460ns|     2.540ns|       0|           0
+  ATA" TO TIMEGRP "TG_CWRDEST" 9 ns         |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  PATH "TS_PCLK_PCLK2X_path" TIG            | SETUP   |         N/A|     4.600ns|     N/A|           0
+------------------------------------------------------------------------------------------------------
+  PATH "TS_GCLK_IDATA_PCLK_path" TIG        | SETUP   |         N/A|    13.510ns|     N/A|           0
+------------------------------------------------------------------------------------------------------
+  PATH "TS_PCLK_GCLK_IDATA_path" TIG        | SETUP   |         N/A|     5.796ns|     N/A|           0
+------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_pre_pre_en | N/A     |         N/A|         N/A|     N/A|         N/A
+  _idata = PERIOD TIMEGRP         "i_sensor |         |            |            |        |            
+  pads_i_sensor_phase_pre_pre_en_idata" TS_ |         |            |            |        |            
+  CLK1 PHASE 2.6 ns         HIGH 50%        |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_pre_pre_en | N/A     |         N/A|         N/A|     N/A|         N/A
+  _idata90 = PERIOD TIMEGRP         "i_sens |         |            |            |        |            
+  orpads_i_sensor_phase_pre_pre_en_idata90" |         |            |            |        |            
+   TS_CLK1 PHASE 5.2 ns         HIGH 50%    |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_dcm2x = PE | N/A     |         N/A|         N/A|     N/A|         N/A
+  RIOD TIMEGRP         "i_sensorpads_i_sens |         |            |            |        |            
+  or_phase_dcm2x" TS_CLK1 / 2 HIGH 50%      |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+  TS_CLK0 = PERIOD TIMEGRP "CLK0" 7.1 ns HI | N/A     |         N/A|         N/A|     N/A|         N/A
+  GH 50%                                    |         |            |            |        |            
+------------------------------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for TS_CLK0
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_CLK0                        |      7.100ns|          N/A|      7.098ns|            0|            0|            0|        31272|
+| TS_DOUBLECYCS2                |     14.200ns|      8.678ns|          N/A|            0|            0|          423|            0|
+| TS_DOUBLECYCS3                |     14.200ns|     13.790ns|          N/A|            0|            0|         8243|            0|
+| TS_HUFFRAMS                   |      6.035ns|      5.615ns|          N/A|            0|            0|           36|            0|
+| TS_HUFFLATCHES                |      4.438ns|      4.393ns|          N/A|            0|            0|          115|            0|
+| TS_HUFFRAMSA                  |      6.124ns|      4.903ns|          N/A|            0|            0|           21|            0|
+| TS_HUFFLATCHESI               |      4.349ns|      4.283ns|          N/A|            0|            0|          107|            0|
+| TS_i_iclockios_isclk0         |      7.100ns|      7.098ns|          N/A|            0|            0|        22239|            0|
+| TS_i_iclockios_isclk270       |      7.100ns|      6.268ns|          N/A|            0|            0|           88|            0|
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_CLK1
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_CLK1                        |     10.400ns|     10.266ns|     10.150ns|            0|            0|        57766|         1866|
+| TS_DOUBLECYC_IDATA            |     10.400ns|      4.641ns|          N/A|            0|            0|          244|            0|
+| TS_HIST_DOUBLECYC1            |     10.400ns|      6.161ns|          N/A|            0|            0|          495|            0|
+| TS_HIST_DOUBLECYC2            |     10.400ns|      6.355ns|          N/A|            0|            0|          117|            0|
+| TS_i_sensorpads_pclk2xi       |      5.200ns|      5.075ns|          N/A|            0|            0|          890|            0|
+| TS_i_sensorpads_i_sensor_phase|     10.400ns|          N/A|          N/A|            0|            0|            0|            0|
+| _pre_pre_en_idata             |             |             |             |             |             |             |             |
+| TS_i_sensorpads_i_sensor_phase|     10.400ns|          N/A|          N/A|            0|            0|            0|            0|
+| _pre_pre_en_idata90           |             |             |             |             |             |             |             |
+| TS_i_sensorpads_i_sensor_phase|      5.200ns|          N/A|          N/A|            0|            0|            0|            0|
+| _dcm2x                        |             |             |             |             |             |             |             |
+| TS_i_sensorpads_i_sensor_phase|      5.200ns|      4.887ns|          N/A|            0|            0|          120|            0|
+| _dcm2x180                     |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+All constraints were met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the 
+   constraint does not cover any paths or that it has no requested value.
+
+
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 13 mins 31 secs 
+Total CPU time to PAR completion: 13 mins 20 secs 
+
+Peak Memory Usage:  356 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - No errors found.
+
+Number of error messages: 0
+Number of warning messages: 9 (0 filtered)
+Number of info messages: 3 (0 filtered)
+
+Writing design to file /home/andrey/cvs_sync/elphel353-8.0.6.4/elphel353/fpga/x3x3/mppr_result.dir/H_H_2.ncd
+
+
+
+PAR done!

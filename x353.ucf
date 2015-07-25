@@ -1,0 +1,435 @@
+# SCSPAD 3.31 Andrey Filippov
+# Use this file with Xilinx software
+# Project: ~/PCB/10353/REVB/10353b
+# Created: Sat Jan 20 01:40:47 2007
+
+NET "PXD<0>"             LOC = "J3"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<1>"             LOC = "H6"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<2>"             LOC = "J2"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<3>"             LOC = "H5"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<4>"             LOC = "J1"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<5>"             LOC = "G5"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<6>"             LOC = "H4"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<7>"             LOC = "G4"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<8>"             LOC = "G3"  | IOSTANDARD = "LVCMOS25" ;
+NET "PXD<9>"             LOC = "H3"  | IOSTANDARD = "LVCMOS25" ;
+
+#NET "DCLK"               LOC = "L3"  | IOSTANDARD = "LVCMOS25"  | SLEW = "SLOW"  | DRIVE = 2 ; # default
+NET "DCLK"               LOC = "L3"  | IOSTANDARD = "LVCMOS25"  | SLEW = "SLOW"  | DRIVE = 4 ; # increased for Eyesis4pi 450mm cable
+
+NET "BPF"                LOC = "K5"  | IOSTANDARD = "LVCMOS25" ;
+NET "VACT"               LOC = "K1"  | IOSTANDARD = "LVCMOS25" ;
+NET "HACT"               LOC = "J5"  | IOSTANDARD = "LVCMOS25" ;
+NET "MRST"               LOC = "E3"  | IOSTANDARD = "LVCMOS25" ;
+NET "ARO"                LOC = "C1"  | IOSTANDARD = "LVCMOS25" ;
+NET "ARST"               LOC = "E1"  | IOSTANDARD = "LVCMOS25" ;
+NET "SCL0"               LOC = "G2"  | IOSTANDARD = "LVCMOS25" ;
+NET "SDA0"               LOC = "E4"  | IOSTANDARD = "LVCMOS25" ;
+
+NET "CNVSYNC"            LOC = "B1"  | IOSTANDARD = "LVCMOS25" ;
+NET "CNVCLK"             LOC = "B2"  | IOSTANDARD = "LVCMOS25" ;
+
+NET "SENSPGM"            LOC = "D1"  | IOSTANDARD = "LVCMOS25" ;
+
+NET "EXT<0>"             LOC = "C4"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<1>"             LOC = "C5"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<2>"             LOC = "A4"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<3>"             LOC = "A5"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<4>"             LOC = "D6"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<5>"             LOC = "C6"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<6>"             LOC = "C7"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<7>"             LOC = "B7"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<8>"             LOC = "E7"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<9>"             LOC = "D7"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<10>"            LOC = "F8"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<11>"            LOC = "E8"  | IOSTANDARD = "LVCMOS33" ;
+
+
+NET "CLK3"               LOC = "A8"  | IOSTANDARD = "LVCMOS33" ;
+NET "CLK2"               LOC = "C9"  | IOSTANDARD = "LVCMOS33" ;
+NET "CLK4"               LOC = "B8"  | IOSTANDARD = "LVCMOS33" ;
+NET "CLK1"               LOC = "A10" | IOSTANDARD = "LVCMOS33" ;
+NET "CLK0"               LOC = "A9"  | IOSTANDARD = "LVCMOS33" ;
+
+NET "LDQS"               LOC = "N8"  | IOSTANDARD = "SSTL2_I" ;
+NET "UDQS"               LOC = "P8"  | IOSTANDARD = "SSTL2_I" ;
+
+NET "SDD<0>"             LOC = "R14" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<1>"             LOC = "T12" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<2>"             LOC = "N12" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<3>"             LOC = "N10" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<4>"             LOC = "R11" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<5>"             LOC = "N9"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<6>"             LOC = "M9"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<7>"             LOC = "L8"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<8>"             LOC = "P9"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<9>"             LOC = "P10" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<10>"            LOC = "M10" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<11>"            LOC = "P11" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<12>"            LOC = "P12" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<13>"            LOC = "R13" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<14>"            LOC = "T13" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<15>"            LOC = "P14" | IOSTANDARD = "SSTL2_I" ;
+
+NET "SDA<0>"             LOC = "P1"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<1>"             LOC = "K3"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<2>"             LOC = "M1"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<3>"             LOC = "K2"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<4>"             LOC = "T4"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<5>"             LOC = "M4"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<6>"             LOC = "T5"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<7>"             LOC = "P5"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<8>"             LOC = "N5"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<9>"             LOC = "R6"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<10>"            LOC = "N1"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<11>"            LOC = "P6"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<12>"            LOC = "P7"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<13>"            LOC = "P2"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<14>"            LOC = "L4"  | IOSTANDARD = "SSTL2_I" ;
+
+NET "SDWE"               LOC = "M7"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDCAS"              LOC = "N7"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDRAS"              LOC = "M6"  | IOSTANDARD = "SSTL2_I" ;
+
+NET "SDLDM"              LOC = "M8"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDUDM"              LOC = "T8"  | IOSTANDARD = "SSTL2_I" ;
+
+NET "SDCLK"  LOC = "R2" | IOSTANDARD = DIFF_SSTL2_I ; 
+NET "SDCLK_FB"  LOC = "R3" | IOSTANDARD = DIFF_SSTL2_I ; 
+NET "SDNCLK"  LOC = "R1" | IOSTANDARD = DIFF_SSTL2_I ; 
+NET "SDNCLK_FB"  LOC = "T3" | IOSTANDARD = DIFF_SSTL2_I ; 
+
+#NET "SDNCLK_FB"          LOC = "T3"  | IOSTANDARD = "DIFF_SSTL2_I" ;
+#NET "SDCLK_FB"           LOC = "R3"  | IOSTANDARD = "DIFF_SSTL2_I" ;
+
+#NET "SDCLK"              LOC = "R2"  | IOSTANDARD = "DIFF_SSTL2_I ";
+#NET "SDNCLK"             LOC = "R1"  | IOSTANDARD = "DIFF_SSTL2_I ";
+
+NET "SDCLKE"             LOC = "N6"  | IOSTANDARD = "SSTL2_I" ;
+
+NET "D<0>"               LOC = "M16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<1>"               LOC = "N15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<2>"               LOC = "N16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<3>"               LOC = "L13" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<4>"               LOC = "P16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<5>"               LOC = "N14" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<6>"               LOC = "R16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<7>"               LOC = "P15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<8>"               LOC = "R15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<9>"               LOC = "L12" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<10>"              LOC = "C11" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<11>"              LOC = "A13" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<12>"              LOC = "B11" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<13>"              LOC = "D9"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<14>"              LOC = "B10" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<15>"              LOC = "A12" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<16>"              LOC = "A7"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<17>"              LOC = "K12" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<18>"              LOC = "E9"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<19>"              LOC = "B4"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<20>"              LOC = "F9"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<21>"              LOC = "C3"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<22>"              LOC = "H11" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<23>"              LOC = "B6"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<24>"              LOC = "K14" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<25>"              LOC = "E10" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<26>"              LOC = "K15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<27>"              LOC = "L14" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<28>"              LOC = "L15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<29>"              LOC = "K13" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<30>"              LOC = "C8"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "D<31>"              LOC = "D8"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+
+NET "A<0>"               LOC = "D14" | IOSTANDARD = "LVCMOS33" ;
+NET "A<1>"               LOC = "F13" | IOSTANDARD = "LVCMOS33" ;
+NET "A<2>"               LOC = "F12" | IOSTANDARD = "LVCMOS33" ;
+NET "A<3>"               LOC = "E11" | IOSTANDARD = "LVCMOS33" ;
+NET "A<4>"               LOC = "E13" | IOSTANDARD = "LVCMOS33" ;
+NET "A<5>"               LOC = "E16" | IOSTANDARD = "LVCMOS33" ;
+NET "A<6>"               LOC = "F14" | IOSTANDARD = "LVCMOS33" ;
+NET "A<7>"               LOC = "F15" | IOSTANDARD = "LVCMOS33" ;
+NET "A<8>"               LOC = "G14" | IOSTANDARD = "LVCMOS33" ;
+NET "A<9>"               LOC = "G13" | IOSTANDARD = "LVCMOS33" ;
+NET "A<10>"              LOC = "G16" | IOSTANDARD = "LVCMOS33" ;
+NET "A<11>"              LOC = "G15" | IOSTANDARD = "LVCMOS33" ;
+NET "A<12>"              LOC = "H12" | IOSTANDARD = "LVCMOS33" ;
+NET "BA<0>"              LOC = "H14" | IOSTANDARD = "LVCMOS33" ;
+NET "BA<1>"              LOC = "H15" | IOSTANDARD = "LVCMOS33" ;
+
+NET "SYS_SDWE"           LOC = "J13" | IOSTANDARD = "LVCMOS33" ;
+NET "SYS_SDCAS"          LOC = "J16" | IOSTANDARD = "LVCMOS33" ;
+NET "SYS_SDRAS"          LOC = "K16" | IOSTANDARD = "LVCMOS33" ;
+
+NET "SYS_SDCLKI"         LOC = "J12" | IOSTANDARD = "LVCMOS33" ;
+NET "SYS_SDCLK"          LOC = "J14" | IOSTANDARD = "LVCMOS33" ;
+NET "SYS_BUSEN"          LOC = "C16" | IOSTANDARD = "LVCMOS33" ;
+
+NET "WE"                 LOC = "M13" | IOSTANDARD = "LVCMOS33" ;
+NET "OE"                 LOC = "M14" | IOSTANDARD = "LVCMOS33" ;
+NET "CE"                 LOC = "D16" | IOSTANDARD = "LVCMOS33" ;
+NET "CE1"                LOC = "E14" | IOSTANDARD = "LVCMOS33" ;
+
+NET "DREQ0"              LOC = "C15" | IOSTANDARD = "LVCMOS33" | SLEW = "SLOW"  | DRIVE = 4 ; # default
+NET "DACK0"              LOC = "B14" | IOSTANDARD = "LVCMOS33" ;
+NET "DREQ1"              LOC = "D10" | IOSTANDARD = "LVCMOS33" | SLEW = "SLOW"  | DRIVE = 4 ; # default
+NET "DACK1"              LOC = "A14" | IOSTANDARD = "LVCMOS33" ;
+
+NET "IRQ"                LOC = "D15" | IOSTANDARD = "LVCMOS33" ;
+NET "BG"                 LOC = "D11" | IOSTANDARD = "LVCMOS33" ;
+NET "BRIN"               LOC = "B16" | IOSTANDARD = "LVCMOS33" ;
+NET "BROUT"              LOC = "B13" | IOSTANDARD = "LVCMOS33" ;
+
+#assign an output with SSTL2_I so VREF will be used in bank 3
+NET "DUMMYVFEF"          LOC = "J4"  | IOSTANDARD = "SSTL2_I" ;
+
+#week pulldown to fool the software into keeping signals
+NET "ALWAYS0"            LOC = "J6"  | IOSTANDARD = "LVCMOS25" ;
+
+
+NET "CLK0" TNM_NET = "CLK0";
+NET "CLK1" TNM_NET = "CLK1";
+NET "CLK1" CLOCK_DEDICATED_ROUTE = FALSE; #phase is not critical, just clock generator
+NET "CLK0" CLOCK_DEDICATED_ROUTE = FALSE; #phase is not critical, just clock generator
+PIN "i_dcm333/i_dcm2.CLK90" CLOCK_DEDICATED_ROUTE = FALSE;
+
+#TIMESPEC "TS_CLK0" = PERIOD "CLK0" 7.25  ns HIGH 50 %; #03534018B
+#TIMESPEC "TS_CLK0" = PERIOD "CLK0" 7.15  ns HIGH 50 %; #reports "N/A" but is needed for derivative signals
+TIMESPEC "TS_CLK0" = PERIOD "CLK0" 7.1  ns HIGH 50 %;
+
+TIMESPEC "TS_CLK1" = PERIOD "CLK1" 10.4 ns HIGH 50 %; #96MHz
+#TIMESPEC "TS_CLK1" = PERIOD "CLK1" 10.6 ns HIGH 50 %; #trying to meet other
+
+#TIMESPEC "TS_CLK1" = PERIOD "CLK1" 18.4 ns HIGH 50 %; #TEMPORARY TO FIND A PROBLEM
+
+TIMEGRP "CPU_ADDR" =   pads("A<*>");
+TIMEGRP "CPU_ADDRCE" = "CPU_ADDR"  pads("CE*");
+TIMEGRP "CPU_DATA" =   pads("D<*>");
+TIMEGRP "WE" =         pads("WE");
+TIMEGRP "OE" =         pads("OE");
+TIMEGRP "DACK_PAD"=    pads("DACK*");
+TIMEGRP "DREQ_PAD"=    pads("DREQ*");
+TIMEGRP "ALLPADS"=     pads("*");
+
+NET "idack0" TPTHRU = "IDACK0_TP";
+NET "idack1" TPTHRU = "IDACK1_TP";
+#NET "idreq0" TPTHRU = "IDREQ0_TP";va
+#NET "idreq1" TPTHRU = "IDREQ1_TP";
+#TIMESPEC "TS_DACK_DREQ0" = FROM "DACK_PAD" THRU "IDACK0_TP" THRU "IDREQ0_TP" TO "DREQ_PAD" 9.5 ns;
+#TIMESPEC "TS_DACK_DREQ1" = FROM "DACK_PAD" THRU "IDACK1_TP" THRU "IDREQ1_TP" TO "DREQ_PAD" 9.5 ns;
+NET "*/cwr" TNM_NET = "TNM_CWR";
+TIMEGRP "TG_CWRDEST" =   "TNM_CWR" except latches ("*"); # RAMS, FFS
+###MARK1# TIMEGRP "TG_LATCHES_A" =  latches ("i_sysinterface/i_a*");
+NET "DACK*" TNM_NET = "DACK";
+NET "SDA0*" TNM_NET = "SDA0";
+NET "sclk0" TNM_NET = "TNM_CLK0";
+NET "xclk" TNM_NET = "TNM_XCLK";
+NET "pclk" TNM_NET = "TNM_PCLK";
+NET "i_sensorpads/i_sensor_phase/gclk_idata" TNM_NET = "TNM_GCLK_IDATA";
+
+NET "i_sensorpads/i_sensor_phase/en_idata" TNM_NET = "TNM_EN_IDATA";
+
+TIMESPEC "TS_PCLK_GCLK_IDATA" = FROM "TNM_PCLK" TO "TNM_GCLK_IDATA" TIG;
+TIMESPEC "TS_GCLK_IDATA_PCLK" = FROM "TNM_GCLK_IDATA" TO "TNM_PCLK" TIG;
+
+#TIMESPEC "TS_GCLK_IDATA_PERIOD" = PERIOD "TNM_GCLK_IDATA" "TS_CLK1" / 2;
+
+TIMESPEC "TS_DOUBLECYC_IDATA" = FROM "TNM_EN_IDATA" TO "TNM_EN_IDATA" "TS_CLK1";
+
+NET "i_sensorpads/i_sensor_phase/phase_hact_sel_sync*" TIG;
+NET "i_sensorpads/i_sensor_phase/mode_alt_sync" TIG;
+NET "i_sensorpads/i_sensor_phase/mode_12bits_sync" TIG;
+NET "i_sensorpads/i_sensor_phase/mode_14bits_sync" TIG;
+NET "hact_length*" TIG;
+NET "cb_*" TIG;
+
+TIMEGRP "TG_CLK1" =   pads("CLK1");
+TIMEGRP "TG_DCLK" =   pads("DCLK");
+
+#TIMESPEC "TS_SENSORCLOCK" = FROM  "TG_CLK1" TO "TG_DCLK" 14.0 ns;
+
+#######TIMESPEC "TS_OE_TO_DATA" = FROM "OE" TO "CPU_DATA" 10.3 ns; # temporary, with proxies
+#TIMESPEC "TS_OE_TO_DATA" = FROM "OE" TO "CPU_DATA" 14.0ns ; # with DRIVE = 4 ; # default
+TIMESPEC "TS_OE_TO_DATA" = FROM "OE" TO "CPU_DATA" 12.0ns ; # with DRIVE = 8 
+
+#normal
+#######TIMESPEC "TS_AXIS_READ" = FROM "CPU_ADDRCE" TO "CPU_DATA" 16 ns; #17.5 ns;
+#TIMESPEC "TS_AXIS_READ" = FROM "CPU_ADDRCE" TO "CPU_DATA" 19 ns; # with DRIVE = 4 ; # default
+TIMESPEC "TS_AXIS_READ" = FROM "CPU_ADDRCE" TO "CPU_DATA" 17 ns; # with DRIVE = 8
+
+###MARK1#TIMESPEC "TS_WR_ADDR" = FROM "TG_LATCHES_A" TO "TG_CWRDEST" 9.7 ns; #temporary, with proxies
+TIMESPEC "TS_WR_DATA" = FROM "CPU_DATA" TO "TG_CWRDEST" 9 ns; # temporary, with proxies
+TIMESPEC "TS_WE" = FROM "WE" TO "TNM_CWR" 11.5 ns; #
+
+#########TIMESPEC "TS_DACK0" = FROM "DACK" TO "ALLPADS" 15 ns;
+TIMESPEC "TS_DACK0" = FROM "DACK" TO "ALLPADS" 17 ns;
+#NET "*dcr<*>" TIG;  # new freedom
+
+ # new freedom
+ 
+ 
+TIMEGRP "TG_ALL_SYNC"=      FFS RAMS MULTS;
+TIMEGRP "TG_DOUBLECYCS2"= ffs("i_mcontr/i_descrproc/seq_par*")
+#                          ffs("i_mcontr/i_descrproc/linAddr*")
+					      	  ffs("i_mcontr/i_descrproc/sa*")
+                          ffs("i_mcontr/i_descrproc/nxtTL*")
+								  ffs("i_mcontr/i_descrproc/tile*")
+								  ffs("i_mcontr/i_descrproc/mode*")
+						        ffs("i_mcontr/i_descrproc/WnR*")
+								  ffs("i_mcontr/i_descrproc/depend*")
+								  ffs("i_mcontr/i_descrproc/nextFrame*")
+						        ffs("i_mcontr/i_descrproc/suspXfer*")
+								  ffs("i_mcontr/i_descrproc/lineNumSource*")
+					           ffs("i_mcontr/i_descrproc/lineNumDest*")
+					           ffs("i_mcontr/i_descrproc/prevStripSource*")
+					           ffs("i_mcontr/i_descrproc/last_lines_reg*")
+#					           ffs("i_mcontr/i_descrproc/first_line_reg*")
+					           ffs("i_mcontr/i_descrproc/first_tile_reg*")
+#					           ffs("i_mcontr/i_descrproc/first_line_dest*")
+					           ffs("i_mcontr/i_descrproc/first_tile_dest*")
+					           ffs("i_mcontr/i_descrproc/nxtTFr*")
+					           ffs("i_mcontr/i_descrproc/srcAtStart*")
+                          mults("i_mcontr/i_descrproc/linAddr*");
+
+TIMESPEC "TS_DOUBLECYCS2" = FROM "TG_DOUBLECYCS2" TO "TG_ALL_SYNC" "TS_CLK0" * 2;
+TIMEGRP "TG_FAST_SRC3"= ffs("*stepsE*") ffs("*stepsI*") ffs("*stepsDwe*");
+TIMEGRP "TG_SLOW_SRC3" =   TG_ALL_SYNC EXCEPT "TG_FAST_SRC3";
+TIMEGRP "TG_DOUBLEDEST3"= ffs("i_mcontr/i_descrproc/seq_par*")
+#                          ffs("i_mcontr/i_descrproc/linAddr*")
+					      	  ffs("i_mcontr/i_descrproc/sa*")
+                          ffs("i_mcontr/i_descrproc/nxtTL*")
+								  ffs("i_mcontr/i_descrproc/tile*")
+								  ffs("i_mcontr/i_descrproc/mode*")
+						        ffs("i_mcontr/i_descrproc/WnR*")
+								  ffs("i_mcontr/i_descrproc/depend*")
+								  ffs("i_mcontr/i_descrproc/nextFrame*")
+								  ffs("i_mcontr/i_descrproc/nextBlocksEn*")
+						        ffs("i_mcontr/i_descrproc/suspXfer*")
+								  ffs("i_mcontr/i_descrproc/lineNumSource*")
+					           ffs("i_mcontr/i_descrproc/lineNumDest*")
+					           ffs("i_mcontr/i_descrproc/prevStripSource*")
+					           ffs("i_mcontr/i_descrproc/rovr*")
+					           ffs("i_mcontr/i_descrproc/last_lines_reg*")
+#					           ffs("i_mcontr/i_descrproc/first_line_reg*")
+					           ffs("i_mcontr/i_descrproc/first_tile_reg*")
+#					           ffs("i_mcontr/i_descrproc/first_line_dest*")
+					           ffs("i_mcontr/i_descrproc/first_tile_dest*")
+					           ffs("i_mcontr/i_descrproc/nxtTFr*")
+					           ffs("i_mcontr/i_descrproc/nxtTF_p*")
+					           ffs("i_mcontr/i_descrproc/srcAtStart*")
+                          mults("i_mcontr/i_descrproc/linAddr*");
+TIMESPEC "TS_DOUBLECYCS3" = FROM "TG_SLOW_SRC3" TO "TG_DOUBLEDEST3" "TS_CLK0" * 2;
+## Next - redundant?
+##TIMESPEC "TS_DOUBLECYCS4" =  FROM FFS("*i_chArbit/chNum*") TO  "TG_DOUBLEDEST3" TS_CLK0*2;
+TIMEGRP "TG_HUFFRAMS"=    rams        ("*i_huffman*") ;
+
+#FIXME: Constraint <TIMEGRP "TG_HUFFFFS" ... does not match any design objects.
+TIMEGRP "TG_HUFFFFS"=     ffs         ("*i_huffman*")
+                          ffs         ("*i_stuffer*") ; 
+								  
+TIMEGRP "TG_HUFFLATCHES"= latches     ("*i_huffman*") ;
+# some registers in Huffman module are isolated from others through latches too - never used?
+##TIMEGRP  "TG_HUFFFFS_ISOLOUT" =  ffs         ("*i_huff_fifo/load_q");
+
+TIMEGRP  "TG_STUFFER_WAS_READY_EARLY" = latches ("i_compressor/i_huffman/i_stuffer_was_rdy_early") ;
+TIMEGRP  "TG_HUFF_FIFO_LOAD_Q"        = ffs     ("i_compressor/i_huffman/i_huff_fifo/load_q") ;
+TIMEGRP  "TG_COMPRESSOR"=               ffs     ("*i_compressor*") ;
+### THe two below constraints are not needed, they are covered by "TS_HUFFLATCHES" and "TS_HUFFLATCHESI"
+## TIMESPEC "TS_HUFF_FIFO_LOAD_Q"=         FROM "TG_STUFFER_WAS_READY_EARLY"  TO   "TG_HUFFFFS" "TS_CLK0" * 0.625;
+## TIMESPEC "TS_STUFFER_WAS_READY_EARLY"=  FROM "TG_HUFFFFS" TO   "TG_STUFFER_WAS_READY_EARLY" "TS_CLK0" * 0.7;
+
+
+
+TIMESPEC "TS_HUFFRAMS" = FROM "TG_HUFFRAMS" TO "TG_HUFFLATCHES" "TS_CLK0" * 0.85;
+TIMESPEC "TS_HUFFLATCHES" = FROM "TG_HUFFLATCHES" TO "TG_HUFFFFS" "TS_CLK0" * 0.625;
+TIMESPEC "TS_HUFFRAMSA" = FROM "TG_HUFFLATCHES" TO "TG_HUFFRAMS" "TS_CLK0" * 0.8625;
+TIMESPEC "TS_HUFFLATCHESI" = FROM "TG_HUFFFFS" TO "TG_HUFFLATCHES" "TS_CLK0" * 0.6125;
+
+NET "*enSDRAM" TIG;
+
+#was already ignored from sclk0 to pclk
+NET "*dcr*" TIG; 
+
+NET "i_rtc353/acc*" TIG;
+NET "i_rtc353/sec*" TIG;
+NET "i_rtc353/usec*" TIG;
+NET "i_rtc353/wsec*" TIG;
+NET "i_rtc353/wusec*" TIG;
+NET "i_rtc353/corr*" TIG;
+
+
+#needed?
+NET "i_camsync/ts_rcv_sec*" TIG;
+NET "i_camsync/ts_rcv_usec*" TIG;
+#NET "i_imu_logger/imu_in_word*" TIG;
+NET "i_rtc353/psec*" TIG;
+NET "i_rtc353/pusec*" TIG;
+#NET "i_rtc353/esec*" TIG;
+#NET "i_rtc353/eusec*" TIG;
+#INST "i_imu_logger/i_buffer*" TIG;
+#INST "i_imu_logger/config*" TIG;
+#INST "i_imu_logger/enable*" TIG;
+
+
+
+INST "*_tig_*" TIG;
+
+#histogram
+
+#NET "???"     TNM_NET = "TNM_PCLK";
+NET "pclk2x"   TNM_NET = "TNM_PCLK2X";
+TIMESPEC "TS_PCLK_PCLK2X" = FROM "TNM_PCLK" TO "TNM_PCLK2X" TIG;
+#TIMESPEC "TS_PCLK2X_PCLK" = FROM "TNM_PCLK2X" TO "TNM_PCLK" TIG;
+
+
+
+TIMEGRP "TG_HIST_DOUBLE_DEST"= ffs("*hist_post*");
+TIMEGRP "TG_HIST_DOUBLE_SRC "= ffs("*hist_pre*");
+
+TIMESPEC "TS_HIST_DOUBLECYC1" =  FROM FFS("*hist_pre*") TO  FFS("*hist_post*") "TS_CLK1" ;
+
+INST "i_histogram/pos_left_*" TIG;
+INST "i_histogram/pos_top_*" TIG;
+INST "i_histogram/size_width_*" TIG;
+INST "i_histogram/size_height_*" TIG;
+INST "i_histogram/minus_pos_left_*" TIG;
+INST "i_histogram/pos_left_is_zero*" TIG;
+
+TIMEGRP  "TG_HIST_DOUBLE2_SRC"=  ffs("i_histogram/pix_cntr*");
+TIMEGRP  "TG_HIST_DOUBLE2_DST"=  ffs("i_histogram/pix_cntr*")
+                                 ffs("i_histogram/line_started*")
+                                 ffs("i_histogram/line_ended*") ;
+TIMESPEC "TS_HIST_DOUBLECYC2" = FROM "TG_HIST_DOUBLE2_SRC" TO "TG_HIST_DOUBLE2_DST" "TS_CLK1" ;
+
+
+
+INST  "i_sensorpads/i_sensor_phase/rq_back*" TIG;
+
+#compressor controls
+INST "i_compressor/i_m_c*" TIG;
+INST "i_compressor/i_coring_num*" TIG;
+INST "i_compressor/i_compr_ifc/cmprs_en*" TIG;
+INST "i_compressor/i_compr_ifc/cmprs_fmode*" TIG;
+INST "i_compressor/i_compr_ifc/cmprs_mode*" TIG;
+INST "i_compressor/i_compr_ifc/cmprs_qpage*" TIG;
+INST "i_compressor/i_compr_ifc/cmprs_shift*" TIG;
+INST "i_compressor/i_compr_ifc/i_bayer_shift*" TIG;
+#INST "i_mcontr/i_descproc/bonded*" TIG;
+INST "*bonded*" TIG;
+
+#:Place:1018 - A clock IOB / clock component pair have been found that are
+#   not placed at an optimal clock IOB / clock site pair. The clock component
+#   <i_pclk> is placed at site <BUFGMUX_X1Y11>. The IO component <BPF> is placed
+#   at site <K5>.  This will not allow the use of the fast path between the IO
+#   and the Clock buffer. If this sub optimal condition is acceptable for this
+#   design, you may use the CLOCK_DEDICATED_ROUTE constraint in the .ucf file to
+#   demote this message to a WARNING and allow your design to continue. However,
+#   the use of this override is highly discouraged as it may lead to very poor
+#   timing results. It is recommended that this error condition be corrected in
+#   the design. A list of all the COMP.PINs used in this clock placement rule is
+#   listed below. These examples can be used directly in the .ucf file to
+#   override this clock rule.
+
+NET "BPF" CLOCK_DEDICATED_ROUTE = FALSE;
+
+#Used with defined debug_mcontr_reset, comment out if disabled
+INST "debug_mcontr_count*" TIG;
