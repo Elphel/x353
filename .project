@@ -17,7 +17,12 @@
 		<link>
 			<name>ise_logs/ISExst.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISExst-20150726001950045.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISExst-20150726141146079.log</location>
+		</link>
+		<link>
+			<name>ise_state/x353-synth.tgz</name>
+			<type>1</type>
+			<location>/home/andrey/git/x353/ise_state/x353-synth-20150726135708468.tgz</location>
 		</link>
 	</linkedResources>
 </projectDescription>
