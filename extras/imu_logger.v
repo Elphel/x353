@@ -311,6 +311,7 @@ imu_timestamps i_imu_timestamps (
                         .ts_ackn(timestamp_ackn[3:0]), // timestamp for this channel is stored
                         .ra({channel[1:0],timestamp_sel[1:0]}),   // read address (2 MSBs - channel number, 2 LSBs - usec_low, (usec_high ORed with channel <<24), sec_low, sec_high
                         .dout(timestamps_rdata[15:0]));// output data
+wire [0:0] debug_state_unused;
 rs232_rcv i_rs232_rcv (.xclk(xclk),           // half frequency (80 MHz nominal)
                        .bitHalfPeriod(bitHalfPeriod[15:0]),  // half of the serial bit duration, in xclk cycles
                        .ser_di(ser_di),              // rs232 (ttl) serial data in
@@ -322,7 +323,7 @@ rs232_rcv i_rs232_rcv (.xclk(xclk),           // half frequency (80 MHz nominal)
                        .ser_do(ser_do),         // serial data out(@posedge xclk) LSB first!
                        .ser_do_stb(ser_do_stb),    // output data strobe (@posedge xclk), first cycle after ser_do becomes valid
 //                       .debug(debug_state[4:0]),
-                       .debug(debug_state[15:12]),
+                       .debug({debug_state_unused,debug_state[15:12]}),
                        .bit_dur_cntr(debug_state[31:16]),
                        .bit_cntr(debug_state[11:7])
                        );

@@ -225,7 +225,7 @@ module ddr (Dq, Dqs, Addr, Ba, Clk, Clk_n, Cke, Cs_n, Ras_n, Cas_n, We_n, Dm);
     assign    Dq  = Dq_out;
 
     // Debug message
-    wire      Debug = 1'b1;
+//    wire      Debug = 1'b1;
 
     // Timing Check
     time      MRD_chk;

@@ -246,8 +246,8 @@ module camsync       (sclk, // @negedge
       if (set_period) rep_en <= !high_zero;
     end
 
-    MSRL16 i_start_pclk16   (.Q(start_pclk16),   .A('hf), .CLK(pclk), .D(start_pclk[2]));
-    MSRL16 i_strigger1_dly16(.Q(trigger1_dly16), .A('hf), .CLK(pclk), .D(trigger1));
+    MSRL16 i_start_pclk16   (.Q(start_pclk16),   .A(4'hf), .CLK(pclk), .D(start_pclk[2]));
+    MSRL16 i_strigger1_dly16(.Q(trigger1_dly16), .A(4'hf), .CLK(pclk), .D(trigger1));
 
 //! synchronize start from sclk to pclk    
 //! Generating repetition (period should be exactly N, not N+/-1) and output pulse

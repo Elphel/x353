@@ -72,10 +72,11 @@ NET "hact_length*" TIG;
 */
 
   parameter MIN_VACT_PERIOD=130; // 3-130, to increase maximal value (130) - chnge counter width
-
-  parameter IS_SIMUL=0;
-//synthesis translate_off
+`ifdef IVERILOG
   parameter IS_SIMUL=1;
+`else
+  parameter IS_SIMUL=0;
+`endif  
 //synthesis translate_on
 
   input         cclk;       // command clock (posedge, invert on input if needed)

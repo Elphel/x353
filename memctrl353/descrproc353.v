@@ -497,16 +497,18 @@ myRAM_WxD_D #( .DATA_WIDTH(22),.DATA_DEPTH(2))
    reg   [15:0]   linAddr;
 //   wire  [15:0]   linAddr;      //replacing with latches to ease timing
    wire  [15:0]   linAddr_input;
-//   assign linAddr_input[15:0] = (padlen[4:0]*{descr_dyn[19:10],mode?4'b0:descr_dyn[9:6]}) +{descr_dyn[19:10],mode?4'b0:descr_dyn[9:6]}; // Result MSB not used    
+   wire [4:0] descr_stat_inc=descr_stat[8:4]+1;    
    assign linAddr_input[15:0] = padlen[4:0]*{descr_dyn[19:10],mode?4'b0:descr_dyn[9:6]};
 
     
     always @ (negedge clk) if (stepsEn[1]) begin      // address should be 1
+//memctrl353/descrproc353.v:504: error: Concatenation operand "((descr_dyn['sd4:'sd0])==(descr_stat['sd13:'sd9]))?((descr_stat['sd8:'sd4])+('sd1)):(5'd0)" has indefinite width.    
+//      seq_par[5:0] <= mode?({1'b0,descr_stat[13:9]}+((descr_stat[8:4]==5'h1f)?2'h2:2'h1)): //fixed bug with pages where number of hor. tiles is multiple of 0x10
+//                           ({1'b0,(descr_dyn[4:0]==descr_stat[13:9])?(descr_stat[8:4]+1):5'b0});
       seq_par[5:0] <= mode?({1'b0,descr_stat[13:9]}+((descr_stat[8:4]==5'h1f)?2'h2:2'h1)): //fixed bug with pages where number of hor. tiles is multiple of 0x10
-                           ({1'b0,(descr_dyn[4:0]==descr_stat[13:9])?(descr_stat[8:4]+1):5'b0});
+                           ({1'b0,(descr_dyn[4:0]==descr_stat[13:9])?(descr_stat_inc):5'b0});
       sa[7:3] <= mode?descr_dyn[4:0]:5'b0;
       linAddr[15:0]   <= linAddr_input[15:0];
-//      linAddr[15:0]   <= (padlen[4:0]*{descr_dyn[19:10],mode?4'b0:descr_dyn[9:6]})+{descr_dyn[19:10],mode?4'b0:descr_dyn[9:6]}; // Result MSB not used
       nxtTL <= nxtTLw;
       tileX[ 9:0] <= nxtTLw?  10'b0 : (descr_dyn[9:0]+1);   // bits [9:5] are garbage if (mode==0)
 

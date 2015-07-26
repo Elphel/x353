@@ -533,23 +533,23 @@ wire       sensor_trigger; // signal to start CMOS sensor in sync mode
 wire       confirmFrame2Compressor; // pulse to start reading a new frame to buffer for compressor (generated at start of each frame by the compressor)
                                     // mcontr will stop to read to channel FIFO at the end of frame, wait for confirmation
 `ifdef debug_compressor
-wire [31:0] printk_compressor;
+    wire [31:0] printk_compressor;
 `endif
 //ia
 
 `ifdef debug_stuffer
-wire [7:0]  testwire;
+    wire [7:0]  testwire;
 //wire [31:0] printk;
-wire [3:0]  tst_stuf_etrax;
-reg  [3:0]  tst_cmd_cntr;
-reg         tst_rdy_after_eot;
+    wire [3:0]  tst_stuf_etrax;
+    reg  [3:0]  tst_cmd_cntr;
+    reg         tst_rdy_after_eot;
 //         ,.test1( test_fifo[3:0])
   //       ,.test2( test_dma_wcntr[3:0])
-wire dma0_enabled; // just for debug
-wire dma1_enabled; // just for debug
+    wire dma0_enabled; // just for debug
+    wire dma1_enabled; // just for debug
 `endif
 `ifdef debug_dma_count
-  wire [31:0] printk;
+    wire [31:0] printk;
 `endif
 /*
 //xfer_over_irq

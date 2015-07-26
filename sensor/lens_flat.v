@@ -174,14 +174,14 @@ module lens_flat (sclk,      /// system clock @negedge
 //      .A(FXY[17]?18'h1ffff:FXY[17:0]),    // 18-bit multiplier input
       .A((FXY[18]==FXY[17])?FXY[17:0]:(FXY[18]?18'h20000:18'h1ffff)),    // 18-bit multiplier input
       .B({1'b0,scales[~color[1:0]]}),    // 18-bit multiplier input
-      .BCIN(0), // 18-bit cascade input
+      .BCIN(18'b0), // 18-bit cascade input
       .CEA(lens_corr_out[0]), // Clock enable input for the A port
       .CEB(lens_corr_out[0]), // Clock enable input for the B port
       .CEP(lens_corr_out[1]), // Clock enable input for the P port
       .CLK(pclk), // Clock input
-      .RSTA(0), // Synchronous reset input for the A port
-      .RSTB(0), // Synchronous reset input for the B port
-      .RSTP(0)  // Synchronous reset input for the P port
+      .RSTA(1'b0), // Synchronous reset input for the A port
+      .RSTB(1'b0), // Synchronous reset input for the B port
+      .RSTP(1'b0)  // Synchronous reset input for the P port
    );
 
 
@@ -195,14 +195,14 @@ module lens_flat (sclk,      /// system clock @negedge
       .P(mult_second_res[35:0]),    // 36-bit multiplier output
       .A(pix_zero[17:0]),    // 18-bit multiplier input
       .B(mult_first_scaled[17:0]),    // 18-bit multiplier input - always positive
-      .BCIN(0), // 18-bit cascade input
+      .BCIN(18'b0), // 18-bit cascade input
       .CEA(lens_corr_out[2]), // Clock enable input for the A port
       .CEB(lens_corr_out[0]), // Clock enable input for the B port
       .CEP(lens_corr_out[3]), // Clock enable input for the P port
       .CLK(pclk), // Clock input
-      .RSTA(0), // Synchronous reset input for the A port
-      .RSTB(0), // Synchronous reset input for the B port
-      .RSTP(0)  // Synchronous reset input for the P port
+      .RSTA(1'b0), // Synchronous reset input for the A port
+      .RSTB(1'b0), // Synchronous reset input for the B port
+      .RSTP(1'b0)  // Synchronous reset input for the P port
    );
 
 
@@ -216,7 +216,7 @@ lens_flat_line #(.F_WIDTH(19), /// number of bits in the output result (signed)
            .first(fstart), /// initialize running parameters from the inputs (first column). Should be at least 1-cycle gap between "first" and first "next"
            .next(newline), /// calcualte next pixel
            .F0(C[18:0]),   /// value of the output in the first column (before saturation), 18 bit, unsigned
-           .ERR0(0),       /// initial value of the running error (-2.0<err<+2.0), scaled by 2^22, so 24 bits
+           .ERR0(24'b0),       /// initial value of the running error (-2.0<err<+2.0), scaled by 2^22, so 24 bits
            .A0(AY[18:0]),  /// Ay
            .B0(BY[20:0]),  /// By,  signed
            .F(FY[18:0]),

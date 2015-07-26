@@ -40,6 +40,13 @@ module testbench353();
   parameter CLK1_PER = 10.4;     //96MHz
   parameter CLK3_PER = 83.33;   //12MHz
   parameter CPU_PER=10.4;
+`ifdef IVERILOG              
+     initial   $display("IVERILOG is defined");
+    `include "IVERILOG_INCLUDE.v"
+`else
+    initial $display("IVERILOG is not defined");
+    parameter lxtname = "x353_1.lxt";
+`endif
 
 `ifdef SYNC_COMPRESS
   parameter DEPEND=1'b1;
@@ -552,7 +559,8 @@ defparam i_sensor12bits.trigdly = TRIG_LINES;   // delay between trigger input a
 
 
         initial begin
-    $dumpfile("x353.lxt");
+//    $dumpfile("x353.lxt");
+    $dumpfile(lxtname);
     $dumpvars(0,testbench353);
             TTRIG = 1;
             CLK3 = 0;
@@ -598,7 +606,7 @@ defparam i_sensor12bits.trigdly = TRIG_LINES;   // delay between trigger input a
 
 
       wait (IMU_CS); // wait IMU inactive
-      IMU_103695REVA = 1'b1; // switch to revision "A"
+      IMU_103695REVA <= 1'b1; // switch to revision "A"
       cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
       cpu_wr(X313_WA_IMU_DATA,     'h5c0000); // set debug_config to 4'h7
       
@@ -763,11 +771,12 @@ $finish;
  `endif  
    
    
-   $finish;         
+   $finish;            
 
 //#250000;
 //     dma_en(0,1);
 //#480000;
+
      dma_en(0,1);
      
       cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
@@ -778,7 +787,7 @@ $finish;
 
 
       wait (IMU_CS); // wait IMU inactive
-      IMU_103695REVA = 1'b1; // switch to revision "A"
+      IMU_103695REVA <= 1'b1; // switch to revision "A"
       cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
       cpu_wr(X313_WA_IMU_DATA,     'h5c0000); // set debug_config to 4'h7
       

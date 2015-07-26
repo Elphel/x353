@@ -8,4 +8,11 @@
 	</buildSpec>
 	<natures>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>ise_logs/ISEPartgen.log</name>
+			<type>1</type>
+			<location>/home/andrey/git/x353/ise_logs/ISEPartgen-20150725173339957.log</location>
+		</link>
+	</linkedResources>
 </projectDescription>
