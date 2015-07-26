@@ -220,7 +220,15 @@ sensor_phase353
 
    wire      pclk2x, pclk2xi;
 BUFG      i_pclk2x  (.I(pclk2xi), .O(pclk2x));
-DCM i_dcm4(
+DCM #(
+     .CLKIN_DIVIDE_BY_2("FALSE"),
+     .CLKIN_PERIOD(10.0),
+     .CLKOUT_PHASE_SHIFT("FIXED"),
+     .CLK_FEEDBACK("2X"),
+     .DESKEW_ADJUST("SYSTEM_SYNCHRONOUS"),
+     .DFS_FREQUENCY_MODE("LOW"),
+     .DUTY_CYCLE_CORRECTION("TRUE")
+) i_dcm4(
     .CLKIN    (clk),
     .CLKFB    (pclk2x),
     .RST      (dcm_rst),
@@ -242,28 +250,4 @@ DCM i_dcm4(
     .PSDONE   ());
     
 // If needed - add positive PHASE_SHIFT - then posedge pclk2x will be earlier than posedge pclk by   PHASE_SHIFT/256*period(pclk)  
-    
-// synthesis attribute CLK_FEEDBACK of i_dcm4 is "2X"
-// synthesis attribute CLKIN_DIVIDE_BY_2 of i_dcm4 is "FALSE"
-// synthesis attribute CLKIN_PERIOD of i_dcm4 is 10
-// synthesis attribute CLKOUT_PHASE_SHIFT of i_dcm4 is "FIXED"
-// synthesis attribute DESKEW_ADJUST of i_dcm4 is "SYSTEM_SYNCHRONOUS"
-// synthesis attribute DLL_FREQUENCY_MODE of i_dcm4 is "LOW"
-// synthesis attribute DUTY_CYCLE_CORRECTION of i_dcm4 is "TRUE"
-
-// put here default phase shift ....
-
-// synthesis attribute PHASE_SHIFT of i_dcm4 is 0
-// synthesis translate_off
- defparam i_dcm4.CLK_FEEDBACK="2X";
- defparam i_dcm4.CLKIN_DIVIDE_BY_2="FALSE";
- defparam i_dcm4.CLKIN_PERIOD=10;
- defparam i_dcm4.CLKOUT_PHASE_SHIFT="FIXED";
- defparam i_dcm4.DESKEW_ADJUST="SYSTEM_SYNCHRONOUS";
- defparam i_dcm4.DLL_FREQUENCY_MODE="LOW";
- defparam i_dcm4.DUTY_CYCLE_CORRECTION="TRUE";
- defparam i_dcm4.PHASE_SHIFT=0;
-// synthesis translate_on
-	
-	
 endmodule

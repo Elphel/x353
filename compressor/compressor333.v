@@ -955,71 +955,27 @@ dcc_sync i_dcc_sync(//.clk(clk),
                      );
 
 always @ (negedge clk2x) wr_saturation_d <= wr_saturation;
-   FDE_1   i_m_cb0 (.C(clk2x),.CE(wr_saturation),.D(di[ 0]),.Q(m_cb[0]));
-   FDE_1   i_m_cb1 (.C(clk2x),.CE(wr_saturation),.D(di[ 1]),.Q(m_cb[1]));
-   FDE_1   i_m_cb2 (.C(clk2x),.CE(wr_saturation),.D(di[ 2]),.Q(m_cb[2]));
-   FDE_1   i_m_cb3 (.C(clk2x),.CE(wr_saturation),.D(di[ 3]),.Q(m_cb[3]));
-   FDE_1   i_m_cb4 (.C(clk2x),.CE(wr_saturation),.D(di[ 4]),.Q(m_cb[4]));
-   FDE_1   i_m_cb5 (.C(clk2x),.CE(wr_saturation),.D(di[ 5]),.Q(m_cb[5]));
-   FDE_1   i_m_cb6 (.C(clk2x),.CE(wr_saturation),.D(di[ 6]),.Q(m_cb[6]));
-   FDE_1   i_m_cb7 (.C(clk2x),.CE(wr_saturation),.D(di[ 7]),.Q(m_cb[7]));
-   FDE_1   i_m_cb8 (.C(clk2x),.CE(wr_saturation),.D(di[ 8]),.Q(m_cb[8]));
-   FDE_1   i_m_cb9 (.C(clk2x),.CE(wr_saturation),.D(di[ 9]),.Q(m_cb[9]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb0 (.C(clk2x),.CE(wr_saturation),.D(di[ 0]),.Q(m_cb[0]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb1 (.C(clk2x),.CE(wr_saturation),.D(di[ 1]),.Q(m_cb[1]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb2 (.C(clk2x),.CE(wr_saturation),.D(di[ 2]),.Q(m_cb[2]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb3 (.C(clk2x),.CE(wr_saturation),.D(di[ 3]),.Q(m_cb[3]));
+   FDE_1 #(.INIT(1'b1))  i_m_cb4 (.C(clk2x),.CE(wr_saturation),.D(di[ 4]),.Q(m_cb[4]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb5 (.C(clk2x),.CE(wr_saturation),.D(di[ 5]),.Q(m_cb[5]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb6 (.C(clk2x),.CE(wr_saturation),.D(di[ 6]),.Q(m_cb[6]));
+   FDE_1 #(.INIT(1'b1))  i_m_cb7 (.C(clk2x),.CE(wr_saturation),.D(di[ 7]),.Q(m_cb[7]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb8 (.C(clk2x),.CE(wr_saturation),.D(di[ 8]),.Q(m_cb[8]));
+   FDE_1 #(.INIT(1'b0))  i_m_cb9 (.C(clk2x),.CE(wr_saturation),.D(di[ 9]),.Q(m_cb[9]));
 
-   FDE_1   i_m_cr0 (.C(clk2x),.CE(wr_saturation),  .D(di[12]),.Q(m_cr[0]));
-   FDE_1   i_m_cr1 (.C(clk2x),.CE(wr_saturation),  .D(di[13]),.Q(m_cr[1]));
-   FDE_1   i_m_cr2 (.C(clk2x),.CE(wr_saturation),  .D(di[14]),.Q(m_cr[2]));
-   FDE_1   i_m_cr3 (.C(clk2x),.CE(wr_saturation),  .D(di[15]),.Q(m_cr[3]));
-   FDE_1   i_m_cr4 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 0]),.Q(m_cr[4]));
-   FDE_1   i_m_cr5 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 1]),.Q(m_cr[5]));
-   FDE_1   i_m_cr6 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 2]),.Q(m_cr[6]));
-   FDE_1   i_m_cr7 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 3]),.Q(m_cr[7]));
-   FDE_1   i_m_cr8 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 4]),.Q(m_cr[8]));
-   FDE_1   i_m_cr9 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 5]),.Q(m_cr[9]));
-//synthesis translate_off
- defparam i_m_cb0.INIT = 1'b0;  // 'h90
- defparam i_m_cb1.INIT = 1'b0;
- defparam i_m_cb2.INIT = 1'b0;
- defparam i_m_cb3.INIT = 1'b0;
- defparam i_m_cb4.INIT = 1'b1;
- defparam i_m_cb5.INIT = 1'b0;
- defparam i_m_cb6.INIT = 1'b0;
- defparam i_m_cb7.INIT = 1'b1;
- defparam i_m_cb8.INIT = 1'b0;
- defparam i_m_cb9.INIT = 1'b0;
-
- defparam i_m_cr0.INIT = 1'b0;  //'hb6
- defparam i_m_cr1.INIT = 1'b1;
- defparam i_m_cr2.INIT = 1'b1;
- defparam i_m_cr3.INIT = 1'b0;
- defparam i_m_cr4.INIT = 1'b1;
- defparam i_m_cr5.INIT = 1'b1;
- defparam i_m_cr6.INIT = 1'b0;
- defparam i_m_cr7.INIT = 1'b1;
- defparam i_m_cr8.INIT = 1'b0;
- defparam i_m_cr9.INIT = 1'b0;
-//synthesis translate_on
-//synthesis attribute INIT of i_m_cb0  is "0" 
-//synthesis attribute INIT of i_m_cb1  is "0" 
-//synthesis attribute INIT of i_m_cb2  is "0" 
-//synthesis attribute INIT of i_m_cb3  is "0" 
-//synthesis attribute INIT of i_m_cb4  is "1" 
-//synthesis attribute INIT of i_m_cb5  is "0" 
-//synthesis attribute INIT of i_m_cb6  is "0" 
-//synthesis attribute INIT of i_m_cb7  is "1" 
-//synthesis attribute INIT of i_m_cb8  is "0" 
-//synthesis attribute INIT of i_m_cb9  is "0" 
-
-//synthesis attribute INIT of i_m_cr0  is "0" 
-//synthesis attribute INIT of i_m_cr1  is "1" 
-//synthesis attribute INIT of i_m_cr2  is "1" 
-//synthesis attribute INIT of i_m_cr3  is "0" 
-//synthesis attribute INIT of i_m_cr4  is "1" 
-//synthesis attribute INIT of i_m_cr5  is "1" 
-//synthesis attribute INIT of i_m_cr6  is "0" 
-//synthesis attribute INIT of i_m_cr7  is "1" 
-//synthesis attribute INIT of i_m_cr8  is "0" 
-//synthesis attribute INIT of i_m_cr9  is "0" 
+   FDE_1 #(.INIT(1'b0))  i_m_cr0 (.C(clk2x),.CE(wr_saturation),  .D(di[12]),.Q(m_cr[0]));
+   FDE_1 #(.INIT(1'b1))  i_m_cr1 (.C(clk2x),.CE(wr_saturation),  .D(di[13]),.Q(m_cr[1]));
+   FDE_1 #(.INIT(1'b1))  i_m_cr2 (.C(clk2x),.CE(wr_saturation),  .D(di[14]),.Q(m_cr[2]));
+   FDE_1 #(.INIT(1'b0))  i_m_cr3 (.C(clk2x),.CE(wr_saturation),  .D(di[15]),.Q(m_cr[3]));
+   FDE_1 #(.INIT(1'b1))  i_m_cr4 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 0]),.Q(m_cr[4]));
+   FDE_1 #(.INIT(1'b1))  i_m_cr5 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 1]),.Q(m_cr[5]));
+   FDE_1 #(.INIT(1'b0))  i_m_cr6 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 2]),.Q(m_cr[6]));
+   FDE_1 #(.INIT(1'b1))  i_m_cr7 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 3]),.Q(m_cr[7]));
+   FDE_1 #(.INIT(1'b0))  i_m_cr8 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 4]),.Q(m_cr[8]));
+   FDE_1 #(.INIT(1'b0))  i_m_cr9 (.C(clk2x),.CE(wr_saturation_d),.D(di[ 5]),.Q(m_cr[9]));
 
 //always @ (negedge clk2x) wr_quantizer_mode_d <= wr_quantizer_mode;
 

@@ -14,5 +14,10 @@
 			<type>1</type>
 			<location>/home/andrey/git/x353/ise_logs/ISEPartgen-20150725173339957.log</location>
 		</link>
+		<link>
+			<name>ise_logs/ISExst.log</name>
+			<type>1</type>
+			<location>/home/andrey/git/x353/ise_logs/ISExst-20150726001950045.log</location>
+		</link>
 	</linkedResources>
 </projectDescription>

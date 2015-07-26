@@ -77,7 +77,7 @@ NET "hact_length*" TIG;
 `else
   parameter IS_SIMUL=0;
 `endif  
-//synthesis translate_on
+
 
   input         cclk;       // command clock (posedge, invert on input if needed)
   input         wcmd;       // write command

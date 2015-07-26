@@ -141,6 +141,9 @@ module sdseq (clk0,	// global clock 75-100MHz (hope to get to 120MHz with Sparta
    wire         pre4drun_rd_abort; // in second access of dual-access, where precharge command is later (to meet activate-to-precharge time)
    wire         predrun_wr_abort; // write nneeds extra NOP befrore precharge
    wire         predmask;
+   wire         predlast_rd;
+   wire         predlast_wr;
+   wire         predqs_re;
    reg          repeat_r;
    wire         repeat_r_end;
    reg          repeat_w;
@@ -160,7 +163,7 @@ module sdseq (clk0,	// global clock 75-100MHz (hope to get to 120MHz with Sparta
     always @ (negedge clk0) begin
 	  rollover <=  (left[4:0]==5'h4) && rovr;
      if      (first)               fullAddr[ 9:3] <= sa[ 9:3];
-     else if (pre2act_m1d2)        fullAddr[ 9:3] <= 8'h0;
+     else if (pre2act_m1d2)        fullAddr[ 9:3] <= 7'h0;
      else if (prerw)               fullAddr[ 9:3] <= fullAddr[ 9:3]+1;
      else if (continue_m1)         fullAddr[ 9:3] <= {rollover?sfa[9:8]:nextAddr[9:8],nextAddr[ 7:3]}; // stored from sa[7:3]
 
@@ -286,16 +289,8 @@ module sdseq (clk0,	// global clock 75-100MHz (hope to get to 120MHz with Sparta
 
 // Use FF for cas, ras, we for correct simulation
 
-  FD_1 i_precmd_0	(.D(mancmd[15] && ~(prewrite | preprech)),         .C(clk0),.Q(precmd[0]));	//WE
-  FD_1 i_precmd_1	(.D(mancmd[16] && ~(prerefr | preread | prewrite)),.C(clk0),.Q(precmd[1]));	//CAS
-  FD_1 i_precmd_2	(.D(mancmd[17] && ~(prerefr | preact | preprech)), .C(clk0),.Q(precmd[2]));	//RAS
-//synthesis translate_off
- defparam i_precmd_0.INIT = 1'b1;
- defparam i_precmd_1.INIT = 1'b1;
- defparam i_precmd_2.INIT = 1'b1;
-//synthesis translate_on
-//synthesis attribute INIT of i_precmd_0  is "1" 
-//synthesis attribute INIT of i_precmd_1  is "1" 
-//synthesis attribute INIT of i_precmd_2  is "1" 
+  FD_1 #(.INIT(1'b1)) i_precmd_0	(.D(mancmd[15] && ~(prewrite | preprech)),         .C(clk0),.Q(precmd[0]));	//WE
+  FD_1 #(.INIT(1'b1)) i_precmd_1	(.D(mancmd[16] && ~(prerefr | preread | prewrite)),.C(clk0),.Q(precmd[1]));	//CAS
+  FD_1 #(.INIT(1'b1)) i_precmd_2	(.D(mancmd[17] && ~(prerefr | preact | preprech)), .C(clk0),.Q(precmd[2]));	//RAS
 
 endmodule

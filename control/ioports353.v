@@ -400,11 +400,7 @@ module sysinterface(clk,
    FD   i_sync_cwr_start2   (.Q(sync_cwr_start2),.C(clk),.D(sync_cwr_start1));
    FD   i_sync_cwr_on       (.Q(sync_cwr_on),    .C(clk),.D(sync_cwr_start1 || (sync_cwr_on && !sync1)));
 
-   LUT4 i_dataouten ( .I0(1'b1), .I1(ice1), .I2(ice), .I3(ioe), .O(t));
-//synthesis translate_off
-    defparam i_dataouten.INIT = 16'hAA80;
-//synthesis translate_on
-//synthesis attribute INIT of i_dataouten  is "AA80" 
+   LUT4 #(.INIT(16'hAA80)) i_dataouten ( .I0(1'b1), .I1(ice1), .I2(ice), .I3(ioe), .O(t));
  dpads32 i_dmapads32(.c(cwr),.t(t),.d(iod[31:0]),.q(id0[31:0]),.dq(d[31:0]));
 endmodule
 
@@ -520,18 +516,10 @@ module sddrio0(c0,/*c90,*/c270,d,t,q,dq); // made for CL=2.5, LSB first - c0 fal
   FD_1 i_q0  (.C(c0),.D(q00),.Q(q[0]));  //regular FF, not IOB
   IOBUF i_dq (.I(dr), .T(tr),.O(qp), .IO(dq));
   FDDRCPE i_dr (.Q(dr),.C0(c270),.C1(!c270),.D0(d0[0]),.D1(d1d),.CE(1'b1),.CLR(1'b0),.PRE(1'b0));
-  FD_1 i_t0 (.C(c0), .D(t), .Q(t0));
-  FD i_t1 (.C(c0), .D(t0), .Q(t1));
-  FD i_tr (.C(c270), .D(t1), .Q(tr));
+  FD_1 #(.INIT(1'b1)) i_t0 (.C(c0), .D(t), .Q(t0));
+  FD  #(.INIT(1'b1))  i_t1 (.C(c0), .D(t0), .Q(t1));
+  FD  #(.INIT(1'b1))  i_tr (.C(c270), .D(t1), .Q(tr));
   IDDR2 i_qq(.Q0(q00),.Q1(q[1]),.C0(c0),.C1(!c0),.CE(1'b1), .D(qp), .R(1'b0), .S(1'b0) );	 
-// synthesis translate_off
-    defparam i_t0.INIT = 1'b1;
-    defparam i_t1.INIT = 1'b1;
-    defparam i_tr.INIT = 1'b1;
-// synthesis translate_on
-// synthesis attribute INIT of i_t0 is "1" 
-// synthesis attribute INIT of i_t1 is "1" 
-// synthesis attribute INIT of i_tr is "1" 
 
 // synthesis attribute IOB of i_dr is "TRUE"
 // synthesis attribute IOB of i_tr is "TRUE"
@@ -552,25 +540,9 @@ module dqs2 (c0,/*c90,*/c270,
     inout UDQS, LDQS;
     output udqsr90,ldqsr90,udqsr270,ldqsr270;
     wire  t0,t1,t2,tr;
-    FD_1    i_t0 (.C(c0),.D(t),.Q(t0));
-    FD      i_t1 (.C(c0),.D(t0),.Q(t1));
-    FD      i_t2 (.C(c270),.D(t0),.Q(t2));
-//    FDDRCPE i_tr (.Q(tr),.C0(c0),.C1(c270),.D0(t),.D1(t | t0),.CE(1'b1),.CLR(1'b0),.PRE(1'b0));
-//    FDDRCPE i_tr (.Q(tr),.C0(c0),.C1(c270),.D0(t0),.D1(t0 | t1),.CE(1'b1),.CLR(1'b0),.PRE(1'b0));
-//    assign tr= t1 || t2;   // ************** try this later if delays will be too high ***********************
-    assign tr= t1;
-    dqs2_0 i_dqsu(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({udqsr270,udqsr90}),.dq(UDQS));
-    dqs2_0 i_dqsl(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({ldqsr270,ldqsr90}),.dq(LDQS));
-// synthesis translate_off
-    defparam i_t0.INIT = 1'b1;
-    defparam i_t1.INIT = 1'b1;
-    defparam i_t2.INIT = 1'b1;
-// synthesis translate_on
-// synthesis attribute INIT of i_t0 is "1" 
-// synthesis attribute INIT of i_t1 is "1" 
-// synthesis attribute INIT of i_t2 is "1" 
-// s---ynthesis attribute KEEP_HIERARCHY of i_t0 is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_tr is "TRUE"
+    FD_1    #(.INIT(1'b1)) i_t0 (.C(c0),.D(t),.Q(t0));
+    FD      #(.INIT(1'b1)) i_t1 (.C(c0),.D(t0),.Q(t1));
+    FD      #(.INIT(1'b1)) i_t2 (.C(c270),.D(t0),.Q(t2));
 endmodule
 
 module dqs2_0(c0,/*c90,*/c270,t,q,dq);
@@ -591,11 +563,8 @@ module dqs2_0(c0,/*c90,*/c270,t,q,dq);
 
 
 // as in  IFDDRCPE.v
-//    FDCPE i_q0 (.C(c90), .CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[0]));
-    FDCPE_1 i_q0 (.C(c270), .CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[0]));
-    defparam i_q0.INIT = 1'b0;
-    FDCPE i_q1 (.C(c270),.CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[1]));
-//    defparam i_q1.INIT = 1'b0;
+    FDCPE_1  #(.INIT(1'b1)) i_q0 (.C(c270), .CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[0]));
+    FDCPE                   i_q1 (.C(c270),.CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[1]));
 // synthesis attribute IOB of i_q0 is "TRUE"
 // synthesis attribute IOB of i_q1 is "TRUE"
 // synthesis attribute FAST of i_dq is "TRUE"
@@ -669,15 +638,10 @@ module sdo0_2(c,d,q); // input at rising edge, resyncs to falling, initializes t
     output q;
 wire d0, dr;
 OBUF i_q  (.I(dr), .O(q));
-FD i_d0   (.C(c), .D(d), .Q(d0));
+FD   #(.INIT(1'b1)) i_d0   (.C(c), .D(d), .Q(d0));
 //FD_1 i_dr (.C(c), .D(d), .Q(dr));
-FD_1 i_dr (.C(c), .D(d0), .Q(dr));
-//synthesis translate_off
- defparam i_dr.INIT = 1'b1;
-//synthesis translate_on
-//synthesis attribute INIT of i_dr is "1" 
+FD_1 #(.INIT(1'b1)) i_dr (.C(c), .D(d0), .Q(dr));
 // synthesis attribute IOB of i_dr is "TRUE"
-//synthesis attribute INIT of i_d0 is "1" 
 
 endmodule
 

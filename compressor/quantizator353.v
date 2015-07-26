@@ -365,39 +365,12 @@ module zigzag (clk,
 
    end
 
-   ROM32X1 i_z0 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[0]));
-   ROM32X1 i_z1 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[1]));
-   ROM32X1 i_z2 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[2]));
-   ROM32X1 i_z3 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[3]));
-   ROM32X1 i_z4 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[4]));
-   ROM32X1 i_z5 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[5]));
-//C67319CC   611A7896   6357A260   4A040C18   8C983060   F0E0C080
-// transposed! (old was 93D94C66   16A1A578   D0244EBC   7BF6E8F0   9C3870C0   E0C08000
-
-//synthesis translate_off
-/*    defparam i_z0.INIT = 32'h93D94C66;
-    defparam i_z1.INIT = 32'h16A1A578;
-    defparam i_z2.INIT = 32'hD0244EBC;
-    defparam i_z3.INIT = 32'h7BF6E8F0;
-    defparam i_z4.INIT = 32'h9C3870C0;
-    defparam i_z5.INIT = 32'hE0C08000;
-*/
-    defparam i_z0.INIT = 32'hC67319CC;
-    defparam i_z1.INIT = 32'h611A7896;
-    defparam i_z2.INIT = 32'h6357A260;
-    defparam i_z3.INIT = 32'h4A040C18;
-    defparam i_z4.INIT = 32'h8C983060;
-    defparam i_z5.INIT = 32'hF0E0C080;
-    
-    
-//synthesis translate_on
-
-//synthesis attribute INIT of i_z0  is "C67319CC" 
-//synthesis attribute INIT of i_z1  is "611A7896" 
-//synthesis attribute INIT of i_z2  is "6357A260" 
-//synthesis attribute INIT of i_z3  is "4A040C18" 
-//synthesis attribute INIT of i_z4  is "8C983060" 
-//synthesis attribute INIT of i_z5  is "F0E0C080" 
+   ROM32X1 #(.INIT(32'hC67319CC)) i_z0 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[0]));
+   ROM32X1 #(.INIT(32'h611A7896)) i_z1 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[1]));
+   ROM32X1 #(.INIT(32'h6357A260)) i_z2 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[2]));
+   ROM32X1 #(.INIT(32'h4A040C18)) i_z3 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[3]));
+   ROM32X1 #(.INIT(32'h8C983060)) i_z4 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[4]));
+   ROM32X1 #(.INIT(32'hF0E0C080)) i_z5 ( .A0(rom_a[0]), .A1(rom_a[1]), .A2(rom_a[2]), .A3(rom_a[3]), .A4(rom_a[4]), .O(rom_q[5]));
 
 endmodule
 

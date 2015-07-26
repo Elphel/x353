@@ -341,65 +341,26 @@ reg  [3:0] extRestartRq;
 // generate address - will be 0 for init
    always @ (negedge clk) rNum[1:0] <= {mancmdRqS[0] || stepsEn[1] || (steps[2] && !stepsEn[2]),
                                         mancmdRqS[0] || stepsEn[0] || (steps[1] && !stepsEn[1])};
-   FD_1      i_mancmd_00  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 0]),.Q(mancmd[ 0]));
-   FD_1      i_mancmd_01  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 1]),.Q(mancmd[ 1]));
-   FD_1      i_mancmd_02  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 2]),.Q(mancmd[ 2]));
-   FD_1      i_mancmd_03  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 3]),.Q(mancmd[ 3]));
-   FD_1      i_mancmd_04  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 4]),.Q(mancmd[ 4]));
-   FD_1      i_mancmd_05  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 5]),.Q(mancmd[ 5]));
-   FD_1      i_mancmd_06  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 6]),.Q(mancmd[ 6]));
-   FD_1      i_mancmd_07  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 7]),.Q(mancmd[ 7]));
-   FD_1      i_mancmd_08  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 8]),.Q(mancmd[ 8]));
-   FD_1      i_mancmd_09  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 9]),.Q(mancmd[ 9]));
-   FD_1      i_mancmd_10  (.C(clk),.D(!mancmdRqS[2] | descr_stat[10]),.Q(mancmd[10]));
-   FD_1      i_mancmd_11  (.C(clk),.D(!mancmdRqS[2] | descr_stat[11]),.Q(mancmd[11]));
-   FD_1      i_mancmd_12  (.C(clk),.D(!mancmdRqS[2] | descr_stat[12]),.Q(mancmd[12]));
-   FD_1      i_mancmd_13  (.C(clk),.D(!mancmdRqS[2] | descr_stat[13]),.Q(mancmd[13]));
-   FD_1      i_mancmd_14  (.C(clk),.D(!mancmdRqS[2] | descr_stat[14]),.Q(mancmd[14]));
-   FD_1      i_mancmd_15  (.C(clk),.D(!mancmdRqS[2] | descr_stat[15]),.Q(mancmd[15]));
-   FD_1      i_mancmd_16  (.C(clk),.D(!mancmdRqS[2] | descr_stat[16]),.Q(mancmd[16]));
-   FD_1      i_mancmd_17  (.C(clk),.D(!mancmdRqS[2] | descr_stat[17]),.Q(mancmd[17]));
-//synthesis translate_off
- defparam i_mancmd_00.INIT = 1'b1;
- defparam i_mancmd_01.INIT = 1'b1;
- defparam i_mancmd_02.INIT = 1'b1;
- defparam i_mancmd_03.INIT = 1'b1;
- defparam i_mancmd_04.INIT = 1'b1;
- defparam i_mancmd_05.INIT = 1'b1;
- defparam i_mancmd_06.INIT = 1'b1;
- defparam i_mancmd_07.INIT = 1'b1;
- defparam i_mancmd_08.INIT = 1'b1;
- defparam i_mancmd_09.INIT = 1'b1;
- defparam i_mancmd_10.INIT = 1'b1;
- defparam i_mancmd_11.INIT = 1'b1;
- defparam i_mancmd_12.INIT = 1'b1;
- defparam i_mancmd_13.INIT = 1'b1;
- defparam i_mancmd_14.INIT = 1'b1;
- defparam i_mancmd_15.INIT = 1'b1;
- defparam i_mancmd_16.INIT = 1'b1;
- defparam i_mancmd_17.INIT = 1'b1;
-//synthesis translate_on
-//synthesis attribute INIT of i_mancmd_00  is "1" 
-//synthesis attribute INIT of i_mancmd_01  is "1" 
-//synthesis attribute INIT of i_mancmd_02  is "1" 
-//synthesis attribute INIT of i_mancmd_03  is "1" 
-//synthesis attribute INIT of i_mancmd_04  is "1" 
-//synthesis attribute INIT of i_mancmd_05  is "1" 
-//synthesis attribute INIT of i_mancmd_06  is "1" 
-//synthesis attribute INIT of i_mancmd_07  is "1" 
-//synthesis attribute INIT of i_mancmd_08  is "1" 
-//synthesis attribute INIT of i_mancmd_09  is "1" 
-//synthesis attribute INIT of i_mancmd_10  is "1" 
-//synthesis attribute INIT of i_mancmd_11  is "1" 
-//synthesis attribute INIT of i_mancmd_12  is "1" 
-//synthesis attribute INIT of i_mancmd_13  is "1" 
-//synthesis attribute INIT of i_mancmd_14  is "1" 
-//synthesis attribute INIT of i_mancmd_15  is "1" 
-//synthesis attribute INIT of i_mancmd_16  is "1" 
-//synthesis attribute INIT of i_mancmd_17  is "1" 
+   FD_1 #(.INIT(1'b1)) i_mancmd_00  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 0]),.Q(mancmd[ 0]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_01  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 1]),.Q(mancmd[ 1]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_02  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 2]),.Q(mancmd[ 2]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_03  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 3]),.Q(mancmd[ 3]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_04  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 4]),.Q(mancmd[ 4]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_05  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 5]),.Q(mancmd[ 5]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_06  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 6]),.Q(mancmd[ 6]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_07  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 7]),.Q(mancmd[ 7]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_08  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 8]),.Q(mancmd[ 8]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_09  (.C(clk),.D(!mancmdRqS[2] | descr_stat[ 9]),.Q(mancmd[ 9]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_10  (.C(clk),.D(!mancmdRqS[2] | descr_stat[10]),.Q(mancmd[10]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_11  (.C(clk),.D(!mancmdRqS[2] | descr_stat[11]),.Q(mancmd[11]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_12  (.C(clk),.D(!mancmdRqS[2] | descr_stat[12]),.Q(mancmd[12]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_13  (.C(clk),.D(!mancmdRqS[2] | descr_stat[13]),.Q(mancmd[13]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_14  (.C(clk),.D(!mancmdRqS[2] | descr_stat[14]),.Q(mancmd[14]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_15  (.C(clk),.D(!mancmdRqS[2] | descr_stat[15]),.Q(mancmd[15]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_16  (.C(clk),.D(!mancmdRqS[2] | descr_stat[16]),.Q(mancmd[16]));
+   FD_1 #(.INIT(1'b1)) i_mancmd_17  (.C(clk),.D(!mancmdRqS[2] | descr_stat[17]),.Q(mancmd[17]));
 
 
-//   always @ (posedge wclk) if (mcs && (maddr[1:0] == 2'h0)) chInitNum[1:0] <= maddr[3:2];
    always @ (negedge clk) if (mcs && (as[1:0] == 2'h0)) chInitNum[1:0] <= as[3:2];
 
    always @ (negedge clk) begin
