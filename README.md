@@ -30,15 +30,21 @@ WARNING:Xst:3152 - You have chosen to run a version of XST which is not the defa
    on the XST command line or in the XST process properties panel.
 ```
 also failed. After I added recommended options:
+
 ```
 run  -use_new_parser no -ifn  x353.prj  -ofn x353.ngc  -top x353  -p xc3s1200eft256  -uc x353.xcf  -opt_mode speed  -opt_level 1 
 ```
+
 and ISE noticed that:
+
+
 ```WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
 ```
+
 It still repeated the same  WARNING:Xst:3152 (see above) disregarding its own suggestion.
 
 So we will need to find a way how to replace lines in the *xst file that cause errors in XST:
+
 ```
 204 TIMEGRP "CPU_ADDR" =   pads("A<*>");
 205 TIMEGRP "CPU_ADDRCE" = "CPU_ADDR"  pads("CE*");
@@ -49,10 +55,12 @@ So we will need to find a way how to replace lines in the *xst file that cause e
 209 TIMEGRP "DREQ_PAD"=    pads("DREQ*");
 210 TIMEGRP "ALLPADS"=     pads("*");
 ```
+
 ```
 ERROR:Xst:1888 - Processing TIMEGRP CPU_ADDR: User group 'pads("A<*>")' defined from other
                  user group pattern not supported.
 ```
+
 Even Google does not know what to do about this Xilinx XST feature: No results found for "ERROR:Xst:1888".
 
 So we'try to find other ways to re-formulate old timing constraints preserving the same meaning and try
