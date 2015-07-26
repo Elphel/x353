@@ -71,4 +71,4 @@ Even Google does not know what to do about this Xilinx XST feature:
 > ...
 
 So we'try to find other ways to re-formulate old timing constraints preserving the same meaning and try
-again to run tools.
+again to run tools. Until then I'll have to mention again ***this project is valid for simulation only!***
