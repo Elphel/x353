@@ -13,7 +13,7 @@ but we are not there yet - ***this project is valid for simulation only!***
 
 Here is what makes it difficult:
 
-1. Xilinx abandoned support of the older devices in the current software called "Vivado".
+1. Xilinx abandoned support for the older devices in the current software called "Vivado".
 2. Last verion of the ISE (it is ISE 14.7) can not use the older code "as is"
 3. We were able to modify the Verilog code to be parsed by the current XST, but it does not
 recognize some statements in the *.xcf constraints file (I had to rename original *.ucf to *.xcf).
@@ -61,7 +61,13 @@ ERROR:Xst:1888 - Processing TIMEGRP CPU_ADDR: User group 'pads("A<*>")' defined 
                  other user group pattern not supported.
 ```
 
-Even Google does not know what to do about this Xilinx XST feature: No results found for "ERROR:Xst:1888".
+Even Google does not know what to do about this Xilinx XST feature:
+
+> No results found for "ERROR:Xst:1888".
+>
+> Results for ERROR:Xst:1888 (without quotes):
+>
+> ...
 
 So we'try to find other ways to re-formulate old timing constraints preserving the same meaning and try
 again to run tools.
