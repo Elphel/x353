@@ -20,8 +20,8 @@ recognize some statements in the *.xcf constraints file (I had to rename origina
 4. Attempt to try old parser (Suggested by XST itself as the new parser is not the default for
 the Spartan 3e): 
 ```
-WARNING:Xst:3152 - You have chosen to run a version of XST which is not the default solution
-   for the specified device family. You are free to use it in order to take
+WARNING:Xst:3152 - You have chosen to run a version of XST which is not the default
+   solution for the specified device family. You are free to use it in order to take
    advantage of its enhanced HDL parsing/elaboration capabilities. However,
    please be aware that you may be impacted by  language support differences.
    This version may also result in circuit performance and device utilization
@@ -57,8 +57,8 @@ So we will need to find a way how to replace lines in the *xst file that cause e
 ```
 
 ```
-ERROR:Xst:1888 - Processing TIMEGRP CPU_ADDR: User group 'pads("A<*>")' defined from other
-                 user group pattern not supported.
+ERROR:Xst:1888 - Processing TIMEGRP CPU_ADDR: User group 'pads("A<*>")' defined from
+                 other user group pattern not supported.
 ```
 
 Even Google does not know what to do about this Xilinx XST feature: No results found for "ERROR:Xst:1888".
