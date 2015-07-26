@@ -37,8 +37,8 @@ run  -use_new_parser no -ifn  x353.prj  -ofn x353.ngc  -top x353  -p xc3s1200eft
 
 and ISE noticed that:
 
-
-```WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
+```
+WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
 ```
 
 It still repeated the same  WARNING:Xst:3152 (see above) disregarding its own suggestion.
