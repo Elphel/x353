@@ -129,7 +129,10 @@ module csconvert_jp4diff  (en,
     reg          dly_1;
     reg   [14:0] dly_16;
     reg          dly_17;
-    wire         start_out=bayer_phase[1]?(bayer_phase[0]?dly_17:dly_16):(bayer_phase[0]?dly_1:pre_first_in);
+//    wire         start_out=bayer_phase[1]?(bayer_phase[0]?dly_17:dly_16):(bayer_phase[0]?dly_1:pre_first_in);
+///AF2015 - What was supposed to be here for "dly_16" (15 bits, expected 1) - any non-zero or [14]? 
+//    wire         start_out=bayer_phase[1]?(bayer_phase[0]?dly_17: (|dly_16)):(bayer_phase[0]?dly_1:pre_first_in);
+    wire         start_out=bayer_phase[1]?(bayer_phase[0]?dly_17: dly_16[14]):(bayer_phase[0]?dly_1:pre_first_in);
     reg    [7:0] iadr;
     reg          iadr_run;
     reg    [1:0] mux_plus_sel;

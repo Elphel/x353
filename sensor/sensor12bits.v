@@ -17,8 +17,8 @@ input         MCLK,   // Master clock
             ARO,   // Array read Out.
             ARST,   // Array Reset. Active low
             OE,      // output enable active low
-            SCL;   // I2C clock
-inout         SDA;   // I2C data
+            SCL;   // I2C clock // SuppressThisWarning Veditor: Not yet implemented
+inout         SDA;   // I2C data // SuppressThisWarning Veditor: Not yet implemented
 input         OFST;   // I2C address ofset by 2: for simulation 0 - still mode, 1 - video mode.
 
 output   [11:0]   D;      // data output
@@ -33,7 +33,7 @@ parameter ncols   =   66; //58; //56; // 129; //128;   //1288;
 parameter nrows   =   18; // 16;   //   1032;
 parameter nrowb =   1;   // number of "blank rows" from vact to 1-st hact
 parameter nrowa   =   1;   // number of "blank rows" from last hact to end of vact
-parameter nAV   =   24;   //240;   // clocks from ARO to VACT (actually from en_dclkd)
+parameter nAV   =   24;   //240;   // clocks from ARO to VACT (actually from en_dclkd) // SuppressThisWarning Veditor UNUSED
 parameter nbpf   =   20;   //16; // bpf length
 parameter ngp1   =   8;   // bpf to hact
 parameter nVLO   =   1;   // VACT=0 in video mode (clocks)
@@ -64,7 +64,7 @@ parameter   t_HACT=      ncols;         // 1288
 parameter   t_afterHACT=lline-nbpf-ngp1-ncols;   // 352
 parameter   t_lastline=   nrowa*lline+1;   // 1664
 
-reg   [15:0]   sensor_data[0:4095]; // up to 64 x 64 pixels
+reg   [15:0]   sensor_data[0:4095]; // up to 64 x 64 pixels // SuppressThisWarning Veditor VDT_BUG - assigned in system task
 //    $readmemh("sensor.dat",sensor_data);
 
 

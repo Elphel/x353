@@ -311,7 +311,7 @@ imu_timestamps i_imu_timestamps (
                         .ts_ackn(timestamp_ackn[3:0]), // timestamp for this channel is stored
                         .ra({channel[1:0],timestamp_sel[1:0]}),   // read address (2 MSBs - channel number, 2 LSBs - usec_low, (usec_high ORed with channel <<24), sec_low, sec_high
                         .dout(timestamps_rdata[15:0]));// output data
-wire [0:0] debug_state_unused;
+wire [0:0] debug_state_unused; // SuppressThisWarning Veditor UNUSED
 rs232_rcv i_rs232_rcv (.xclk(xclk),           // half frequency (80 MHz nominal)
                        .bitHalfPeriod(bitHalfPeriod[15:0]),  // half of the serial bit duration, in xclk cycles
                        .ser_di(ser_di),              // rs232 (ttl) serial data in
@@ -415,7 +415,7 @@ module logger_arbiter(xclk, // 80 MHz, posedge
   reg    [3:1] chn1hot;       // channels 1-hot - granted and ready, priority applied
   reg          rq_not_zero;   // at least one channel is ready for processing (same time as chn1hot[3:0])
   reg    [1:0] channel;
-  reg          start;
+///AF:  reg          start;
   reg          busy;
   wire         wstart;
   reg          ts_en;
@@ -462,7 +462,7 @@ module logger_arbiter(xclk, // 80 MHz, posedge
                      channels_ready[2] & ~|channels_ready[1:0],
                      channels_ready[1] &  ~channels_ready[0]};
 
-    start <= wstart;
+///AF:    start <= wstart;
 
     if  ((seq_cntr[4:0]=='h1e) || rst) busy <= 1'b0;
     else if (rq_not_zero)              busy <= 1'b1;
@@ -765,10 +765,12 @@ module  imu_spi   ( sclk,  // system clock, negedge
     stall_dur[7:0]       <= stall_dur_mclk[7:0];
 
     bit_duration_zero <= (bit_duration[7:0]==8'h0);
-    clk_div[1:0]=en?(clk_div[1:0]+1):2'b0;
-    clk_en[3:0]  <= {clk_en[2:0],clk_div[1:0]==2'h3};
+    clk_div[1:0]      <= en?(clk_div[1:0]+1):2'b0;
+    clk_en[3:0]       <= {clk_en[2:0],clk_div[1:0]==2'h3};
+    
     if (bit_duration_zero || (bit_duration_cntr[7:0]==8'h0)) bit_duration_cntr[7:0]<=bit_duration[7:0];
     else bit_duration_cntr[7:0] <= bit_duration_cntr[7:0]-1;
+    
     clk_en[3:0]  <= {clk_en[2:0],bit_duration_cntr[7:0]==8'h3};  // change 9'h3 to enforce frequency limit
   end  
   
@@ -795,7 +797,7 @@ module  imu_spi   ( sclk,  // system clock, negedge
     else if (end_spi)                                       seq_counter[9:0] <= 10'h001;
     else if (clk_en[3] && (seq_state[1:0]!=2'h0) && !stall) seq_counter[9:0] <= seq_counter[9:0] - 1;
     set_mosi_prepare <= clk_en[2] && first_prepare;
-    set_mosi_spi       <= clk_en[2] && (seq_state[1:0]==2'h2) && (seq_counter[4:0]==5'h1f) && (seq_counter[9:5]!=6'h0) && !stall; // last word use zero
+    set_mosi_spi       <= clk_en[2] && (seq_state[1:0]==2'h2) && (seq_counter[4:0]==5'h1f) && (seq_counter[9:5] != 5'h0) && !stall; // last word use zero
     
 // no stall before the first word
     if      (!en)                          skip_stall <= 1'b0;
@@ -1109,7 +1111,7 @@ module  rs232_rcv (xclk,           // half frequency (80 MHz nominal)
   reg        wait_just_pause;
   wire       wstart;
   wire [4:0] debug;
-  reg  [4:0] debug0;          // {was_ts_stb, was_start, was_error, was_ser_di_1, was_ser_di_0} - once after reset
+  reg  [4:0] debug0;          // {was_ts_stb, was_start, was_error, was_ser_di_1, was_ser_di_0} - once after reset // SuppressThisWarning Veditor UNUSED
   assign     reset_wait_pause= (restart[1] && !restart[0]) || (wait_pause && !wait_start && !ser_di);
   assign     error=!ser_filt_di && last_half_bit && bit_half_end && receiving_byte;
   assign     sample_bit=shift_en && bit_half_end && !bit_cntr[0];
@@ -1161,7 +1163,7 @@ module  rs232_rcv (xclk,           // half frequency (80 MHz nominal)
     
     
     if (ser_rst) debug0[4:0] <=5'b0;
-    else debug0[4:0] <= debug | {ts_stb,start,error,ser_di_d,~ser_di_d};
+    else debug0[4:0] <= debug | {ts_stb,start,error,ser_di_d[0],~ser_di_d[0]};
   end
 endmodule
 
@@ -1571,7 +1573,7 @@ module imu_timestamps (
                        rq_sclk2[1] &  ~rq_sclk2[0],
                        rq_sclk2[0]};
      pri_sclk_d[3:0] <= pri_sclk[3:0];
-     proc[9:0] <= {proc[9:0], wstart};
+     proc[9:0] <= {proc[8:0], wstart};
      if (proc[0]) wa[3:2] <= {|pri_sclk_d[3:2], pri_sclk_d[3] | pri_sclk_d[1]};
      if (proc[0]) sec_latched[31:0] <= sec[31:0];
      if (proc[0]) usec_latched[19:0] <= usec[19:0];

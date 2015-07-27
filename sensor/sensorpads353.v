@@ -86,7 +86,7 @@ module	sensorpads (/// interface to DCM
 	output         pclk2x;
 	input				vact;
 	input				hact; //output in fillfactory mode
-	inout				bpf;  // output in fillfactory mode
+	inout				bpf;  // output in fillfactory mode  // SuppressThisWarning Veditor - not used as output 
 	inout	  [11:0]	pxd; //actually only 2 LSBs are inouts
 	inout          mrst;
 	output			arst;

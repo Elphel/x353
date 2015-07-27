@@ -219,21 +219,21 @@ module compressor(//  cwr,   // CPU write - global clock
 //         3 - enable compressor, enable repetitive mode
 //
 // control registetr bits
-   wire            cr_w;                        // data written to cr (1 cycle) - now just to reset legacy IRQ
-   wire            raw_dv;                     // input pixel data valid (pxd[7:0]may be sent to DMA buffer through multiplexor)
-   wire            color_dv; // unused                  // color data valid       (color_d[7:0] may be sent to DMA buffer through multiplexor)
-   wire   [ 9:0]   color_d;                     // data out stream from color space converter (6X64 blocks for each MCU - 4Y, Cb,Cr)
-   wire   [ 2:0]   color_tn;                  // tile number in an MCU from color space converter (valid @ color_dv)
-   wire   [ 8:0]   color_avr;                  // [8:0]   DC (average value) 9 bit signed for Y: 9'h000..9'h0ff, for C - 9h100..9'h000..9'h0ff
-   wire            color_first;               // sending first MCU (valid @ ds)
-   wire            color_last;                  // sending last MCU (valid @ ds)
+   wire            cr_w;                // data written to cr (1 cycle) - now just to reset legacy IRQ
+   wire            raw_dv;              // input pixel data valid (pxd[7:0]may be sent to DMA buffer through multiplexor) // SuppressThisWarning Veditor UNUSED
+   wire            color_dv; // unused  // color data valid       (color_d[7:0] may be sent to DMA buffer through multiplexor)// SuppressThisWarning Veditor UNUSED
+   wire   [ 9:0]   color_d;             // data out stream from color space converter (6X64 blocks for each MCU - 4Y, Cb,Cr)
+   wire   [ 2:0]   color_tn;            // tile number in an MCU from color space converter (valid @ color_dv)
+   wire   [ 8:0]   color_avr;           // [8:0]   DC (average value) 9 bit signed for Y: 9'h000..9'h0ff, for C - 9h100..9'h000..9'h0ff
+   wire            color_first;         // sending first MCU (valid @ ds)
+   wire            color_last;          // sending last MCU (valid @ ds)
 
 //   wire         dct_en;
-   wire         dct_start;
-   wire         dct_dv;
+   wire          dct_start;
+   wire          dct_dv; // SuppressThisWarning Veditor UNUSED
    wire [12:0]   dct_out;
-   wire         dct_last_in;   // output high during input of the last of 64 pixels in a 8x8 block
-   wire         dct_pre_first_out; // 1 cycle ahead of the first output in a 64 block
+   wire          dct_last_in;   // output high during input of the last of 64 pixels in a 8x8 block
+   wire          dct_pre_first_out; // 1 cycle ahead of the first output in a 64 block
 
    wire [17:0]   ntiles; //number of 16x16 MCU tiles in a frame to process
    reg         quant_start;
@@ -245,7 +245,7 @@ module compressor(//  cwr,   // CPU write - global clock
    wire         focus_ds;
  
 // wire   enc_first;
- wire enc_last;
+ wire          enc_last; // SuppressThisWarning Veditor UNUSED
  wire   [15:0] enc_do;
  wire          enc_dv;
 
@@ -664,8 +664,8 @@ FD i_is_compressing (.Q(is_compressing),.C(clk), .D(cmprs_en && (go_single || (i
                                                    // single-cycle @ negedge sclk
                         
 `ifdef debug_compressor
-wire        debug_bcntrIsZero;
-wire [17:0] debug_bcntr;
+    wire        debug_bcntrIsZero;
+    wire [17:0] debug_bcntr; //SuppressThisWarning Veditor UNUSED
 `endif
  color_proc i_color_proc(.clk(clk),            // pixel clock 37.5MHz
                          .en(cmprs_en),      // Enable (0 will reset states)
@@ -1080,7 +1080,7 @@ module compr_ifc   (clk,   // compressor input clock (1/2 of sclk)
 
 
 
-   reg  [23:0]   cr;
+///AF:     reg  [23:0]   cr;
    reg  [17:0]   ntiles;
    reg  [15:0] ntiles0;
    reg  [17:0] ntiles1;
@@ -1095,7 +1095,8 @@ module compr_ifc   (clk,   // compressor input clock (1/2 of sclk)
 
 
    assign      rcs[1:0]={cwe && rs, cwe && ~rs};
-   reg         rcs0_d, rcs0_dd, rcs1_d;
+   reg         rcs0_d, rcs0_dd;
+///AF:     reg         rcs1_d;
    reg [2:0]   rcs1d;
 
    reg    [1:0]   is_compressing_sclk; // sync to negedge sclk
@@ -1168,7 +1169,7 @@ module compr_ifc   (clk,   // compressor input clock (1/2 of sclk)
 //   always @ (posedge clk) cr[23:0] <=cri[23:0];   // make it sync
    always @ (negedge sclk) if (rcs[1]) ntiles0[15:0] <= di[15:0];
 //   always @ (negedge sclk) if (rcs1_d) ntiles1[17:0] <= {di[15:0],ntiles0[15:0]};
-   always @ (negedge sclk) if (rcs1d[0]) ntiles1[17:0] <= {di[15:0],ntiles0[15:0]};
+   always @ (negedge sclk) if (rcs1d[0]) ntiles1[17:0] <= {di[ 1:0],ntiles0[15:0]};
    always @ (negedge sclk) if (rcs1d[2]) ntiles1_prev[17:0] <= ntiles1[17:0];
 
 //     rcs1d[2:0]<={rcs1d[1:0],rcs[1]};

@@ -68,9 +68,9 @@ module huffman    (pclk,	// half frequency, sync to incoming data
 	 output        gotLastBlock;
 	 reg           test_lbw;
       wire [19:0] tables_out;
-	 wire [15:0]	hcode;	// table output huffman code (1..16 bits)
+	 wire [15:0]	hcode;     // table output huffman code (1..16 bits)
 	 wire [ 3:0]	hlen;		// table - code length only 4 LSBs are used
-	 wire	 [11:0]	unused;
+	 wire	 [11:0]	unused;     // SuppressThisWarning Veditor UNUSED 
 	 reg	 [ 7:0]	haddr_r;	// index in huffman table	
 	 wire [ 7:0]   haddr_next;
 	 wire [ 8:0]	haddr;	// index in huffman table	 (after latches)
@@ -335,18 +335,18 @@ module huff_fifo (pclk,
 	output		 dav;
 	output[15:0] q;
 	
-	reg	 [9:0]	 wa;
-	reg	 [9:0]	 sync_wa;	// delayed wa, re-calculated at output clock
+	reg      [9:0]	 wa;
+	reg	     [9:0]	 sync_wa;	// delayed wa, re-calculated at output clock
 	reg 	 [9:0]	 ra_r;
 	wire	 [9:0]	 ra;
-     wire [15:0]	 q;
-     reg             load_q;
+    wire [15:0]	 q;
+    reg          load_q;    // SuppressThisWarning Veditor VDT_BUG
 	wire [15:0]	 fifo_o;
 	reg			 ds1;	// ds delayed by one pclk to give time to block ram to write data. Not needed likely.
 	reg			 synci;
 	reg	[1:0]	 synco;
-     reg			 sync_we; // single clk period pulse for each ds@pclk
-     reg             en2x; // en sync to clk;
+    reg			 sync_we; // single clk period pulse for each ds@pclk
+    reg             en2x; // en sync to clk;
 
 	reg			 re_r;
 	wire			 re;
@@ -404,7 +404,6 @@ module huff_fifo (pclk,
   LD i_ra1 (.Q(ra[1]),.G(clk),.D(ra_r[1]));  
   LD i_ra0 (.Q(ra[0]),.G(clk),.D(ra_r[0]));  
   always @ (posedge clk) begin
-//    load_q <= dav?want_read:re_r;
     load_q <= dav?want_read_early:re_r;
   end
   LD_1 i_q15 (.Q( q[15]),.G(clk),.D(load_q?fifo_o[15]:q[15]));  

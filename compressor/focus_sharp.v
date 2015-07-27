@@ -234,7 +234,8 @@ assign	  mult_b[17:0] = use_coef ? {d1[10:0],{7{d1[0]}}}: mult_s[17:0];
 	  use_k_dly[5:0]<={use_k_dly[4:0],use_coef};
      acc_ldval <= !(|start2[7:6]);
      if      (acc_clear || (acc_corr && acc_blk[23])) acc_blk[23:0] <= {1'b0,{23{acc_ldval}}};
-     else if (acc_add)   acc_blk[23:0] <= acc_blk[23:0]+mult_p[35:8];
+///AF:       else if (acc_add)   acc_blk[23:0] <= acc_blk[23:0]+mult_p[35:8];
+     else if (acc_add)   acc_blk[23:0] <= acc_blk[23:0]+mult_p[31:8];
      if (acc_to_out) fdo[11:0] <= (|acc_blk[23:20])?12'hfff:acc_blk[19:8]; // positive, 0..0xfff
 	  if (acc_to_out) sum_blk[22:0] <= acc_blk[22:0]; // accumulator for the sum ((a[i]*d[i])^2), copied at block end
 
@@ -290,18 +291,12 @@ assign	  mult_b[17:0] = use_coef ? {d1[10:0],{7{d1[0]}}}: mult_s[17:0];
       .RSTP(1'b0)  // Synchronous reset input for the P port
    );
 
-
-
-
-
 	 
-	 RAM16X1D i_tn0    (.D(tni[0]),.DPO(tn[0]),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb));
-	 RAM16X1D i_tn1    (.D(tni[1]),.DPO(tn[1]),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb));
-	 RAM16X1D i_tn2    (.D(tni[2]),.DPO(tn[2]),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb));
-	 RAM16X1D i_first  (.D(firsti),.DPO(first),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb));
-	 RAM16X1D i_last   (.D(lasti), .DPO(last), .A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb));
-
-	 
+	 RAM16X1D i_tn0    (.D(tni[0]),.DPO(tn[0]),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb),.SPO());
+	 RAM16X1D i_tn1    (.D(tni[1]),.DPO(tn[1]),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb),.SPO());
+	 RAM16X1D i_tn2    (.D(tni[2]),.DPO(tn[2]),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb),.SPO());
+	 RAM16X1D i_first  (.D(firsti),.DPO(first),.A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb),.SPO());
+	 RAM16X1D i_last   (.D(lasti), .DPO(last), .A0(ic[0]),.A1(ic[1]),.A2(1'b0),.A3(1'b0),.DPRA0(oc[0]),.DPRA1(oc[1]),.DPRA2(1'b0),.DPRA3(1'b0),.WCLK(clk),.WE(stb),.SPO());
 
    RAMB16_S18_S18 i_focus_dct_tab (
       .DOA(tdo[15:0]),       // Port A 16-bit Data Output

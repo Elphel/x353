@@ -27,9 +27,11 @@
 
 `define TEST_BAD_FRAME //abbreviate one frame
 
-`define TEST_IMU
+///AF2015  `define TEST_IMU
 
 module testbench353();
+  reg [639:0] TEST_TITLE; //SuppressThisWarning Veditor Simulator wave
+
   parameter SYNC_BIT_LENGTH=8-1; /// 7 pixel clock pulses
   parameter FPGA_XTRA_CYCLES= 1500; // 1072+;
   parameter HISTOGRAM_LEFT=  0; //2;   // left   
@@ -40,7 +42,8 @@ module testbench353();
   parameter CLK1_PER = 10.4;     //96MHz
   parameter CLK3_PER = 83.33;   //12MHz
   parameter CPU_PER=10.4;
-`ifdef IVERILOG              
+`ifdef IVERILOG
+    `define SIMULATION 1              
      initial   $display("IVERILOG is defined");
     `include "IVERILOG_INCLUDE.v"
 `else
@@ -64,7 +67,7 @@ module testbench353();
  parameter BLANK_ROWS_BEFORE=1; //8; ///2+2 - a little faster than compressor
  parameter BLANK_ROWS_AFTER= 1; //8;
  parameter TRIG_LINES=       8;
- parameter VBLANK=           2; /// 2 lines
+ parameter VBLANK=           2; /// 2 lines //SuppressThisWarning Veditor UNUSED
  parameter CYCLES_PER_PIXEL= 3; /// 2 for JP4, 3 for JPEG
 
 `ifdef PF
@@ -78,9 +81,9 @@ module testbench353();
 `endif
 
  parameter VIRTUAL_WIDTH=    FULL_WIDTH+HBLANK;
- parameter VIRTUAL_HEIGHT=   FULL_HEIGHT+BLANK_ROWS_BEFORE+BLANK_ROWS_AFTER;
+ parameter VIRTUAL_HEIGHT=   FULL_HEIGHT+BLANK_ROWS_BEFORE+BLANK_ROWS_AFTER;  //SuppressThisWarning Veditor UNUSED
  
- parameter TRIG_INTERFRAME=100; /// extra 100 clock cycles between frames
+ parameter TRIG_INTERFRAME=100; /// extra 100 clock cycles between frames  //SuppressThisWarning Veditor UNUSED
 // parameter TRIG_OUT_DATA=     'h800000; // external cable
  parameter TRIG_OUT_DATA=        'h80000; // internal cable
  parameter TRIG_EXTERNAL_INPUT=  'h20000; // internal cable, low level on EXT[8]
@@ -113,43 +116,43 @@ module testbench353();
  parameter X313_WA_DCR0_TRIGDIS=  'h100000;
 
  parameter X313_WA_DCR0_ENDFRAMESEN=  'h600000;
- parameter X313_WA_DCR0_ENDFRAMESDIS= 'h400000;
+ parameter X313_WA_DCR0_ENDFRAMESDIS= 'h400000;  //SuppressThisWarning Veditor UNUSED
 
  parameter X353_WA_DCR0_RESET_MCONTREN=  'h60; //  1 - enable reset memory controllers (channles 0,1,2) at each frame
- parameter X353_WA_DCR0_RESET_MCONTRDIS=  'h40; // 0 - disable reset memory controllers (channles 0,1,2) at each frame
+ parameter X353_WA_DCR0_RESET_MCONTRDIS=  'h40; // 0 - disable reset memory controllers (channles 0,1,2) at each frame  //SuppressThisWarning Veditor UNUSED
 
  parameter X313_WA_IOPINS=        'h70;    // bits [31:24] - enable channels (channel 0 -software, enabled at FPGA init)
+
  parameter X313_WA_IOPINS_EN_TRIG_OUT= 'h0c000000;
- parameter X313_WA_IOPINS_DIS_TRIG_OUT='h08000000;
+ parameter X313_WA_IOPINS_DIS_TRIG_OUT='h08000000;  //SuppressThisWarning Veditor UNUSED
 
- parameter X313_WA_IOPINS_EN_IMU_OUT= 'hc0000000;
- parameter X313_WA_IOPINS_DIS_IMU_OUT='h80000000;
 
- parameter X313_WA_IMU_DATA= 'h7e;
- parameter X313_WA_IMU_CTRL= 'h7f;
 
- parameter X313_RA_IMU_DATA= 'h7e; // read fifo word, advance pointer (32 reads w/o ready check)
- parameter X313_RA_IMU_STATUS= 'h7f; // LSB==ready
- parameter IMU_PERIOD= 'h800; // normal period
- parameter IMU_AUTO_PERIOD= 'hffff0000; // period defined by IMU ready
+`ifdef TEST_IMU
+     parameter X313_WA_IOPINS_EN_IMU_OUT= 'hc0000000;
+     parameter X313_WA_IOPINS_DIS_IMU_OUT='h80000000;  //SuppressThisWarning Veditor UNUSED
+     parameter X313_WA_IMU_CTRL= 'h7f;
+    
+     parameter X313_WA_IMU_DATA= 'h7e;
+     parameter X313_RA_IMU_DATA= 'h7e; // read fifo word, advance pointer (32 reads w/o ready check) 
+     parameter X313_RA_IMU_STATUS= 'h7f; // LSB==ready
+     parameter IMU_PERIOD= 'h800; // normal period
+     parameter IMU_AUTO_PERIOD= 'hffff0000; // period defined by IMU ready
  
- parameter IMU_BIT_DURATION= 'h3; // actual F(scl) will be F(xclk)/2/(IMU_BIT_DURATION+1)
+     parameter IMU_BIT_DURATION= 'h3; // actual F(scl) will be F(xclk)/2/(IMU_BIT_DURATION+1)
 
- parameter IMU_READY_PERIOD=100000; //100usec
- parameter IMU_NREADY_DURATION=10000; //10usec
- 
-
-
- parameter IMU_GPS_BIT_PERIOD='h20; // serial communication duration of a bit (in system clocks)
+     parameter IMU_READY_PERIOD=100000; //100usec
+     parameter IMU_NREADY_DURATION=10000; //10usec
+     parameter IMU_GPS_BIT_PERIOD='h20; // serial communication duration of a bit (in system clocks)
 // use start of trigger as a timestamp (in async mode to prevent timestamp jitter)
 // parameter X313_WA_DCR1_EARLYTRIGEN='hc; //OBSOLETE!
 // parameter X313_WA_DCR1_EARLYTRIGDIS='h8;
-
+`endif
  parameter X313_WA_DCR1_EXTERNALTSEN='hc;
- parameter X313_WA_DCR1_EXTERNALTSDIS='h8;
+ parameter X313_WA_DCR1_EXTERNALTSDIS='h8;  //SuppressThisWarning Veditor UNUSED
 
  parameter X313_WA_DCR1_OUTPUTTSEN= 'h300000;
- parameter X313_WA_DCR1_OUTPUTTSDIS='h200000;
+ parameter X313_WA_DCR1_OUTPUTTSDIS='h200000;  //SuppressThisWarning Veditor UNUSED
 
 
 
@@ -224,87 +227,34 @@ module testbench353();
 //   parameter CLK1_PER = 10.4;     //96MHz
 //   parameter CLK3_PER = 83.33;   //12MHz
 //   parameter CPU_PER=10.4;
-   parameter DMA_BURST=8;
+   parameter DMA_BURST=8;  //SuppressThisWarning Veditor UNUSED
 
-reg TEST_CPU_WR_OK;
-reg TEST_CPU_RD_OK;
-reg SERIAL_BIT = 1'b1;
-reg GPS1SEC    = 1'b0;
-reg ODOMETER_PULSE= 1'b0;
-integer SERIAL_DATA_FD;
-reg IMU_DATA_READY;
+///AF:  reg TEST_CPU_WR_OK;
+///AF:  reg TEST_CPU_RD_OK;
+reg SERIAL_BIT = 1'b1;   // SuppressThisWarning Veditor UNUSED - simulator test WAVE
+reg GPS1SEC    = 1'b0;   // SuppressThisWarning Veditor UNUSED - simulator test WAVE
+reg ODOMETER_PULSE= 1'b0;// SuppressThisWarning Veditor UNUSED - simulator test WAVE
+integer SERIAL_DATA_FD;  // SuppressThisWarning Veditor UNUSED - simulator test WAVE
+reg IMU_DATA_READY;      // SuppressThisWarning Veditor UNUSED - simulator test WAVE
 /*
  parameter IMU_READY_PERIOD=100000; //100usec
  parameter IMU_NREADY_DURATION=10000; //10usec
 
 */
+wire [11:0] EXT; // bidirectional
+
 `ifdef TEST_IMU
-//wire [11:0] EXT; // bidirectional
-      wire IMU_SCL=EXT[0];
-      wire IMU_SDA=EXT[1];
-      wire IMU_MOSI=EXT[2];
-      wire IMU_MISO=EXT[3];
-      reg  IMU_EN;
-      wire IMU_ACTIVE;
-      wire IMU_NMOSI=!IMU_MOSI;
-      wire [5:1] IMU_TAPS;
-      reg        IMU_LATE_ACKN;
-      reg        IMU_SCLK;
-      reg        IMU_MOSI_REVA;
-      reg        IMU_103695REVA;
-      wire       IMU_MOSI_OUT;
-      wire       IMU_SCLK_OUT;
-
-      assign IMU_MOSI_OUT=IMU_103695REVA?IMU_MOSI_REVA:IMU_MOSI;
-      assign IMU_SCLK_OUT=IMU_103695REVA?(IMU_SCLK):IMU_SCL;
-      always @ (posedge IMU_SDA) begin
-        IMU_EN<=IMU_MOSI;
-      end
-      wire IMU_CS=IMU_103695REVA?!IMU_ACTIVE:!(IMU_EN &&IMU_SDA);
-      reg        IMU_MOSI_D;
-      always @ (posedge IMU_SCLK_OUT) begin
-//        IMU_MOSI_D<=IMU_MOSI;
-        IMU_MOSI_D<=IMU_MOSI_OUT;
-      end
-      reg [15:0] IMU_LOOPBACK;
-      always @ (negedge IMU_SCLK_OUT) begin
-        if (!IMU_CS) IMU_LOOPBACK[15:0]<={IMU_LOOPBACK[14:0],IMU_MOSI_D};
-      end
-      assign EXT[3]=IMU_CS?IMU_DATA_READY:IMU_LOOPBACK[15];
-      PULLUP  i_IMU_SDA   (.O(IMU_SDA));
-      PULLUP  i_IMU_SCL   (.O(IMU_SCL));
-      
-      initial begin
-        SERIAL_DATA_FD=$fopen("gps_data.dat","r"); 
-      end
-      
-      always begin
-       #(IMU_READY_PERIOD-IMU_NREADY_DURATION) IMU_DATA_READY=1'b0;
-       #(IMU_NREADY_DURATION)                  IMU_DATA_READY=1'b1;
-      end
-      assign EXT[4]=SERIAL_BIT;
-      assign EXT[5]=GPS1SEC;
-      assign EXT[6]=ODOMETER_PULSE;
-      oneshot i_oneshot  (.trigger(IMU_NMOSI),
-                          .out(IMU_ACTIVE));
-                          
-      dly5taps i_dly5taps (.dly_in(IMU_NMOSI),
-                           .dly_out(IMU_TAPS[5:1]));
-      always @ (negedge IMU_ACTIVE or posedge IMU_TAPS[5])    if (!IMU_ACTIVE)    IMU_LATE_ACKN<= 1'b0; else IMU_LATE_ACKN<= 1'b1;
-      always @ (negedge IMU_LATE_ACKN or posedge IMU_TAPS[4]) if (!IMU_LATE_ACKN) IMU_SCLK<= 1'b1;      else IMU_SCLK<= ~IMU_SCLK;
-      always @ (negedge IMU_SCLK)  IMU_MOSI_REVA<= IMU_NMOSI;
-
-
+    `include "imu_sim_init_include.vh"
 `endif
-
 // Inputs
     wire [11:0] PXD;
     wire BPF;
     wire HACT;
     wire VACT;
+    wire VACT1CYCLE; //SuppressThisWarning Veditor UNUSED
     reg TTRIG;
     reg CLK3;
-    reg CLK2;
+    reg CLK2; //SuppressThisWarning Veditor UNUSED
     reg CLK1;
     reg CLK0;
   //  reg SDCLK_DLL;
@@ -320,20 +270,20 @@ reg IMU_DATA_READY;
     reg   [31:0] CPU_DO;
     reg          CPU_OE;   // enable data from CPU to D[31:0]
     reg   [31:0] CPU_DI;
-    reg   [31:0] DMA_DI;
-    reg   [31:0] DMA_DI_1;
-    reg  [31:0] DMA_CNTR;
-    reg  [31:0] DMA_CNTR_1;
+    reg   [31:0] DMA_DI;   //SuppressThisWarning Veditor UNUSED
+    reg   [31:0] DMA_DI_1; //SuppressThisWarning Veditor UNUSED
+///AF:      reg  [31:0] DMA_CNTR;
+///AF:      reg  [31:0] DMA_CNTR_1;
     reg   [11:0]   SDRAM_MODE;   // shadow register for SDRAM controller modes
  // Outputs
     wire DCLK;
     wire MRST;
     wire ARO;
     wire ARST;
-    wire CNVSYNC;
-    wire CNVCLK;
-    wire XRST;
-    wire AUXCLK;
+///AF:      wire CNVSYNC;
+///AF:      wire CNVCLK;
+///AF:      wire XRST;
+///AF:      wire AUXCLK;
     wire [14:0] SDA;
     wire SDCLK, SDNCLK;
 //    wire SDCKE;
@@ -353,11 +303,11 @@ reg IMU_DATA_READY;
 
 // Bidirs
     wire SCL0;
-    wire SCL1;
+///AF:      wire SCL1;
     wire SDA0;
-    wire SDA1;
-    wire EXPS;
-    wire TRIG;
+///AF:      wire SDA1;
+///AF:      wire EXPS;
+    wire TRIG; //SuppressThisWarning Veditor UNUSED
     wire [15:0] SDD;
     wire [31:0] D;
     wire LDQS;
@@ -379,10 +329,10 @@ parameter BUSOP_IO_RD1= 7;
    reg [7:0] BUS;    // Vector of currently active bus operations
 
 
-   reg CPU_IO;   // CPU IO in progress, may not start IO/DMA
+   reg CPU_IO;   // CPU IO in progress, may not start IO/DMA //SuppressThisWarning Veditor UNUSED
 //   integer LOCK;
-   reg  [10:0] LOCK_ADDR; // LSB - address, 3 MSBs: 0 - read, 1 - write, 2 - DMA0, 3 - DMA1, 4 - INTA
-   reg [31:0] LOCK_DATA; // Data wants to write
+///AF:     reg  [10:0] LOCK_ADDR; // LSB - address, 3 MSBs: 0 - read, 1 - write, 2 - DMA0, 3 - DMA1, 4 - INTA
+///AF:     reg [31:0] LOCK_DATA; // Data wants to write
 //   reg DMA_EN;
 //   reg DMA_EN_1;
    assign D[31:0]=CPU_OE? CPU_DO[31:0]: 32'bz;
@@ -394,25 +344,26 @@ parameter BUSOP_IO_RD1= 7;
    integer histogram_total;
    reg [9:0] histogram_count;
 
-   reg [23:0] IMG_POINTER;
+   reg [23:0] IMG_POINTER; //SuppressThisWarning Veditor UNUSED
    reg [1:0]  FOCUS_MODE;
    reg        BLOCK_HACT=0;
 
 assign TRIG=TTRIG; 
 
-   reg [2:0] I2C_FRAME; // frame number modulo 8 as seen in i2c_writeonly  
+   reg [2:0] I2C_FRAME; // frame number modulo 8 as seen in i2c_writeonly   //SuppressThisWarning Veditor UNUSED
 // ************************* Instantiate the X353 ****************************
-wire [11:0] EXT; // bidirectional
 assign SYSTEM_A[12:0]={5'b0,A[7:0]}; // will make it tri-state when testing bus acquisition
 wire SENSPGM,DUMMYVFEF,ALWAYS0;
 wire SDCLKE;
-wire [1:0] BA; // don't need now
-wire       SYS_SDWE, SYS_SDCAS, SYS_SDRAS, SYS_SDCLKI, SYS_SDCLK, SYS_BUSEN, BG, BRIN, BROUT;
+wire [1:0] BA; // don't need now //SuppressThisWarning Veditor UNUSED
+wire       SYS_SDWE, SYS_SDCAS, SYS_SDRAS, SYS_SDCLK, SYS_BUSEN, BG, BROUT; //SuppressThisWarning Veditor UNUSED
+wire       SYS_SDCLKI = 1'bx; // not tested
+wire       BRIN  =      1'bx; // not tested
 
 /// connect external sync
 assign EXT[8]=EXT[9];
 
-wire  external_sync_line=~EXT[9];
+wire  external_sync_line=~EXT[9]; //SuppressThisWarning Veditor UNUSED
 x353 i_x353 (
              .PXD(PXD[11:2]), 
              .DCLK(DCLK),
@@ -481,7 +432,7 @@ x353 i_x353 (
 
 // Instance of Micron MT48LC8M16LFFF8
 // cheating - no such actual signal :-(
-reg SDCKE;
+reg SDCKE; //SuppressThisWarning Veditor UNUSED
 initial begin
   SDCKE=0;
   #1000;
@@ -520,7 +471,9 @@ sensor12bits i_sensor12bits(.MCLK(DCLK),   // Master clock
                   .DCLK(BPF),   // Data output clock
                   .BPF(),   // Black Pixel Flag
                   .HACT(HACT),   // Horizontal Active
-                  .VACT(VACT)
+                  .VACT(VACT),
+                  .VACT1(VACT1CYCLE) // output 
+                  
                );// Vertical Active
 
 // testing end of SDRAM page - process 17 tiles starting at the 3-rd 128-words ina 512 words page
@@ -561,13 +514,13 @@ defparam i_sensor12bits.trigdly = TRIG_LINES;   // delay between trigger input a
         initial begin
 //    $dumpfile("x353.lxt");
     $dumpfile(lxtname);
-    $dumpvars(0,testbench353);
+    $dumpvars(0,testbench353); //testbench353 cannot be resolved to a signal or parameter //SuppressThisWarning Veditor
             TTRIG = 1;
             CLK3 = 0;
             CLK2 = 0;
             CLK1 = 0;
             CLK0 = 0;
-            A = 8'bx;
+            A = 13'bx;
             WE = 1'b1;
             OE = 1'b1;
             CE = 1'b1;
@@ -586,7 +539,10 @@ defparam i_sensor12bits.trigdly = TRIG_LINES;   // delay between trigger input a
             BUS_EN[7:0] =8'h0;
             BUS_RQ[7:0] =8'h0;
             FOCUS_MODE = 2'h0;
+`ifdef TEST_IMU
             IMU_103695REVA = 1'b0;
+`endif
+            
 `ifdef LATE_DMA
 `else
      dma_en(0,1);
@@ -594,373 +550,17 @@ defparam i_sensor12bits.trigdly = TRIG_LINES;   // delay between trigger input a
 // temporary for IMU testing
 //   #200000;
 //   $finish;            
-
-#250000;
-     dma_en(0,1);
-     
-      cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
-      cpu_wr(X313_WA_IMU_DATA,     'h4c0000); // set debug_config to 4'h3
-
-      cpu_wr(X313_WA_IMU_CTRL,            1); // select period register
-      cpu_wr(X313_WA_IMU_DATA, IMU_BIT_DURATION | 16'h1000); // set bit counter and stall of 16 sclk half-periods
-
-
-      wait (IMU_CS); // wait IMU inactive
-      IMU_103695REVA <= 1'b1; // switch to revision "A"
-      cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
-      cpu_wr(X313_WA_IMU_DATA,     'h5c0000); // set debug_config to 4'h7
-      
-      cpu_wr(X313_WA_IMU_CTRL,            0); // select period register
-      cpu_wr(X313_WA_IMU_DATA,   IMU_AUTO_PERIOD); // set period defined by IMU
-
-
-     
-#480000;
-//#480000;
-$finish;
 `ifdef TEST_IMU
-  
-      cpu_rd(X313_RA_IMU_STATUS);     $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd(X313_RA_IMU_STATUS);     $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
+            `include "imu_sim_include.vh"
+`endif
+    #200000;
+    TEST_TITLE = "FIRST_INIT_DONE";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
+    $finish;
+end
 
 
- `endif  
-   
-   
-   $finish;            
-
-//#250000;
-//     dma_en(0,1);
-//#480000;
-
-     dma_en(0,1);
-     
-      cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
-      cpu_wr(X313_WA_IMU_DATA,     'h4c0000); // set debug_config to 4'h3
-
-      cpu_wr(X313_WA_IMU_CTRL,            1); // select period register
-      cpu_wr(X313_WA_IMU_DATA, IMU_BIT_DURATION | 16'h1000); // set bit counter and stall of 16 sclk half-periods
-
-
-      wait (IMU_CS); // wait IMU inactive
-      IMU_103695REVA <= 1'b1; // switch to revision "A"
-      cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
-      cpu_wr(X313_WA_IMU_DATA,     'h5c0000); // set debug_config to 4'h7
-      
-      cpu_wr(X313_WA_IMU_CTRL,            0); // select period register
-      cpu_wr(X313_WA_IMU_DATA,   IMU_AUTO_PERIOD); // set period defined by IMU
-
-
-     
-#480000;
-$finish;
-`ifdef TEST_IMU
-  
-      cpu_rd(X313_RA_IMU_STATUS);     $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd(X313_RA_IMU_STATUS);     $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-      cpu_rd_ce1(X313_RA_IMU_STATUS); $display ("IMU_STATUS =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-      cpu_rd_ce1(X313_RA_IMU_DATA);   $display ("IMU_DATA =%x",CPU_DI[31:0]);
-
-
- `endif  
-   
-   
-   $finish;            
-
-//#250000;
-//     dma_en(0,1);
-//#480000;
-#200000;
-
-$finish;            
-        end
-
+// Second async test for IMU
 `ifdef TEST_IMU
   initial begin
     #10000;
@@ -1002,6 +602,9 @@ initial begin
   TTRIG=0;
   #1000;
   TTRIG=1;
+    TEST_TITLE = "EXT_TRIG_DONE";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
+  
 end
 
   always #(CLK0_PER/2) CLK0 =   ~CLK0;
@@ -1106,6 +709,8 @@ end
  $display ("      FRAME_COMPRESS_CYCLES= %d",FRAME_COMPRESS_CYCLES);
  $display ("FRAME_COMPRESS_CYCLES_INPUT= %d",FRAME_COMPRESS_CYCLES_INPUT);
  $display ("reset done at %t",$time);
+    TEST_TITLE = "RESET_DONE";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
 
 #10;
 
@@ -1146,188 +751,9 @@ end
    cpu_wr(X313_WA_CAMSYNCPER, SYNC_BIT_LENGTH); ///set (bit_length -1) (should be 2..255)
 
    cpu_wr(X313_WA_IOPINS,      X313_WA_IOPINS_EN_TRIG_OUT); // Enable GPIO output from camsync module
-
+   
 `ifdef TEST_IMU
-  
-      cpu_wr(X313_WA_IOPINS,      X313_WA_IOPINS_EN_IMU_OUT); // 'hc0000000;
-/*
-  reg           we_config_imu; // bits 1:0, 2 - enable slot[1:0]
-  reg           we_config_gps; // bits 6:3, 7 - enable - {ext,inver, slot[1:0]} slot==0 - disable
-  reg           we_config_msg; // bits 12:8,13 - enable - {invert,extinp[3:0]} extinp[3:0]=='hf' - disable
-  reg           we_config_syn; // bit  14,  15 - enable  - enable logging external timestamps
-  reg           we_config_rst; // bit  16,  17 - enable - reset modules 
-*/
-
-      cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
-//      cpu_wr(X313_WA_IMU_DATA,      'h3e695); // configure channels and reset // gps timestamp from 1sec input, positive
-//      cpu_wr(X313_WA_IMU_DATA,      'h3e6b5); // configure channels and reset // gps timestamp from 1sec input, negative
-//      cpu_wr(X313_WA_IMU_DATA,      'h3e6d5); // configure channels and reset // gps timestamp after pause
-//      cpu_wr(X313_WA_IMU_DATA,      'h3e6f5); // configure channels and reset  // gps timestamp at "$" start
-      cpu_wr(X313_WA_IMU_DATA,     'h43e6f5); // configure channels and reset  // gps timestamp at "$" start, reset configure_debug
-
-
-
-      cpu_wr(X313_WA_IMU_CTRL,            2); // select register number 2 (serial half-bit duration)
-      cpu_wr(X313_WA_IMU_DATA,       'h8007); // reset rs232 by 1 in MSB
-
-      cpu_wr(X313_WA_IMU_CTRL,            2); // select register number 2 (serial half-bit duration)
-      cpu_wr(X313_WA_IMU_DATA,       'h0007); // serial speed 8 cycles (period = 32 CLK0 cycles)
-      
-      cpu_wr(X313_WA_IMU_CTRL,            3); // select config register
-      cpu_wr(X313_WA_IMU_DATA,      'h20000); // remove reset
-
-
-// encode 4 sentences 
-/*
-$GPRMC,042931.0,A,4043.39929,N,11155.92706,W,000.00,283.8,250411,013.2,E*45
-$GPGGA,042931.0,4043.39929,N,11155.92706,W,1,09,0.8,1280.5,M,-13.8,M,,*5B
-$GPGSA,A,3,04,07,08,11,15,17,24,26,27,,,,1.7,0.8,1.5*36
-$GPVTG,283.8,T,270.5,M,000.00,N,0000.00,K*7F
-*/
-      cpu_wr(X313_WA_IMU_CTRL,         'h20); // format write
-// just ($GP)RMC, GGA, GSA and VTG
-      cpu_wr(X313_WA_IMU_DATA,          'h6); //
-      cpu_wr(X313_WA_IMU_DATA,          'hf); //
-      cpu_wr(X313_WA_IMU_DATA,          'he); //
-      cpu_wr(X313_WA_IMU_DATA,          'h0); //
-      cpu_wr(X313_WA_IMU_DATA,          'h9); //
-
-      cpu_wr(X313_WA_IMU_DATA,          'h7); //
-      cpu_wr(X313_WA_IMU_DATA,          'h6); //
-      cpu_wr(X313_WA_IMU_DATA,          'hb); //
-      cpu_wr(X313_WA_IMU_DATA,          'h1); //
-      cpu_wr(X313_WA_IMU_DATA,          'hc); //
-
-      cpu_wr(X313_WA_IMU_DATA,          'hf); //
-      cpu_wr(X313_WA_IMU_DATA,          'h9); //
-      cpu_wr(X313_WA_IMU_DATA,          'h8); //
-      cpu_wr(X313_WA_IMU_DATA,          'h0); //
-      cpu_wr(X313_WA_IMU_DATA,          'h0); //
-      cpu_wr(X313_WA_IMU_DATA,          'h0); //
-      
-///      cpu_wr(X313_WA_IMU_CTRL,          'h30); // first format
-//$GPRMC,042931.0,A,4043.39929,N,11155.92706,W,000.00,283.8,250411,013.2,E*45
-//0101010 000 : 'hb 'h2a 'h04 'h0
-//      cpu_wr(X313_WA_IMU_DATA,          'h0b); //number of fields including dummy comma
-      cpu_wr(X313_WA_IMU_DATA,          'h0a); // testing - made 1 shorter than actual
-      cpu_wr(X313_WA_IMU_DATA,          'h2a); //
-      cpu_wr(X313_WA_IMU_DATA,          'h04); //
-      cpu_wr(X313_WA_IMU_DATA,          'h00); //
-
-///      cpu_wr(X313_WA_IMU_CTRL,          'h34); // second format
-//$GPGGA,042931.0,4043.39929,N,11155.92706,W,1,09,0.8,1280.5,M,-13.8,M,,*5B
-//0010 1000 0101 0 : 'h0e 'h14 'h0a 'h0
-      cpu_wr(X313_WA_IMU_DATA,          'h0e); //number of fields including dummy comma
-      cpu_wr(X313_WA_IMU_DATA,          'h14); //
-      cpu_wr(X313_WA_IMU_DATA,          'h0a); //
-      cpu_wr(X313_WA_IMU_DATA,          'h00); //
-
-///      cpu_wr(X313_WA_IMU_CTRL,          'h38); // third format
-//$GPGSA,A,3,04,07,08,11,15,17,24,26,27,,,,1.7,0.8,1.5*36
-//01000000 00000000 00 : 'h11 'h01 'h00 'h0
-      cpu_wr(X313_WA_IMU_DATA,          'h11); //number of fields including dummy comma
-      cpu_wr(X313_WA_IMU_DATA,          'h01); //
-      cpu_wr(X313_WA_IMU_DATA,          'h00); //
-      cpu_wr(X313_WA_IMU_DATA,          'h00); //
-
-///      cpu_wr(X313_WA_IMU_CTRL,          'h3c); // fourth format
-//$GPVTG,283.8,T,270.5,M,000.00,N,0000.00,K*7F
-//00101010 1 : 'h08 'haa 'h00 'h0
-      cpu_wr(X313_WA_IMU_DATA,          'h08); //number of fields including dummy comma
-      cpu_wr(X313_WA_IMU_DATA,          'haa); //
-      cpu_wr(X313_WA_IMU_DATA,          'h00); //
-      cpu_wr(X313_WA_IMU_DATA,          'h00); //
-
-
-      
-      cpu_wr(X313_WA_IMU_CTRL,            4); // select register number 4
-      cpu_wr(X313_WA_IMU_DATA,         'h10); // x gyro low
-      cpu_wr(X313_WA_IMU_DATA,         'h12); // x gyro high
-      cpu_wr(X313_WA_IMU_DATA,         'h14); //
-      cpu_wr(X313_WA_IMU_DATA,         'h16); //
-      cpu_wr(X313_WA_IMU_DATA,         'h18); //
-      cpu_wr(X313_WA_IMU_DATA,         'h1a); //
-      cpu_wr(X313_WA_IMU_DATA,         'h1c); // x accel low
-      cpu_wr(X313_WA_IMU_DATA,         'h1e); //
-      cpu_wr(X313_WA_IMU_DATA,         'h20); //
-      cpu_wr(X313_WA_IMU_DATA,         'h22); //
-      cpu_wr(X313_WA_IMU_DATA,         'h24); //
-      cpu_wr(X313_WA_IMU_DATA,         'h26); // z accel high
-      
-      cpu_wr(X313_WA_IMU_DATA,         'h40); // x delta ang low
-      cpu_wr(X313_WA_IMU_DATA,         'h42); // x delta ang high
-      cpu_wr(X313_WA_IMU_DATA,         'h44); //
-      cpu_wr(X313_WA_IMU_DATA,         'h46); //
-      cpu_wr(X313_WA_IMU_DATA,         'h48); //
-      cpu_wr(X313_WA_IMU_DATA,         'h4a); //
-      cpu_wr(X313_WA_IMU_DATA,         'h4c); // x delta vel low
-      cpu_wr(X313_WA_IMU_DATA,         'h4e); //
-      cpu_wr(X313_WA_IMU_DATA,         'h50); //
-      cpu_wr(X313_WA_IMU_DATA,         'h52); //
-      cpu_wr(X313_WA_IMU_DATA,         'h54); //
-      cpu_wr(X313_WA_IMU_DATA,         'h56); // z delta vel high
-      
-      cpu_wr(X313_WA_IMU_DATA,         'h0e); // temperature
-      cpu_wr(X313_WA_IMU_DATA,         'h70); // time m/s
-      cpu_wr(X313_WA_IMU_DATA,         'h72); // time d/h
-      cpu_wr(X313_WA_IMU_DATA,         'h74); // time y/m
-
-      cpu_wr(X313_WA_IMU_CTRL,            0); // select period register
-      cpu_wr(X313_WA_IMU_DATA,            0); // reset IMU
-      cpu_wr(X313_WA_IMU_DATA,            0); // reset bit counter
-      
-      #1000;
-      cpu_wr(X313_WA_IMU_CTRL,            1); // select period register
-      cpu_wr(X313_WA_IMU_DATA, IMU_BIT_DURATION); // set bit counter (clock frequency divider)
-
-      cpu_wr(X313_WA_IMU_CTRL,            0); // select period register
-      cpu_wr(X313_WA_IMU_DATA,   IMU_PERIOD); // set period
-      
-// set "odometer" message
-      cpu_wr(X313_WA_IMU_CTRL,         'h40); // select start of message
-      cpu_wr(X313_WA_IMU_DATA,         'h01234567); // Message first 4 bytes
-      cpu_wr(X313_WA_IMU_DATA,         'h12345678); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h23456789); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h3456789a); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h456789ab); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h56789abc); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h6789abcd); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h789abcde); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h89abcdef); //next
-      cpu_wr(X313_WA_IMU_DATA,         'h9abcdef0); //next
-      cpu_wr(X313_WA_IMU_DATA,         'habcdef01); //next
-      cpu_wr(X313_WA_IMU_DATA,         'hbcdef012); //next
-      cpu_wr(X313_WA_IMU_DATA,         'hcdef0123); //next
-      cpu_wr(X313_WA_IMU_DATA,         'hdef01234); //next
-// extra 8 bytes - will not be logged
-      cpu_wr(X313_WA_IMU_DATA,         'hef012345); //next
-      cpu_wr(X313_WA_IMU_DATA,         'hf0123456); //next
-      
-//   cpu_wr(1,32'h00000);   // disable and reset dma
-//   cpu_wr(1,32'h20000);   // enable DMA channel 1
-   cpu_wr(1,32'h00024);   // disable and reset dma (both channels)
-   cpu_wr(1,32'h00028);   // enable DMA channel 1
-//      cpu_wr(X313_WA_IMU_DATA,            1); // set period
-      
-/*
- parameter X313_WA_IMU_DATA= 'h7e;
- parameter X313_WA_IMU_CTRL= 'h7f;
-
- parameter X313_RA_IMU_DATA= 'h7e; // read fifo word, advance pointer (32 reads w/o ready check)
- parameter X313_RA_IMU_STATUS= 'h7f; // LSB==ready
-
-*/
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
-       cpu_rd_ce1(1);
+    `include "imu_sim2_include.vh"
 `endif
 
       program_quantization;
@@ -1341,7 +767,7 @@ $GPVTG,283.8,T,270.5,M,000.00,N,0000.00,K*7F
       set_focus_filt(0,100,8,24,127,0,1);
       set_zero_bin  (8'hc0,8'h80); // zero_bin 0.75 (half), bias (0.5 - true rounding)
 
-   cpu_wr(X313_WA_CAMSYNCPER,  TRIG_PERIOD); /// starts generatoe *******************new 
+   cpu_wr(X313_WA_CAMSYNCPER,  {8'b0,TRIG_PERIOD}); /// starts generatoe *******************new 
 
 
 
@@ -1450,8 +876,8 @@ $GPVTG,283.8,T,270.5,M,000.00,N,0000.00,K*7F
    cpu_rd('h10)   ; //status
 
 // program rtc
-   cpu_wr('h4a,    16'h8000);   //  maximal correction to the rtc
-   cpu_wr('h48,   20'h00000);   //  microseconds
+   cpu_wr('h4a,      'h8000);   //  maximal correction to the rtc
+   cpu_wr('h48,     'h00000);   //  microseconds
    cpu_wr('h49,32'h12345678);   //  seconds
 //   #1000;
 //   cpu_wr('h45,32'h12345678);   //  seconds     - repeat for simulation
@@ -1490,9 +916,13 @@ $GPVTG,283.8,T,270.5,M,000.00,N,0000.00,K*7F
    cpu_wr('h61,'h43000000 | (HISTOGRAM_HEIGHT-2)); // height
 
 
+    TEST_TITLE = "INIT_DRAM";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
 
       init_sdram;
 
+    TEST_TITLE = "INIT_DRAM_DONE";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
 `ifdef ENDFRAMES
    cpu_wr(X313_WA_DCR0, X313_WA_DCR0_ENDFRAMESEN);   // enable ending frames if insufficient data
 `else
@@ -1563,6 +993,8 @@ $GPVTG,283.8,T,270.5,M,000.00,N,0000.00,K*7F
 
 //     dma_en(0,1);
      dma_en(1,1);
+    TEST_TITLE = "DMA_EN_1_1";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
 
 //***************   cpu_wr(1,32'h00000);   // disable and reset dma *** immediate ***
 //   cpu_wr('h60,'h01000000);
@@ -1725,7 +1157,11 @@ $display ("saturation=2");
    cpu_wr('h64,'h31400000); // [BY] => 0x180000
 
 `ifdef CONTINUOUS_COMPRESSION
+    TEST_TITLE = "START_CONTINUOUS_COMPRESSION";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
+
 `else
+    TEST_TITLE = "INIT_CHAN_SEQ";
    init_chan_seq ('h64,2,1,(PF_HEIGHT>0)?1:0,DEPEND,'h200000,(WOI_WIDTH>>4)-1,(WOI_HEIGHT & 'h3ff0)-'h10);  // ch2,mode1,wnr0,depend1,sa000000,nTileX10, nTileY10
   `ifdef TEST_INSUFFICIENT_DATA
   // Don't set correct number of blocks, leave the number larger
@@ -1767,13 +1203,29 @@ task program_compressor;
       read_ch3_descript;
         read_status;
 `ifdef TEST_CH3_AND_PHASE
+    TEST_TITLE = "write256_ch3-1";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       write256_ch3(16'h1100);
+    TEST_TITLE = "write256_ch3-2";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       write256_ch3(16'h2200);
+    TEST_TITLE = "write256_ch3-3";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       write256_ch3(16'h3300);
+    TEST_TITLE = "write256_ch3-4";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       write256_ch3(16'h4400);
+    TEST_TITLE = "write256_ch3-5";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       write256_ch3(16'h5500);
+    TEST_TITLE = "write256_ch3-6";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       write256_ch3(16'h6600);
+    TEST_TITLE = "write256_ch3-7";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       close_ch3;   // wait write buffer empty
+    TEST_TITLE = "write256_ch3-8";
+    $display("===================== TEST_%s ========================= @%t",TEST_TITLE,$time);
       read_ch3_descript;
         read_status;
    init_chan (3,0,0,0,0,'h20,'hf);  // ch3,mode1,wnr1,depend0,sa0,nTileX1f, nTileY2 writes 1 full and 1 small
@@ -2037,7 +1489,7 @@ parameter CPU_RH_A    = 2;
      end
   endtask
 
-  task   cpu_rd_ce1_isr;
+  task   cpu_rd_ce1_isr;    //SuppressThisWarning Veditor UNUSED TASK
     input   [ 7:0]   ia;
      begin
              wait (~BUS[BUSOP_ISR_RD1]);
@@ -2094,10 +1546,10 @@ parameter   CH3_WEMPTY_BITNUM=8;   // was 0??
 
 
 // enable SDRAM controller and refresh (all channels disabled)
-      SDRAM_MODE=6'h00;   cpu_wr(SDRAM_ENABLE,SDRAM_MODE);   // to init to 0 (for simulation only)
+      SDRAM_MODE = 'h00;   cpu_wr(SDRAM_ENABLE,{20'b0,SDRAM_MODE});   // to init to 0 (for simulation only)
       #(100);
 //      SDRAM_MODE=6'h03;   cpu_wr(SDRAM_ENABLE,SDRAM_MODE);   // All channels disabled, only refresh and sdram itself
-      SDRAM_MODE=12'haaf; cpu_wr(SDRAM_ENABLE,SDRAM_MODE); // All channels disabled, only refresh and sdram itself
+      SDRAM_MODE= 'haaf; cpu_wr(SDRAM_ENABLE,{20'b0,SDRAM_MODE}); // All channels disabled, only refresh and sdram itself
     end
    endtask
 
@@ -2122,11 +1574,11 @@ parameter   CH3_WEMPTY_BITNUM=8;   // was 0??
     w1[15:0]=   {2'b0,inTileX[9:0],isa[24:21]};
     w2[15:0]=   {4'b0,inTileY[11:0]};
     $display ("    writing %x to %x",w1,CHN_BASEA+4*ichnum+1);
-      cpu_wr(CHN_BASEA+4*ichnum+1,w1);
+      cpu_wr(CHN_BASEA+4*ichnum+1,{16'b0,w1});
     $display ("    writing %x to %x",w2,CHN_BASEA+4*ichnum+2);
-      cpu_wr(CHN_BASEA+4*ichnum+2,w2);
+      cpu_wr(CHN_BASEA+4*ichnum+2,{16'b0,w2});
     $display ("    writing %x to %x",w0,CHN_BASEA+4*ichnum+0);
-      cpu_wr(CHN_BASEA+4*ichnum+0,w0);
+      cpu_wr(CHN_BASEA+4*ichnum+0,{16'b0,w0});
 // enable channel:
 //      SDRAM_MODE=SDRAM_MODE | (6'h4 << ichnum);
       SDRAM_MODE= (12'h030 << (ichnum <<1));
@@ -2136,7 +1588,7 @@ parameter   CH3_WEMPTY_BITNUM=8;   // was 0??
        4'h2: SDRAM_MODE= 12'h300;
        4'h3: SDRAM_MODE= 12'hc00;
       endcase
-      cpu_wr(SDRAM_ENABLE,SDRAM_MODE);
+      cpu_wr(SDRAM_ENABLE,{20'b0,SDRAM_MODE});
     end
    endtask
 //     init_chan (2,1,0,1,'h200000,'h07,'h10);  // ch2,mode1,wnr0,depend1,sa000000,nTileX10, nTileY10
@@ -2218,7 +1670,7 @@ parameter   CH3_WEMPTY_BITNUM=8;   // was 0??
      end
    endtask
 
-
+/*
    task writeGrad_ch3;   // write 256 8-bit words (as 64 x 32) , same all lines, with value=first+x
      input   [7:0] first;
      integer i;
@@ -2253,7 +1705,7 @@ parameter   CH3_WEMPTY_BITNUM=8;   // was 0??
     end
    endtask
 
-
+*/
 // 1-cycle latency!
    task read256_ch3;   // read 16 16-bit words (as 8 x 32)
      reg    [15:0] i;
@@ -2286,13 +1738,13 @@ parameter   CH3_WEMPTY_BITNUM=8;   // was 0??
 */
 task program_huffman;
 // huffman tables data
-  reg   [23:0]   huff_data[0:511];
+  reg   [23:0]   huff_data[0:511]; // SuppressThisWarning VEditor : assigned in $readmem() system task
   integer i;
   begin
     $readmemh("huffman.dat",huff_data);
     cpu_wr ('he,'h200);   // start address of huffman tables
     for (i=0;i<512;i=i+1) begin
-      cpu_wr('hf,huff_data[i]);
+      cpu_wr('hf,{8'b0,huff_data[i]});
     end
   end
 endtask
@@ -2300,7 +1752,7 @@ endtask
 task program_quantization;
 // quantization tables data
 //  reg   [11:0]   quant_data[0:255];
-  reg   [15:0]   quant_data[0:255];
+  reg   [15:0]   quant_data[0:255];  // SuppressThisWarning VEditor : assigned in $readmem() system task
   integer i;
   begin
 //    $readmemh("quantization.dat",quant_data);
@@ -2314,7 +1766,7 @@ endtask
 
 task program_coring;
 // coring tables data
-  reg   [15:0]   coring_data[0:1023];
+  reg   [15:0]   coring_data[0:1023];  // SuppressThisWarning VEditor : assigned in $readmem() system task
   integer i;
   begin
 //    $readmemh("quantization.dat",quant_data);
@@ -2330,13 +1782,13 @@ endtask
 
 task program_focus_filt;
 // focus quality filter data 
-  reg   [15:0]   filt_data[0:127];
+  reg   [15:0]   filt_data[0:127];  // SuppressThisWarning VEditor : assigned in $readmem() system task
   integer i;
   begin
     $readmemh("focus_filt.dat",filt_data);
     cpu_wr ('he,'h800);   // start address of focus filter tables
     for (i=0;i<128;i=i+1) begin
-      cpu_wr('hf,filt_data[i]);
+      cpu_wr('hf,{16'b0,filt_data[i]});
     end
   end
 endtask
@@ -2409,9 +1861,9 @@ endtask
 
 
 task program_curves;
-  reg   [9:0]   curves_data[0:1027];
+  reg   [9:0]   curves_data[0:1027]; // SuppressThisWarning VEditor : assigned in $readmem() system task
   integer n,i,base,diff,diff1;
-  reg [10:0] curv_diff;
+///AF:    reg [10:0] curv_diff;
   begin
     $readmemh("linear1028rgb.dat",curves_data);
 //    $readmemh("zero1028rgb.dat",curves_data);
@@ -2424,18 +1876,18 @@ task program_curves;
         diff1=curves_data[257*n+i+1]-curves_data[257*n+i]+8;
 //        $display ("%x %x %x %x %x %x",n,i,curves_data[257*n+i], base, diff, diff1);
         #1;
-        if ((diff>63) || (diff < -64)) cpu_wr('hf,{1'b1,diff1[10:4],base[9:0]});
-        else                           cpu_wr('hf,{1'b0,diff [ 6:0],base[9:0]});
+        if ((diff>63) || (diff < -64)) cpu_wr('hf,{14'b0,1'b1,diff1[10:4],base[9:0]});
+        else                           cpu_wr('hf,{14'b0,1'b0,diff [ 6:0],base[9:0]});
       end
     end  
   end
 endtask
 /// NOTE: Can not use sequencer to program tables - may collide with software table writes !!!
-task pre_program_curves; // all but last word, last word schedule through sequencer to provided address
+task pre_program_curves; // all but last word, last word schedule through sequencer to provided address //SuppressThisWarning Veditor UNUSED TASK
   input [7:0]  seq_addr;
-  reg     [9:0]   curves_data[0:1027];
+  reg     [9:0]   curves_data[0:1027]; // SuppressThisWarning VEditor : assigned in $readmem() system task
   integer n,i,base,diff,diff1;
-  reg [10:0] curv_diff;
+///AF:    reg [10:0] curv_diff;
   reg [23:0] data;
   begin
     $readmemh("linear1028rgb.dat",curves_data);
@@ -2449,9 +1901,9 @@ task pre_program_curves; // all but last word, last word schedule through sequen
         diff1=curves_data[257*n+i+1]-curves_data[257*n+i]+8;
 //        $display ("%x %x %x %x %x %x",n,i,curves_data[257*n+i], base, diff, diff1);
         #1;
-        if ((diff>63) || (diff < -64)) data={1'b1,diff1[10:4],base[9:0]};
-        else                           data={1'b0,diff [ 6:0],base[9:0]};
-        if ((n<3) || (i<255)) cpu_wr('hf, data);
+        if ((diff>63) || (diff < -64)) data={6'b0,1'b1,diff1[10:4],base[9:0]};
+        else                           data={6'b0,1'b0,diff [ 6:0],base[9:0]};
+        if ((n<3) || (i<255)) cpu_wr('hf, {8'b0,data});
         else begin
            cpu_wr(seq_addr,'h0e0007ff);
           cpu_wr(seq_addr,{8'h0f,data[23:0]});
@@ -2486,52 +1938,9 @@ task program_compressor;
           1'b1,cmd[1:0]});
   end
 endtask
-
-task send_serial_bit;
-  input [7:0] data_byte;
-  reg   [7:0] d;
-  begin
-    d <= data_byte;
-    wait (CLK0); wait (~CLK0); 
-// SERIAL_BIT should be 1 here
-// Send start bit    
-    SERIAL_BIT <= 1'b0;
-    repeat (IMU_GPS_BIT_PERIOD) begin  wait (CLK0); wait (~CLK0);  end
-// Send 8 data bits, LSB first    
-    repeat (8) begin
-      SERIAL_BIT <= d[0];
-      #1 d[7:0] <= {1'b0,d[7:1]};
-      repeat (IMU_GPS_BIT_PERIOD) begin  wait (CLK0); wait (~CLK0);  end
-    end
-// Send stop bit    
-    SERIAL_BIT <= 1'b1;
-    repeat (IMU_GPS_BIT_PERIOD) begin  wait (CLK0); wait (~CLK0);  end
-  end
-endtask  
-
-task send_serial_pause;
-  begin
-    wait (CLK0); wait (~CLK0); 
-    SERIAL_BIT <= 1'b1;
-    repeat (16) begin
-      repeat (IMU_GPS_BIT_PERIOD) begin  wait (CLK0); wait (~CLK0);  end
-    end  
-  end
-endtask  
-
-//        SERIAL_DATA_FD=$fopen("gps_data.dat","r"); 
-
-task send_serial_line;
-  integer char;
-  begin
-    char=0;
-    while (!$feof (SERIAL_DATA_FD) && (char != 'h0a)) begin
-      char=$fgetc(SERIAL_DATA_FD);
-      send_serial_bit(char);
-    end
-  end  
-endtask
-
+`ifdef TEST_IMU
+    `include "imu_sim_tasks_include.vh"
+`endif
 
 
 endmodule
@@ -2541,7 +1950,7 @@ module oneshot(trigger,
   input  trigger;
   output out;
   reg    out;
-  event  start;
+  event  start; //SuppressThisWarning Veditor "event" is not supported in VDT?
   parameter duration=4000;
   initial out= 0;
   always @ (posedge trigger) begin

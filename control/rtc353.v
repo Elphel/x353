@@ -260,7 +260,7 @@ module timestamp353( mclk,    // system clock (negedge)
       else if (hacti && !hact_d)           vact_pend <= 1'b0;
       if (hacti && !hact_d) odd_line <= !vact_pend && !odd_line;
 //      if (hacti && !hact_d) line[3:0] <= vact_pend?4'h1:{line[2:0],1'b0};
-      if (hacti && !hact_d) line[2:0] <= vact_pend?4'h1:{line[1:0],1'b0};
+      if (hacti && !hact_d) line[2:0] <= vact_pend ? 3'h1 : {line[1:0],1'b0};
       
       if (hacti && !hact_d) ts_line <= tsmode[1]? (vact_pend || line[0] ) : (!vact_pend && (line[1] || line[2]));
       
@@ -282,9 +282,9 @@ module timestamp353( mclk,    // system clock (negedge)
 //      else	                       ts_data[25:0]<= 16'h0;
       ts_active_r <= ts_active;
       ts_line_r   <= ts_line;
-      if      (ts_active_r)         ts_data[25:0]<= {ts_data[24:0],1'b0};
-      else if (ts_line_r)           ts_data[25:0]<= odd_line?sec[31:6]:{sec[5:0],usec[19:0]};
-		else	                        ts_data[25:0]<= 16'h0;
+      if      (ts_active_r)         ts_data[25:0] <= {ts_data[24:0],1'b0};
+      else if (ts_line_r)           ts_data[25:0] <= odd_line?sec[31:6]:{sec[5:0],usec[19:0]};
+	  else	                        ts_data[25:0] <= 26'h0;
     end   
                      
 endmodule

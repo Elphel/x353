@@ -539,10 +539,15 @@ module dqs2 (c0,/*c90,*/c270,
     input c0,/*c90,*/c270,t;
     inout UDQS, LDQS;
     output udqsr90,ldqsr90,udqsr270,ldqsr270;
-    wire  t0,t1,t2,tr;
+    wire  t0,t1,tr;
+///AF:      wire  t2; 
     FD_1    #(.INIT(1'b1)) i_t0 (.C(c0),.D(t),.Q(t0));
     FD      #(.INIT(1'b1)) i_t1 (.C(c0),.D(t0),.Q(t1));
-    FD      #(.INIT(1'b1)) i_t2 (.C(c270),.D(t0),.Q(t2));
+///AF:      FD      #(.INIT(1'b1)) i_t2 (.C(c270),.D(t0),.Q(t2));
+    assign tr= t1;
+    dqs2_0 i_dqsu(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({udqsr270,udqsr90}),.dq(UDQS));
+    dqs2_0 i_dqsl(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({ldqsr270,ldqsr90}),.dq(LDQS));
+    
 endmodule
 
 module dqs2_0(c0,/*c90,*/c270,t,q,dq);
@@ -563,7 +568,7 @@ module dqs2_0(c0,/*c90,*/c270,t,q,dq);
 
 
 // as in  IFDDRCPE.v
-    FDCPE_1  #(.INIT(1'b1)) i_q0 (.C(c270), .CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[0]));
+    FDCPE_1  #(.INIT(1'b0)) i_q0 (.C(c270), .CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[0]));
     FDCPE                   i_q1 (.C(c270),.CE(1'b1),.CLR(1'b0),.D(qp),.PRE(1'b0),.Q(q[1]));
 // synthesis attribute IOB of i_q0 is "TRUE"
 // synthesis attribute IOB of i_q1 is "TRUE"
@@ -577,7 +582,7 @@ endmodule
 module sddrdm(c0,/*c90,*/c270,d,dq);
     input       c0,/*c90,*/c270;
     input  [1:0] d;
-    inout        dq;
+    inout        dq; //SuppressThisWarning Veditor UNUSED
 sddrdm0 i_dq (.c0(c0),/*.c90(c90),*/.c270(c270),.d(d),.dq(dq));
 // s--ynthesis attribute KEEP_HIERARCHY of i_dq is "TRUE"
 endmodule

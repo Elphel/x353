@@ -359,13 +359,13 @@ module mcontr(
 
   bufCntr256   i_bufCntr0 (.clk(clk0), .rst(!enSDRAM), .cs(curChanLate[0]), .init(ch_prefirstdrun), .bank(nBuf[1:0]),
                            .drun_rd(1'b0), .drun_wr(ch_drun_wr), .dlast(ch_dlast),
-                             .a(bmad0[8:0]),  .en(ch0en),              .done(dnch[0]));
+                             .a(bmad0[8:0]),  .en(ch0en),              .done(dnch[0]),.we());
   bufCntr256   i_bufCntr1 (.clk(clk0), .rst(!enSDRAM), .cs(curChanLate[1]), .init(ch_prefirstdrun), .bank(nBuf[1:0]),
                            .drun_rd(ch_drun_rd), .drun_wr(1'b0), .dlast(ch_dlast),
-                             .a(bmad1[8:0]), .we(ch1we),  .done(dnch[1]));
+                             .a(bmad1[8:0]), .we(ch1we),  .done(dnch[1]), .en());
   bufCntr256   i_bufCntr2 (.clk(clk0), .rst(!enSDRAM), .cs(curChanLate[2]), .init(ch_prefirstdrun), .bank(nBuf[1:0]),
                            .drun_rd(ch_drun_rd), .drun_wr(1'b0), .dlast(ch_dlast),
-                             .a(bmad2[8:0]), .we(ch2we),  .done(dnch[2]));
+                             .a(bmad2[8:0]), .we(ch2we),  .done(dnch[2]), .en());
   bufCntr256   i_bufCntr3 (.clk(clk0), .rst(!enSDRAM), .cs(curChanLate[3]), .init(ch_prefirstdrun), .bank(nBuf[1:0]),
                            .drun_rd(ch_drun_rd), .drun_wr(ch_drun_wr), .dlast(ch_dlast),
                            .a(bmad3[8:0]), .en (ch3en), .we(ch3owe), .done(dnch[3])
@@ -451,7 +451,9 @@ end
                                       .done(dnch[0]),            // data transfer over
                                       .rq(chnReq[0]),            // request (level, sync to iclk)
                                       .rqInit(chnReqInit[0]),   // request to Init channel (level, sync to iclk)
-                                      .rdy(ch0rdy));            // external ready output
+                                      .rdy(ch0rdy),             // external ready output
+                                      .rdy_async(),             // output 
+                                      .wrempty());               // output 
 
     channelRequest i_channelRequest1 (.rst(!enSDRAM),            // probably for simulation only...
                                       .init(chReqInit[1]),      // 1 cycle long, sync to iclk
@@ -464,7 +466,10 @@ end
                                       .done(dnch[1]),            // data transfer over
                                       .rq(chnReq[1]),            // request (level, sync to iclk)
                                       .rqInit(chnReqInit[1]),   // request to Init channel (level, sync to iclk)
-                                      .rdy(ch1rdy));            // external ready output
+                                      .rdy(ch1rdy),             // external ready output
+                                      .rdy_async(),             // output 
+                                      .wrempty());               // output 
+                                      
 
     channelRequest   i_channelRequest2 (.rst(!enSDRAM),            // probably for simulation only...
                                       .init(chReqInit[2]),      // 1 cycle long, sync to iclk
@@ -477,7 +482,9 @@ end
                                       .done(dnch[2]),            // data transfer over
                                       .rq(chnReq[2]),            // request (level, sync to iclk)
                                       .rqInit(chnReqInit[2]),   // request to Init channel (level, sync to iclk)
-                                      .rdy(ch2rdy));            // external ready output
+                                      .rdy(ch2rdy),             // external ready output
+                                      .rdy_async(),             // output 
+                                      .wrempty());               // output 
 
     channelRequest_1 i_channelRequest3 (.rst(!enSDRAM),            // probably for simulation only...
                                       .init(chReqInit[3]),      // 1 cycle long, sync to iclk. For now - do nothing in dcc mode
@@ -680,7 +687,7 @@ module channelRequest (rst,   // only for simulation?
 
    assign   ready_off= !cntrsValid || (ecnt[2:0] == rcnt[2:0]);
    always @ (posedge eclk or posedge rst)
-     if (rst)  ecnt <= 2'b0;
+     if (rst)  ecnt <= 3'b0;
      else if (start) ecnt[2:0] <= next_ecnt;
 
 // reduce latency of rdy - valid next cycle after start
@@ -768,7 +775,7 @@ module channelRequest_1 (rst,   // only for simulation?
 
    assign   ready_off= !cntrsValid || (ecnt[2:0] == rcnt[2:0]);
    always @ (negedge eclk or posedge rst)
-     if (rst)  ecnt <= 2'b0;
+     if (rst)  ecnt <= 3'b0;
      else if (start) ecnt[2:0] <= next_ecnt;
 
 // reduce latency of rdy - valid next cycle after start

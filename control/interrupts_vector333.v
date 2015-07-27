@@ -55,7 +55,7 @@ module interrupts_vector(sclk, // @negedge
     wire   [15:0] irq_insa;
     reg    [15:0] irq_insb;
     reg    [15:0] irq_insc;  //single cycle sync interrupt request.
-    wire   [15:0] irq_rst;
+///AF:      wire   [15:0] irq_rst;
     reg           rst_rqs, en_rqs, dis_rqs, pre_set_irqv, set_irqv;
     reg    [ 3:0] irqv_a; // irq vectors table write address
     reg    [ 7:0] irqv_d; // irq vectors table write data
@@ -190,7 +190,7 @@ module interrupts_vector(sclk, // @negedge
     FD_1   i_irq_um_15   (.C(sclk), .D(~(rst_rq[15]) & (irq_insc[15] | irq_um[15])), .Q(irq_um[15]));
     
     
-    myRAM16X8D_1   i_vecttab (.D(irqv_d[7:0]), .WE(set_irqv), .clk(sclk), .AW(irqv_a[3:0]), .AR(irqn_r[3:0]), .QR(irqv[7:0]));
+    myRAM16X8D_1   i_vecttab (.D(irqv_d[7:0]), .WE(set_irqv), .clk(sclk), .AW(irqv_a[3:0]), .AR(irqn_r[3:0]), .QR(irqv[7:0]), .QW());
     
     always @ (negedge sclk) begin
 	   if (pre_wen) did[15:0] <= di[15:0];
@@ -208,8 +208,8 @@ module interrupts_vector(sclk, // @negedge
       set_irqv <= pre_set_irqv;
       if (pre_set_irqv) irqv_a[3:0] <= did[11:8];      
       if (pre_set_irqv) irqv_d[7:0] <= did[ 7:0];
-      rst_rq[15:0] <= ({15{rst_rqs}} & did[15:0]) | rst_rq_inta[15:0];
-      dis_rq[15:0] <= ({15{dis_rqs}} & did[15:0]);
+      rst_rq[15:0] <= ({16{rst_rqs}} & did[15:0]) | rst_rq_inta[15:0];
+      dis_rq[15:0] <= ({16{dis_rqs}} & did[15:0]);
 //      en_rq [15:0] <= ({15{ en_rqs}} & did[15:0]);
       
       inta_s[5:0] <= {inta_s[4:0], inta};

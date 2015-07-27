@@ -198,7 +198,7 @@ input             hdr;            // second green absolute, not difference
    reg            four_blocks_r;
    reg            scale_diff_r;
    reg            hdr_r;
-   reg    [1:0]   tile_margin_r;
+   reg    [1:0]   tile_margin_r; // SuppressThisWarning Veditor UNUSED
 //   reg    [2:0]   tile_shift_r;
    reg    [1:0]   bayer_phase_r;
    reg    [3:0]   bayer_phase_onehot;
@@ -259,7 +259,7 @@ input             hdr;            // second green absolute, not difference
      last_from_sdram <= en & preline_was_0 && (prepix[4:0]==0);
      inc_sdrama <= en & (pre_first_pixel || (inc_sdrama && !last_from_sdram ));
      if      (pre_first_pixel)    sdram_a9[8:0] <= sdrama_top_left[8:0];
-     else if (inc_sdrama)         sdram_a9[8:0] <= sdram_a9[8:0] + (pre_start_of_line ? sdrama_line_inc[2:0] : 1);
+     else if (inc_sdrama)         sdram_a9[8:0] <= sdram_a9[8:0] + (pre_start_of_line ? sdrama_line_inc[2:0] : 3'b1);
 
      if      (!en || memWasInit)             sdram_a9_page[1:0] <= 2'h0;
      else if (last_from_sdram && inc_sdrama) sdram_a9_page[1:0] <= sdram_a9_page[1:0]+1;
@@ -445,7 +445,7 @@ input             hdr;            // second green absolute, not difference
 
      if (first_pixel) begin
 	    first0 <= willbe_first;
-		 last0  <= (bcntr[17:0]==17'b0);
+		 last0  <= (bcntr[17:0] == 18'b0);
 	  end
      if (ccv_out_start) begin
 	    first <= first0;

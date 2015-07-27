@@ -160,7 +160,7 @@ FD_1 i_initialized ( .Q(initialized), .C(sclk), .D(por[1] && ( initialized || (r
       we_fifo_wp <= wen_d[1] || wpage0_inc;
 	   if (wen_d[1])  fifo_wr_pointers_outw_r[5:0] <= fifo_wr_pointers_outw[5:0];
 
-	   if (we_fifo_wp) fifo_wr_pointers[wpage_w[2:0]] <= wpage0_inc_d? 7'h0:(fifo_wr_pointers_outw_r[5:0]+1); 
+	   if (we_fifo_wp) fifo_wr_pointers[wpage_w[2:0]] <= wpage0_inc_d? 6'h0:(fifo_wr_pointers_outw_r[5:0]+1); 
 		
 		fifo_wr_pointers_outr_r[5:0] <= fifo_wr_pointers_outr[5:0]; // just register distri
 // command seq fifo (RAMB16_S9_S18)

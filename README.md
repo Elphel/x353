@@ -18,7 +18,7 @@ Here is what makes it difficult:
 2. Last verion of the ISE (it is ISE 14.7) can not use the older code "as is"
 3. We were able to modify the Verilog code to be parsed by the current XST, but it does not
 recognize some statements in the *.xcf constraints file (I had to rename original *.ucf to *.xcf).
-4. Attempt to try old parser (Suggested by XST itself as the new parser is not the default for
+4. Attempt to try old parser (suggested by XST itself as the new parser is not the default for
 the Spartan 3e): 
 ```
 WARNING:Xst:3152 - You have chosen to run a version of XST which is not the default

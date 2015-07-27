@@ -455,11 +455,13 @@ myRAM_WxD_D #( .DATA_WIDTH(22),.DATA_DEPTH(2))
    wire [4:0] padlen;
    assign padlen=((mode && (descr_stat[8:4]==5'h1f))?(descr_stat[13:9]+1'b1):descr_stat[13:9])+1;
 
-   reg   [15:0]   linAddr;
+ /// AF2015: was   reg   [15:0]   linAddr;
+    reg   [16:0]   linAddr;
 //   wire  [15:0]   linAddr;      //replacing with latches to ease timing
-   wire  [15:0]   linAddr_input;
+///AAF2015:   wire  [15:0]   linAddr_input;
+   wire  [18:0]   linAddr_input; // to match multipler result, 2 MSBs are still discarded
    wire [4:0] descr_stat_inc=descr_stat[8:4]+1;    
-   assign linAddr_input[15:0] = padlen[4:0]*{descr_dyn[19:10],mode?4'b0:descr_dyn[9:6]};
+   assign linAddr_input = padlen[4:0]*{descr_dyn[19:10],mode?4'b0:descr_dyn[9:6]};
 
     
     always @ (negedge clk) if (stepsEn[1]) begin      // address should be 1
@@ -469,7 +471,8 @@ myRAM_WxD_D #( .DATA_WIDTH(22),.DATA_DEPTH(2))
       seq_par[5:0] <= mode?({1'b0,descr_stat[13:9]}+((descr_stat[8:4]==5'h1f)?2'h2:2'h1)): //fixed bug with pages where number of hor. tiles is multiple of 0x10
                            ({1'b0,(descr_dyn[4:0]==descr_stat[13:9])?(descr_stat_inc):5'b0});
       sa[7:3] <= mode?descr_dyn[4:0]:5'b0;
-      linAddr[15:0]   <= linAddr_input[15:0];
+///AAF2015:   linAddr   <= linAddr_input[12:0];
+      linAddr   <= linAddr_input[16:0];
       nxtTL <= nxtTLw;
       tileX[ 9:0] <= nxtTLw?  10'b0 : (descr_dyn[9:0]+1);   // bits [9:5] are garbage if (mode==0)
 
@@ -526,7 +529,8 @@ myRAM_WxD_D #( .DATA_WIDTH(22),.DATA_DEPTH(2))
                   {descr_stat[3:0],8'b0,mode?
                        descr_dyn[9:5]:
                        descr_dyn[4:0]}:
-                  {linAddr[15:0]}));
+ /// AF2015: was                  {linAddr[16:0]})); 
+                  {linAddr[16:0]})); 
     end
  //photofinish hack
     always @ (negedge clk) if (stepsEn[1]) begin

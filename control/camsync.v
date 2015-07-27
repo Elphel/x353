@@ -119,7 +119,7 @@ module camsync       (sclk, // @negedge
     reg   [31:0]  restart_cntr; // restart period counter
     reg    [1:0]  restart_cntr_run; // restart counter running
     wire          restart;          // restart out sync
-    reg    [8:0]  out_pulse_cntr;
+///AF:      reg    [8:0]  out_pulse_cntr;
     reg           trigger_condition; // GPIO input trigger condition met
     reg           trigger_condition_d; // GPIO input trigger condition met, delayed (for edge detection)
     reg           trigger_condition_filtered; // trigger condition filtered
@@ -140,7 +140,7 @@ module camsync       (sclk, // @negedge
     wire          pre_start_out_pulse;
     reg           start_out_pulse; /// start generation of output pulse. In internal trigger mode uses delay counter, in external - no delay
     
-    reg           pre_start;
+///AF:     reg           pre_start;
     reg   [31:0]  pre_period;
     reg   [ 7:0]  bit_length='hff; /// Output pulse duration or bit duration in timestamp mode
                                    /// input will be filtered with (bit_length>>2) duration
@@ -228,7 +228,7 @@ module camsync       (sclk, // @negedge
       
 //      if (wen[3]) repeat_period[31:0] <= did[31:0];
       if (wen[3]) pre_period[31:0] <= did[31:0];
-      if (wen[3]) high_zero =         did[31:8]==24'b0;
+      if (wen[3]) high_zero <=        did[31:8]==24'b0;
       
 
 //      start <= wen[3] && (did[31:0]!=32'h0);

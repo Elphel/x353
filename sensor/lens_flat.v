@@ -87,7 +87,7 @@ module lens_flat (sclk,      /// system clock @negedge
     reg    [20:0] BY; /// By
     reg    [18:0] C;  /// C
     reg    [16:0] scales[0:3]; // per-color coefficients
-    reg    [16:0] scales_r;
+///AF:      reg    [16:0] scales_r;
     reg    [15:0] fatzero_in;     /// zero level to subtract before multiplication
     reg    [15:0] fatzero_out;    /// zero level to add after multiplication
     reg    [ 3:0] post_scale;     /// shift product after first multiplier - maybe needed when using decimation
@@ -95,7 +95,7 @@ module lens_flat (sclk,      /// system clock @negedge
     wire   [18:0] FY;    /// F(0,y)
     wire   [23:0] ERR_Y; /// running error for the first column
     wire   [18:0] FXY;   /// F(x,y)
-    reg    [18:0] FXY_sat;
+///AF:      reg    [18:0] FXY_sat;
     reg   [ 4:0] lens_corr_out; /// lens correction out valid (first clock from column0 )
 /// copied form sensorpix353.v
     reg           bayer_nset; 
@@ -158,7 +158,7 @@ module lens_flat (sclk,      /// system clock @negedge
         3'h7:mult_first_scaled[17:0]<=  (~mult_first_res[35] & |mult_first_res[34:26]) ? 18'h1ffff:mult_first_res[26: 9];
       endcase
 
-      if (lens_corr_out[4]) pixdo[15:0]=pre_pixdo_with_zero[20]? 16'h0:   /// negative - use 0
+      if (lens_corr_out[4]) pixdo[15:0] <= pre_pixdo_with_zero[20]? 16'h0:   /// negative - use 0
                                         ((|pre_pixdo_with_zero[19:16])?16'hffff: ///>0xffff - limit by 0xffff
                                                                        pre_pixdo_with_zero[15:0]);
     end
@@ -324,6 +324,7 @@ module lens_flat_line(
 
       if     (first_d)   F[F_WIDTH-1:0] <=  F1[ F_WIDTH-1:0];
       else if (next_d)   F[F_WIDTH-1:0] <=  F[F_WIDTH-1:0]+{{(F_WIDTH-(DF_WIDTH)){dF[(DF_WIDTH)-1]}},dF[(DF_WIDTH)-1:0]};
+      
       if     (first_d) A2X[F_SHIFT+1:1] <=                     {{F_SHIFT+2-A_WIDTH{A[A_WIDTH-1]}},A[A_WIDTH-1:0]};
       else if (next)   A2X[F_SHIFT+1:1] <=  A2X[F_SHIFT+1:1] + {{F_SHIFT+2-A_WIDTH{A[A_WIDTH-1]}},A[A_WIDTH-1:0]};
     end 

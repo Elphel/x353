@@ -201,8 +201,8 @@ module i2c_writeonly     (sclk,    // @negedge
 		bytes_cmd <=  wen_d[0] && is_ctl && di_1[11];
 		dly_cmd   <=  wen_d[0] && is_ctl && di_1[ 8];
 // setting control parameters		
-		if (bytes_cmd) i2c_bytes[1:0]=di_2[10:9];
-		if (dly_cmd)   i2c_dly[7:0]  =di_2[ 7:0];
+		if (bytes_cmd) i2c_bytes[1:0] <= di_2[10:9];
+		if (dly_cmd)   i2c_dly[7:0]   <= di_2[ 7:0];
 		if (reset_cmd || (run_cmd && !di_2[12])) i2c_enrun <= 1'b0;
 		else if (run_cmd && di_2[12]) i2c_enrun <= 1'b1;
 // write pointer memory
@@ -220,7 +220,7 @@ module i2c_writeonly     (sclk,    // @negedge
       we_fifo_wp <= wen_d[1] || wpage0_inc;
 	   if (wen_d[1])  fifo_wr_pointers_outw_r[5:0] <= fifo_wr_pointers_outw[5:0];
 
-	   if (we_fifo_wp) fifo_wr_pointers[wpage_w[2:0]] <= wpage0_inc_d? 7'h0:(fifo_wr_pointers_outw_r[5:0]+1); 
+	   if (we_fifo_wp) fifo_wr_pointers[wpage_w[2:0]] <= wpage0_inc_d? 6'h0:(fifo_wr_pointers_outw_r[5:0]+1); 
 		
 		fifo_wr_pointers_outr_r[5:0] <= fifo_wr_pointers_outr[5:0]; // just register distri
 // command i2c fifo (RAMB16_S9_S18)

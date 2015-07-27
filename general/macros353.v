@@ -31,7 +31,11 @@ module MSRL16 (Q, A, CLK, D);
     output Q;
     input  [3:0] A;
     input  CLK, D;
-    SRL16 i_q(.Q(Q), .A0(A[0]), .A1(A[1]), .A2(A[2]), .A3(A[3]), .CLK(CLK), .D(D));
+`ifdef SIMULATION
+    SRL16_MOD #(.INVERT(1'b0)) i_q (.Q(Q), .A0(A[0]), .A1(A[1]), .A2(A[2]), .A3(A[3]), .CLK(CLK), .D(D));
+`else    
+    SRL16                      i_q (.Q(Q), .A0(A[0]), .A1(A[1]), .A2(A[2]), .A3(A[3]), .CLK(CLK), .D(D));
+`endif    
 endmodule
 
 
@@ -39,7 +43,11 @@ module MSRL16_1 (Q, A, CLK, D);
     output Q;
     input  [3:0] A;
     input  CLK, D;
-    SRL16_1 i_q(.Q(Q), .A0(A[0]), .A1(A[1]), .A2(A[2]), .A3(A[3]), .CLK(CLK), .D(D));
+`ifdef SIMULATION
+    SRL16_MOD #(.INVERT(1'b1)) i_q (.Q(Q), .A0(A[0]), .A1(A[1]), .A2(A[2]), .A3(A[3]), .CLK(CLK), .D(D));
+`else    
+    SRL16_1                    i_q (.Q(Q), .A0(A[0]), .A1(A[1]), .A2(A[2]), .A3(A[3]), .CLK(CLK), .D(D));
+`endif    
 endmodule
 
 module myRAM_WxD_D(D,WE,clk,AW,AR,QW,QR);
@@ -72,4 +80,44 @@ parameter DATA_2DEPTH=(1<<DATA_DEPTH)-1;
     always @ (negedge clk) if (WE) ram[AW] <= D; 
     assign	QW= ram[AW];
     assign	QR= ram[AR];
+endmodule
+
+// Fixing Xilinx SLR16_x
+module SRL16_MOD #(
+    parameter INIT = 16'h0000,
+    parameter INVERT = 0 // *_1 - invert
+) (
+    output Q,
+    input  A0,
+    input  A1,
+    input  A2,
+    input  A3,
+    input  CLK,
+    input  D);
+
+
+    reg  [15:0] data;
+    wire        clk_;
+    wire  [3:0] a = {A3, A2, A1, A0};
+
+
+    assign Q = (data == 16'h0) ? 1'b0 :
+               ((data == 16'hffff) ? 1'b1 : data[a]);
+    assign clk_ = INVERT? (~CLK) : CLK;
+
+    initial
+    begin
+          assign  data = INIT;
+          while (clk_ === 1'b1 || clk_ === 1'bX) 
+            #10; 
+          deassign data;
+    end
+
+
+    always @(posedge clk_)
+    begin
+    {data[15:0]} <= #100 {data[14:0], D};
+    end
+
+
 endmodule

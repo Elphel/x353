@@ -131,7 +131,7 @@ module dma_fifo_sync (	clk,		// system clock, 120MHz? (currentle negedge used)
       
       burst_start_sync[1:0] <= {burst_start_sync[0],~first_four_r[2] & first_four_r[1]};
 
-      first_four_r[2:0]={first_four_r[1:0],first_four};
+      first_four_r[2:0]     <= {first_four_r[1:0],first_four};
       
       
 	   empties[3:0]	<=	{4{!rst && (infifo[9:0]==10'h0) && !dreq && !dack_r[1]}} & {empties[2:0],1'b1};

@@ -30,6 +30,7 @@
  `define debug_dma_count
  `define debug_compressor
  `define debug_mcontr_reset
+// `define DEBUG_IMU
 module x353(PXD,DCLK,BPF,VACT,HACT,MRST,ARO,ARST,SCL0,SDA0,CNVSYNC,CNVCLK, SENSPGM,
             DUMMYVFEF,  ALWAYS0,
             EXT,
@@ -237,8 +238,8 @@ wire [31:0] debug_mcontr_reset_data;
    wire        ARST;
    wire        CNVSYNC;
    wire        CNVCLK;
-   wire        XRST;
-   wire        AUXCLK;
+///AF:     wire        XRST;
+///AF:     wire        AUXCLK;
    wire        SDCLK;
    wire        DREQ0,DREQ1;
    wire        IRQ;
@@ -248,9 +249,9 @@ wire [31:0] debug_mcontr_reset_data;
 // internal wires
 wire  iclk3;
 
-  wire             dccout;       // enable output of DC and HF components - not used anymore
-  wire             dcc_enabled;
-  wire             dcc_rdy=0;      // Ready to read 128 DC coefficients in dcc mode. Actually they will be availabla a little later after being copied to
+   wire             dccout;       // enable output of DC and HF components - not used anymore //SuppressThisWarning Veditor UNUSED
+   wire             dcc_enabled; //SuppressThisWarning Veditor UNUSED
+   wire             dcc_rdy=0;      // Ready to read 128 DC coefficients in dcc mode. Actually they will be availabla a little later after being copied to
                                  // 8x32 output buffer
 
 
@@ -264,13 +265,13 @@ wire  iclk3;
 
    wire  [31:0]   iod;     // 32-bit data to be sent to CPU
    wire  [31:0]   idi;     // 32-bit data from CPU
-   wire  [31:0]   dcr;     // 32-bit control register
+///AF:     wire  [31:0]   dcr;     // 32-bit control register
    wire  [ 7:0]   as;      // internal address bus - sync to sclk0
    wire  [ 7:0]   am;      // internal address bus - multiplexed between input (for reads) and sycnc (for writes) - should not read too soon after write
    wire  [ 7:0]   ia;      // internal address bus - before latches
 
    wire           sclk0;    // 120MHz (same as CLK0) - SDRAM/compressor controller global clock
-   wire           sclk180; // 120MHz (same as CLK0) - phase shifted 180 degrees (maybe not needed)
+   wire           sclk180; // 120MHz (same as CLK0) - phase shifted 180 degrees (maybe not needed) //SuppressThisWarning Veditor UNUSED
    wire           sclk270; // 120MHz (same as CLK0) - phase shifted 270 degrees
    wire           pclk; //  sensor pixel clock
    wire           xclk; // 60MHz (=CLK0/2) - JPEG compressor clock (input stages)
@@ -286,7 +287,7 @@ wire  iclk3;
                                         // allow one per trigger in triggered mode. Minimal period set to 129 pixel clocks
    wire  [15:0]   ipxd;
    wire           sens_we;
-   wire  [15:0]   sens_wdl;
+///AF:    wire  [15:0]   sens_wdl;
    wire           sens_wpage;
    wire  [ 9:0]   fpn_a;
    wire  [15:0]   fpn_d;
@@ -338,7 +339,7 @@ wire  iclk3;
      wire        idreq1;
      wire        idack1;
 
-   wire           da_ctl_24l, da_ctl_8h;     // WE to control 32-bit register (1 loc) *********** obsolete **************
+   wire           da_ctl_24l, da_ctl_8h;     // WE to control 32-bit register (1 loc) *********** obsolete ************** //SuppressThisWarning Veditor UNUSED
    wire           da_dmamode;       // select writing to dma_cntr/dma_raw (1 loc)
    wire           da_sensormode;    // select writing to sensorpix (1 loc)
    wire           da_virttrig;      // write virtual trigger threshold
@@ -404,7 +405,7 @@ wire  iclk3;
    wire  [ 9:0]   sens_a;     // [7:0] channel 0 address (MSB - block #)
    wire  [15:0]   sens_d;     // [15:0] channel 0 data in
 
-   wire  trigger_single_pclk; // start of trigger
+   wire  trigger_single_pclk; // start of trigger //SuppressThisWarning Veditor UNUSED
 
    wire  [31:0]   bdo;     // 32-bit data from SDRAM channel3
    wire  [31:0]   dsdo;    // 32-bit data from SDRAM descriptor memory
@@ -413,7 +414,9 @@ wire  iclk3;
 
    wire  [31:0]   hist_do; // histogram data out, actully only [17:0];
 
-   wire  sr_sda0, sr_scl0, sr_sda1, sr_scl1,sr_memrdy,sr_ch0rdy,sr_ch1rdy,sr_ch2rdy,sr_wrempty;
+   wire  sr_sda0, sr_scl0;
+///AF:     wire  sr_sda1, sr_scl1;
+   wire  sr_memrdy,sr_ch0rdy,sr_ch1rdy,sr_ch2rdy,sr_wrempty;
    wire  [3:0] sr_nextFrame;  //[3:0]
    wire  [3:0] chInitOnehot; // decoded channel init pulses, 2 cycles behind chInit
    
@@ -431,9 +434,11 @@ wire  iclk3;
                                   // does not inclusde flushing
 
    wire        compressor_done_pulse; // does not need to be reset, single cycle (sclk)
-   wire        dma_empty,dma_empty0,dma_empty1;       // dma output buffer empty and dma is enabled (pessimistic - with delay)
+   wire        dma_empty;       // dma output buffer empty and dma is enabled (pessimistic - with delay)
+///AF:    wire        dma_empty0,dma_empty1;       // dma output buffer empty and dma is enabled (pessimistic - with delay)
 
-   wire           virt_trig, virt_sel;
+   wire           virt_trig;
+   wire           virt_sel;  //SuppressThisWarning Veditor UNUSED
 
    wire        ch2_en_rd_buff;
 
@@ -457,10 +462,10 @@ wire  iclk3;
    wire twr_gamma;  // write enable to "gamma" table (@negedge clk - addr and data valid this cycle and one before)
    wire twr_focus;  // write enable to "focus" table (coefficients to multiply DCT results before accumulating squares)
 
-   wire        statistics_dv;      // image statistics word valid (sync to clk)
-   wire [15:0] statistics_do;       // 16-bit image statistics data to write
+   wire        statistics_dv;      // image statistics word valid (sync to clk) //SuppressThisWarning Veditor UNUSED
+   wire [15:0] statistics_do;      // 16-bit image statistics data to write //SuppressThisWarning Veditor UNUSED
    wire        line_run;
-   wire        frame_run;
+   wire        frame_run;          // SuppressThisWarning Veditor UNUSED
 
 // synthesis attribute keep of rd_regs is true;
 
@@ -468,12 +473,12 @@ wire  iclk3;
  wire          stuffer_dv;
 
 
-wire  [3:0] test_dma_rcntr;
-wire  [3:0] test_dma_wcntr;
-wire  [3:0] test_fifo;
+///AF: wire  [3:0] test_dma_rcntr;
+wire  [3:0] test_dma_wcntr; // SuppressThisWarning Veditor UNUSED
+wire  [3:0] test_fifo;      // SuppressThisWarning Veditor UNUSED
 
-wire  [3:0] test_dma1_rcntr;
-wire  [7:0] test_dma1_wcntr;
+///AF: wire  [3:0] test_dma1_rcntr;
+wire  [7:0] test_dma1_wcntr; // SuppressThisWarning Veditor UNUSED
 wire  [7:0] test_fifo1;
 
 
@@ -520,37 +525,38 @@ wire [7:0] dcm_status;
 wire       sens_dcm_locked;
 wire       sens_dcm_done;
 wire [7:0] sens_dcm_status;
-wire [1:0] sens_ph_err;
+wire [1:0] sens_ph_err = 0; // currently not assigned (removed module) 
 
 wire       ioe;//  internal (not global) version of OE (for DMA)
 wire [1:0] phsel; // additional phase select for SDRAM clock
 
 wire       pclk2x; // twice frequency of the pclk, global
-wire [1:0] sensordat_pherr; // sync to posedge pclk, PXD[2] differs with 1/4 early, 1/4 late
+wire [1:0] sensordat_pherr; // sync to posedge pclk, PXD[2] differs with 1/4 early, 1/4 late //SuppressThisWarning Veditor UNUSED
 
 wire       sensor_trigger; // signal to start CMOS sensor in sync mode
 
 wire       confirmFrame2Compressor; // pulse to start reading a new frame to buffer for compressor (generated at start of each frame by the compressor)
                                     // mcontr will stop to read to channel FIFO at the end of frame, wait for confirmation
 `ifdef debug_compressor
-    wire [31:0] printk_compressor;
+    wire [31:0] printk_compressor; //SuppressThisWarning Veditor UNUSED
 `endif
 //ia
 
 `ifdef debug_stuffer
     wire [7:0]  testwire;
-//wire [31:0] printk;
     wire [3:0]  tst_stuf_etrax;
     reg  [3:0]  tst_cmd_cntr;
     reg         tst_rdy_after_eot;
-//         ,.test1( test_fifo[3:0])
-  //       ,.test2( test_dma_wcntr[3:0])
-    wire dma0_enabled; // just for debug
-    wire dma1_enabled; // just for debug
+///AF:    wire dma0_enabled; // just for debug
+///AF:    wire dma1_enabled; // just for debug
 `endif
 `ifdef debug_dma_count
     wire [31:0] printk;
 `endif
+// Needed anyway:
+    wire dma0_enabled; // just for debug
+    wire dma1_enabled; // just for debug
+
 /*
 //xfer_over_irq
 reg [3:0] test_11;
@@ -562,10 +568,24 @@ wire    [3:0] nextBlocksEn; // When combined with SDRAM data ready, may be used 
 
 wire    [3:0] restart; // reinitialize mcontr channels (normally after frame sync, if enabled)
 
-// debug IMU
-wire imu_enabled_mclk;
-wire imu_run_mclk;
-wire [31:0] imu_period;
+// Wires missing in the original 353 design
+    wire    sdwe_p;          // WE  command bit to SDRAM (1 cycle ahead)
+    wire    sdras_p;         // CAS command bit to SDRAM (1 cycle ahead)
+    wire    sdcas_p;         // CAS command bit to SDRAM
+    wire    sd_dqsrd;        // enable read from DQS i/o-s for phase adjustments  (latency 2 from the SDRAM RD command)
+    wire    trig_irq;        // single-cycle (pclk) pulse at external interrupt
+    wire    da_init_ch3;     // write to init cnhannel 3 (will reset address r/w)
+    wire    da_next_ch3;     // advance to the next channel3 page, reset address
+    wire    stch2;           // start channel 2 transfer
+
+
+`ifdef DEBUG_IMU// debug IMU
+    wire imu_enabled_mclk;
+    wire imu_run_mclk;
+    wire [31:0] imu_period;
+`endif    
+
+
 
 
 
@@ -699,7 +719,6 @@ wire [31:0] imu_period;
 
 // temporary change behaviour of dqs2 to fix pinout problem - will influence adjustment goal
        dqs2 i_sddqs(.c0(sclk0),/*.c90(sclk90),*/.c270(sclk270),
-//     dqs2 i_sddqs(.c0(sclk0),.c0comb(sclk270),.c90(sclk90),.c270(sclk270),
                   .t       (sddqt),       // 1/2 cycle before cmd "write" sent out to the SDRAM, sync to sclk180
                   .UDQS    (UDQS),         // UDQS I/O pin
                   .LDQS    (LDQS),         // LDQS I/O pin
@@ -707,7 +726,6 @@ wire [31:0] imu_period;
                   .ldqsr90 (ldqsr90),      // data from SDRAM interface pin LDQS strobed at rising sclk90
                   .udqsr270(udqsr270),     // data from SDRAM interface pin UDQS strobed at rising sclk270
                   .ldqsr270(ldqsr270)      // data from SDRAM interface pin UDQS strobed at rising sclk270
-//                  ,.qtmp(qtmp[3:0]) // temporary
                  );
                                   
                  
@@ -973,43 +991,15 @@ BUFGMUX i_pclk  (.O(pclk),  .I0(pclki), .I1(sens_clk), .S(|cb_pclksrc[1:0]));
 //cb_pxd14
 assign ihact=iihact;
 
-/*
-sensor_phase i_sensor_phase(.pre_wcmd(da_dcm),       // decoded address - enables wclk
-                     .wd(idi[7:4]),         // CPU write data [3:0]
-                                 //       0 - nop, just reset status data
-                                 //       1 - increase phase shift
-                                 //       2 - decrease phase shift
-                                 //       3 - reset phase shift to default (preprogrammed in FPGA configuration)
-                                 //       c - reset phase90
-                                 //       4 - incr pahse90
-                                 //       8 - decrease phase90
-                                 //      
-                     .sensordat_pherr(sensordat_pherr[1:0]), // phase error detected on PXD[2] (should be different)
-                     .ph_err(sens_ph_err[1:0]),     // [1:0] 0 - no data since last change (wclk*wcmd)
-                                 //       1 - clock is too late
-                                 //       2 - clock is too early
-                                 //       3 - OK (some measurements show too late, some - too early)
-                     .sclk0(sclk0),       // global clock, (negedge - commands)
-                     .pclk(pclk),       // global pixel clock (posedge) - from CLK1
-                     .pixclko(idclk),     // pixel clock out (phase shifted from global pclk
-                     .dcm_done( sens_dcm_done),
-                     .locked(sens_dcm_locked),     // dcm locked
-                     .status(sens_dcm_status[7:0]),      // dcm status (bit 1 - dcm clkin stopped)
-                     .pclk2x(pclk2x)                     // pclk multiplied by 2
-                     );
-                              
-
-*/
 //da_sensortrig_lines
 
-reg  [9:0] ch0_blocks_in_line;
-reg        mode16bits;
-reg [13:3] pre_hact_length;
+///AF: reg  [9:0] ch0_blocks_in_line;
+///AF: reg        mode16bits;
+///AF: reg [13:3] pre_hact_length;
 reg [13:0] hact_length;
 always @(negedge sclk0) if (da_sensortrig_lines && (idi[15:14]==2'h1)) begin
   hact_length[13:0] <= idi[13:0];
 end
-//                              .en_vacts(!cb_sensor_trigger || sensor_trigger ),   // disable processing second vact after the trigger in triggered mode
 reg        en_vacts_free=1'b1; // register to allow only one vacts after trigger in triggered mode. Allows first vacts after mode is set
 always @ (posedge pclk) begin
    if (!cb_sensor_trigger) en_vacts_free<= 1'b1;
@@ -1428,7 +1418,8 @@ cmd_sequencer i_cmd_sequencer
                          .seq_a(sequencer_a[7:0]),            // address from the sequencer
                          .seq_d(sequencer_d[23:0]),           // data from the sequencer
                          .frame_no(sequencer_frame_no[2:0])); // [2:0] current frame modulo 8
-        
+wire [7:4] test_fifo_dummy; //SuppressThisWarning Veditor UNUSED        
+wire [7:4] test_dma_wcntr_dummy; //SuppressThisWarning Veditor UNUSED        
  dma_fifo_sync i_dma_fifo0 (  .clk(sclk0),      // system clock, 120MHz? (currentle negedge used)
                         .pre_wen(da_dmamode),   // decoded addresses (valid @ negedge clk)
 //                        .wd({idi[3],idi[1]}),      // only 2 bits are used -  {pio_mode,dma_enable} 1 cycle delay
@@ -1443,8 +1434,8 @@ cmd_sequencer i_cmd_sequencer
                         .di({stuffer_do[7:0],stuffer_do[15:8]}),      // 16-bit data to write
                         .enabled(dma0_enabled),
                         .real_empty(dma_empty)
-         ,.test1( test_fifo[3:0])
-         ,.test2( test_dma_wcntr[3:0])
+         ,.test1( {test_fifo_dummy[7:4], test_fifo[3:0]})
+         ,.test2( {test_dma_wcntr_dummy[7:4], test_dma_wcntr[3:0]})
 
                         ); // pessimistic, with several clk delay
 /*
@@ -1521,7 +1512,7 @@ end
     if (debug_mcontr_compressor_eot) debug_mcontr_count_end   <= {sr_ch2rdy, compressor_done_input, confirmFrame2Compressor, debug_mcontr_count};
     
   end
-  reg    [11:0] debug_interrupt_counts;
+  reg    [11:0] debug_interrupt_counts;   //SuppressThisWarning Veditor UNUSED
   reg    [ 3:0] debug_interrupt_frames=0;
   reg    [ 3:0] debug_interrupt_starts=0;
   reg    [ 3:0] debug_interrupt_dones=0;
@@ -1538,7 +1529,7 @@ end
   
   end
 `endif
-  wire   [2:0] compressor_test_state; // {is_compressing,cmprs_repeat,cmprs_en}
+  wire   [2:0] compressor_test_state; // {is_compressing,cmprs_repeat,cmprs_en}    //SuppressThisWarning Veditor UNUSED
   compressor i_compressor( .clk(xclk),          // compressor pixel clock (80MHz?)
                            .clk2x(sclk0),       // twice compressor pixel clock (120MHz) - for huffman/stuffer), memory clock, input data clock (negedge)
                            .cwe(da_compressor), // we to compressor from CPU
@@ -1719,9 +1710,11 @@ end
 
 
 // dummy module instances
-wire   iclk2;
+(* keep *)
+wire   iclk2; // SuppressThisWarning Veditor UNUSED
   IBUF i_iclk2 (.I(CLK2), .O(iclk2));
-wire   iclk4;
+(* keep *)
+wire   iclk4; // SuppressThisWarning Veditor UNUSED
   IBUF i_iclk4 (.I(CLK4), .O(iclk4));
   IBUF i_iclk3 (.I(CLK3), .O(iclk3));
 
@@ -1729,8 +1722,8 @@ wire   iclk4;
 
 // 3 legacy wires  
   assign itrig=io_pins[5];
-  assign sr_sda1=io_pins[1];
-  assign sr_scl1=io_pins[0];
+///AF:    assign sr_sda1=io_pins[1];
+///AF:    assign sr_scl1=io_pins[0];
 
   IOBUF i_iopins0 (.I(io_do[ 0]), .T(io_t[ 0]), .O(io_pins[ 0]), .IO(EXT[ 0]));
   IOBUF i_iopins1 (.I(io_do[ 1]), .T(io_t[ 1]), .O(io_pins[ 1]), .IO(EXT[ 1]));

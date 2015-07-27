@@ -135,7 +135,7 @@ FDCE_1 i_enable_mot_clk     (.C(clk),.CE(we_ctl && di_d[1]),.CLR(1'b0),         
 
 // reset at simulation
   assign sequence_next[1:0]=sequence[1:0]+1;
-  assign sequence_next[3:2]=(sequence[1:0]==3'b11)?((sequence[3:2]==3'b11)?2'b01:(sequence[3:2]+1)):sequence[3:2];
+  assign sequence_next[3:2]=(sequence[1:0]==2'b11)?((sequence[3:2]==2'b11)?2'b01:(sequence[3:2]+1)):sequence[3:2];
   FD i_sequence_0(.C(xclk),.D(sequence_next[0]), .Q(sequence[0]));
   FD i_sequence_1(.C(xclk),.D(sequence_next[1]), .Q(sequence[1]));
   FD i_sequence_2(.C(xclk),.D(sequence_next[2]), .Q(sequence[2]));
@@ -342,6 +342,9 @@ endmodule
 /// Combine old (freom register file) /new encoded periods, inc/dec pulses to prepare a 6-bit (partial) index for a RAM table.
 /// Together with the position error (another 6 bits) the full 12-bit undex provides 1 4-bit PWM code from the RAM table
 /// Updates direction immediately, period - if inc_dec or when new period > saved period (so it will be updated even if the motor is stopped)
+
+/// AF2015: Replace eith a function?
+
 module calc_speed (clk,             // posedge, 80 MHz
                    en_in,           // enable (just for simulation), for real - let it on even when motors are off
                    process,         // increment (with limit) period
@@ -355,11 +358,11 @@ module calc_speed (clk,             // posedge, 80 MHz
                    enc_period_this  // [4:0] encoded period for the register file/ table index
                    );
  parameter IGNORE_EN=1;
- input         clk;             // posedge, 80MHz
+ input         clk;             // posedge, 80MHz // SuppressThisWarning Veditor UNUSED
  input         en_in;           // enable, 0 resets period counter - simulation only
- input         process;         // increment (with limit) period
+ input         process;         // increment (with limit) period // SuppressThisWarning Veditor UNUSED
  input         inc_dec;         // encoder pulse detected
- input         inc;             // encoder position increment
+ input         inc;             // encoder position increment // SuppressThisWarning Veditor UNUSED
  input         dec;             // encoder position decrement
  input   [4:0] enc_period_curr; // encoded current period (still running if !inc_dec)
  input         dir_last;        // last stored direction (from register file)
@@ -560,14 +563,14 @@ module motor_pwm( clk,      // posedge, 80MHz
  output  [2:0] new_pwm;  // [2:0]
  output  [1:0] mot;      // [1:0] - data to be copied to the motor outputs
 
- reg     [9:0] pwm_cycle_count;
+ reg     [9:0] pwm_cycle_count; /// AF2015: Seems to be a bug - 2 MSBs are never used (only 8 LSB)
  reg           pwm_cycle_next;
- reg     [3:0] pwm_delay_count;
+ reg     [3:0] pwm_delay_count; /// AF2015: Seems to be a bug - 1 MSB  is never used (only 3 LSB)
  reg           pwm_delay_end;
  reg     [2:0] pwm_phase;
  wire    [2:0] spreaded_phase;
- wire          pwn_on;
- wire          pwn_off;
+ wire          pwn_on; // SuppressThisWarning Veditor UNUSED
+ wire          pwn_off; // SuppressThisWarning Veditor UNUSED
  wire    [2:0] new_pwm;
  wire          stop_cmd;
  wire    [3:0] pwm_diff;
@@ -575,7 +578,7 @@ module motor_pwm( clk,      // posedge, 80MHz
 
  assign spreaded_phase[2:0]= pwm_phase[2:0]+spread[2:0];
  assign pwn_on= pwm_cycle_next && (spreaded_phase == 0) && (pwm_code != 0);
- assign pwn_off=pwm_cycle_next && (spreaded_phase == pwm_code);
+ assign pwn_off=pwm_cycle_next && (spreaded_phase == pwm_code[2:0]);
  assign stop_cmd= !en || (pwm_code==8) ;
  assign pwm_diff[3:0]={1'b0,pwm_code[2:0]}-{1'b0,spreaded_phase[2:0]}; 
 
@@ -584,10 +587,14 @@ module motor_pwm( clk,      // posedge, 80MHz
  assign new_pwm[2]=!en || (pwm_cycle_next? (new_pwm[1:0]!=cur_pwm[1:0]):(cur_pwm[2]&& !pwm_delay_end));
  assign mot[1:0]=(stop_cmd || new_pwm[2])? 2'b0:(new_pwm[1]?{new_pwm[0],!new_pwm[0]}:2'b11);
  always @ (posedge clk) if (pre_first) begin // change these registers once per cycle of all motors
-   pwm_cycle_count<= (!en || (pwm_cycle_count==0))?pwm_cycle:(pwm_cycle_count-1);
+
+/// AF2015:   pwm_cycle_count<= (!en || (pwm_cycle_count==0)) ? pwm_cycle:(pwm_cycle_count-1);
+   pwm_cycle_count<= (!en || (pwm_cycle_count==0)) ? {2'b0,pwm_cycle}:(pwm_cycle_count-1);
+
    pwm_cycle_next<=    en && (pwm_cycle_count==0);
-//   pwm_delay_count<= (!en || (pwm_delay_count==0))?0:(pwm_cycle_next?pwm_delay: (pwm_delay_count-1));
-   pwm_delay_count<= (!en || pwm_cycle_next)?pwm_delay:((pwm_delay_count==0)?0: (pwm_delay_count-1));
+   
+/// AF2015:   pwm_delay_count<= (!en || pwm_cycle_next)?pwm_delay:((pwm_delay_count==0)?0: (pwm_delay_count-1));
+   pwm_delay_count<= (!en || pwm_cycle_next)?{1'b0,pwm_delay}:((pwm_delay_count==0)? 4'b0: (pwm_delay_count-1));   
    pwm_delay_end<=     en && (pwm_delay_count==1);
    pwm_phase<=       (!en)? 0: (pwm_phase + pwm_cycle_next); // divide by 8
  end

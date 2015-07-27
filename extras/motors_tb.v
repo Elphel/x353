@@ -7,17 +7,15 @@ module testbench();
    parameter CLK2WA= 1;
    parameter WA2WD= 1;
 
-   parameter aaaa=0;
-   parameter aaaa=1;
+///AF:     parameter aaaa=0;
+///AF:     parameter aaaa=1;
 
     reg         sclk,xclk;
     reg  [15:0] wd;
     reg         wa;
     reg         we;
-    wire [15:0] rd;
-//    reg  [1:0] encod1;
-//    reg  [1:0] encod2;
-//    reg  [1:0] encod3;
+    wire [31:0] rd; // SuppressThisWarning Veditor UNUSED
+
     wire [1:0] encod1;
     wire [1:0] encod2;
     wire [1:0] encod3;
@@ -71,7 +69,7 @@ motor i_motor3 (.clk(xclk),
     initial begin
 
       $dumpfile("motors.lxt");
-      $dumpvars(0,testbench.i_three_motor_driver);
+      $dumpvars(0,testbench.i_three_motor_driver);  // SuppressThisWarning Veditor VDT_BUG
 /*
       $dumpvars(0,testbench.i_three_motor_driver.addr);
       $dumpvars(0,testbench.i_three_motor_driver.reg_addr);
@@ -95,7 +93,7 @@ motor i_motor3 (.clk(xclk),
       $dumpvars(0,testbench.i_three_motor_driver.i_motor_pwm);
 */
       $dumpvars(0,testbench.rd);
-      $dumpvars(0,testbench.i_motor1);
+      $dumpvars(0,testbench.i_motor1); // SuppressThisWarning Veditor VDT_BUG - it is resolved
       $dumpvars(0,testbench.i_motor2.position);
       $dumpvars(0,testbench.i_motor2.speed);
       $dumpvars(0,testbench.i_motor3.position);
@@ -194,7 +192,7 @@ $finish;
 
   task program_table;
 
-    reg [31:0] data[0:511];
+    reg [31:0] data[0:511]; // SuppressThisWarning Veditor VDT_BUG - assigned in system task
     integer i;
     begin
       $readmemh("motor.dat",data);
@@ -216,12 +214,12 @@ module motor (clk,
               enc);
   parameter SAMPLE_PERIOD=100; // ns
   parameter VMAX=1000.0; /// pulses/sec
-  parameter EMF= 0.5;    /// part of the voltage that is caused by rotation (remaining goes to current -> force->acceleration). Not yet used
+  parameter EMF= 0.5;    /// part of the voltage that is caused by rotation (remaining goes to current -> force->acceleration). Not yet used // SuppressThisWarning Veditor UNUSED
 //  parameter ACCEL=10.0;  /// number of VMAX/sec if full power is applied, speed==0
   parameter ACCEL=300.0;  /// number of VMAX/sec if full power is applied, speed==0
 // no simulation of friction yet
-  input       clk;
-  input       en;
+  input       clk; // SuppressThisWarning Veditor UNUSED
+  input       en;  // SuppressThisWarning Veditor UNUSED
   input  [1:0] pwr;
   output [1:0] enc;
 
@@ -229,8 +227,8 @@ module motor (clk,
   real    position, position0;
   real    speed, speed0;
 //  time    t,t0;
-  integer itime;
-  real    rtime;
+///AF:    integer itime;
+///AF:    real    rtime;
   reg [1:0] enc;
   reg [1:0] enc_bin;
   real    t,t0, dt, e,f;
@@ -249,10 +247,10 @@ module motor (clk,
    t=$time;
    dt=(t-t0)/1000000000; // in seconds
    case (pwr)
-   0: f<=(speed>0)?-1.0:1.0;
-   1: f<=1.0;
-   2: f<=-1.0;
-   3: f<=0.0;
+   0: f = (speed>0)?-1.0:1.0;
+   1: f = 1.0;
+   2: f = -1.0;
+   3: f = 0.0;
    endcase
    e=f-speed/VMAX;
    speed=speed0+ACCEL*VMAX*e*dt;
@@ -261,7 +259,7 @@ module motor (clk,
    #1;
 //   itime=sim_time;
 //   rtime=sim_time;
-   enc[1:0] <= {enc_bin[1],enc_bin[1] ^ enc_bin[0]};
+   enc[1:0] = {enc_bin[1],enc_bin[1] ^ enc_bin[0]};
    t0=t;
    speed0=speed;
    position0=position;

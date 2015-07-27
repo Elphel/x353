@@ -45,7 +45,7 @@ module dcm333(
   output xclk;
   output SDCLK, SDNCLK;
   input [1:0] phsel;
-  input       sdcl_fb;
+  input       sdcl_fb; // SuppressThisWarning Veditor UNUSED - was designed to use external pin sync (maybe still use it?)
   input dcm_rst, dcm_incdec, dcm_en, dcm_clk;
   output dcm_done;
   

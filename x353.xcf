@@ -201,14 +201,14 @@ TIMESPEC "TS_CLK1" = PERIOD "CLK1" 10.4 ns HIGH 50 %; #96MHz
 
 #TIMESPEC "TS_CLK1" = PERIOD "CLK1" 18.4 ns HIGH 50 %; #TEMPORARY TO FIND A PROBLEM
 
-TIMEGRP "CPU_ADDR" =   pads("A<*>");
-TIMEGRP "CPU_ADDRCE" = "CPU_ADDR"  pads("CE*");
-TIMEGRP "CPU_DATA" =   pads("D<*>");
-TIMEGRP "WE" =         pads("WE");
-TIMEGRP "OE" =         pads("OE");
-TIMEGRP "DACK_PAD"=    pads("DACK*");
-TIMEGRP "DREQ_PAD"=    pads("DREQ*");
-TIMEGRP "ALLPADS"=     pads("*");
+TIMEGRP "CPU_ADDR" =   PADS("A<*>");
+TIMEGRP "CPU_ADDRCE" = "CPU_ADDR"  PADS("CE*");
+TIMEGRP "CPU_DATA" =   PADS("D<*>");
+TIMEGRP "WE" =         PADS("WE");
+TIMEGRP "OE" =         PADS("OE");
+TIMEGRP "DACK_PAD"=    PADS("DACK*");
+TIMEGRP "DREQ_PAD"=    PADS("DREQ*");
+TIMEGRP "ALLPADS"=     PADS("*");
 
 NET "idack0" TPTHRU = "IDACK0_TP";
 NET "idack1" TPTHRU = "IDACK1_TP";
@@ -217,8 +217,8 @@ NET "idack1" TPTHRU = "IDACK1_TP";
 #TIMESPEC "TS_DACK_DREQ0" = FROM "DACK_PAD" THRU "IDACK0_TP" THRU "IDREQ0_TP" TO "DREQ_PAD" 9.5 ns;
 #TIMESPEC "TS_DACK_DREQ1" = FROM "DACK_PAD" THRU "IDACK1_TP" THRU "IDREQ1_TP" TO "DREQ_PAD" 9.5 ns;
 NET "*/cwr" TNM_NET = "TNM_CWR";
-TIMEGRP "TG_CWRDEST" =   "TNM_CWR" except latches ("*"); # RAMS, FFS
-###MARK1# TIMEGRP "TG_LATCHES_A" =  latches ("i_sysinterface/i_a*");
+TIMEGRP "TG_CWRDEST" =   "TNM_CWR" except LATCHES ("*"); # RAMS, FFS
+###MARK1# TIMEGRP "TG_LATCHES_A" =  LATCHES ("i_sysinterface/i_a*");
 NET "DACK*" TNM_NET = "DACK";
 NET "SDA0*" TNM_NET = "SDA0";
 NET "sclk0" TNM_NET = "TNM_CLK0";
@@ -242,8 +242,8 @@ NET "i_sensorpads/i_sensor_phase/mode_14bits_sync" TIG;
 NET "hact_length*" TIG;
 NET "cb_*" TIG;
 
-TIMEGRP "TG_CLK1" =   pads("CLK1");
-TIMEGRP "TG_DCLK" =   pads("DCLK");
+TIMEGRP "TG_CLK1" =   PADS("CLK1");
+TIMEGRP "TG_DCLK" =   PADS("DCLK");
 
 #TIMESPEC "TS_SENSORCLOCK" = FROM  "TG_CLK1" TO "TG_DCLK" 14.0 ns;
 
@@ -268,65 +268,65 @@ TIMESPEC "TS_DACK0" = FROM "DACK" TO "ALLPADS" 17 ns;
  
  
 TIMEGRP "TG_ALL_SYNC"=      FFS RAMS MULTS;
-TIMEGRP "TG_DOUBLECYCS2"= ffs("i_mcontr/i_descrproc/seq_par*")
-					      	  ffs("i_mcontr/i_descrproc/sa*")
-                          ffs("i_mcontr/i_descrproc/nxtTL*")
-								  ffs("i_mcontr/i_descrproc/tile*")
-								  ffs("i_mcontr/i_descrproc/mode*")
-						        ffs("i_mcontr/i_descrproc/WnR*")
-								  ffs("i_mcontr/i_descrproc/depend*")
-								  ffs("i_mcontr/i_descrproc/nextFrame*")
-						        ffs("i_mcontr/i_descrproc/suspXfer*")
-								  ffs("i_mcontr/i_descrproc/lineNumSource*")
-					           ffs("i_mcontr/i_descrproc/lineNumDest*")
-					           ffs("i_mcontr/i_descrproc/prevStripSource*")
-					           ffs("i_mcontr/i_descrproc/last_lines_reg*")
-					           ffs("i_mcontr/i_descrproc/first_tile_reg*")
-					           ffs("i_mcontr/i_descrproc/first_tile_dest*")
-					           ffs("i_mcontr/i_descrproc/nxtTFr*")
-					           ffs("i_mcontr/i_descrproc/srcAtStart*")
-                          mults("i_mcontr/i_descrproc/linAddr*");
+TIMEGRP "TG_DOUBLECYCS2"= FFS("i_mcontr/i_descrproc/seq_par*")
+					      	  FFS("i_mcontr/i_descrproc/sa*")
+                          FFS("i_mcontr/i_descrproc/nxtTL*")
+								  FFS("i_mcontr/i_descrproc/tile*")
+								  FFS("i_mcontr/i_descrproc/mode*")
+						        FFS("i_mcontr/i_descrproc/WnR*")
+								  FFS("i_mcontr/i_descrproc/depend*")
+								  FFS("i_mcontr/i_descrproc/nextFrame*")
+						        FFS("i_mcontr/i_descrproc/suspXfer*")
+								  FFS("i_mcontr/i_descrproc/lineNumSource*")
+					           FFS("i_mcontr/i_descrproc/lineNumDest*")
+					           FFS("i_mcontr/i_descrproc/prevStripSource*")
+					           FFS("i_mcontr/i_descrproc/last_lines_reg*")
+					           FFS("i_mcontr/i_descrproc/first_tile_reg*")
+					           FFS("i_mcontr/i_descrproc/first_tile_dest*")
+					           FFS("i_mcontr/i_descrproc/nxtTFr*")
+					           FFS("i_mcontr/i_descrproc/srcAtStart*")
+                          MULTS("i_mcontr/i_descrproc/linAddr*");
 
 TIMESPEC "TS_DOUBLECYCS2" = FROM "TG_DOUBLECYCS2" TO "TG_ALL_SYNC" "TS_CLK0" * 2;
-TIMEGRP "TG_FAST_SRC3"= ffs("*stepsE*") ffs("*stepsI*") ffs("*stepsDwe*");
+TIMEGRP "TG_FAST_SRC3"= FFS("*stepsE*") FFS("*stepsI*") FFS("*stepsDwe*");
 TIMEGRP "TG_SLOW_SRC3" =   TG_ALL_SYNC EXCEPT "TG_FAST_SRC3";
-TIMEGRP "TG_DOUBLEDEST3"= ffs("i_mcontr/i_descrproc/seq_par*")
-					      	  ffs("i_mcontr/i_descrproc/sa*")
-                          ffs("i_mcontr/i_descrproc/nxtTL*")
-								  ffs("i_mcontr/i_descrproc/tile*")
-								  ffs("i_mcontr/i_descrproc/mode*")
-						        ffs("i_mcontr/i_descrproc/WnR*")
-								  ffs("i_mcontr/i_descrproc/depend*")
-								  ffs("i_mcontr/i_descrproc/nextFrame*")
-								  ffs("i_mcontr/i_descrproc/nextBlocksEn*")
-						        ffs("i_mcontr/i_descrproc/suspXfer*")
-								  ffs("i_mcontr/i_descrproc/lineNumSource*")
-					           ffs("i_mcontr/i_descrproc/lineNumDest*")
-					           ffs("i_mcontr/i_descrproc/prevStripSource*")
-					           ffs("i_mcontr/i_descrproc/rovr*")
-					           ffs("i_mcontr/i_descrproc/last_lines_reg*")
-					           ffs("i_mcontr/i_descrproc/first_tile_reg*")
-					           ffs("i_mcontr/i_descrproc/first_tile_dest*")
-					           ffs("i_mcontr/i_descrproc/nxtTFr*")
-					           ffs("i_mcontr/i_descrproc/nxtTF_p*")
-					           ffs("i_mcontr/i_descrproc/srcAtStart*")
-                          mults("i_mcontr/i_descrproc/linAddr*");
+TIMEGRP "TG_DOUBLEDEST3"= FFS("i_mcontr/i_descrproc/seq_par*")
+					      	  FFS("i_mcontr/i_descrproc/sa*")
+                          FFS("i_mcontr/i_descrproc/nxtTL*")
+								  FFS("i_mcontr/i_descrproc/tile*")
+								  FFS("i_mcontr/i_descrproc/mode*")
+						        FFS("i_mcontr/i_descrproc/WnR*")
+								  FFS("i_mcontr/i_descrproc/depend*")
+								  FFS("i_mcontr/i_descrproc/nextFrame*")
+								  FFS("i_mcontr/i_descrproc/nextBlocksEn*")
+						        FFS("i_mcontr/i_descrproc/suspXfer*")
+								  FFS("i_mcontr/i_descrproc/lineNumSource*")
+					           FFS("i_mcontr/i_descrproc/lineNumDest*")
+					           FFS("i_mcontr/i_descrproc/prevStripSource*")
+					           FFS("i_mcontr/i_descrproc/rovr*")
+					           FFS("i_mcontr/i_descrproc/last_lines_reg*")
+					           FFS("i_mcontr/i_descrproc/first_tile_reg*")
+					           FFS("i_mcontr/i_descrproc/first_tile_dest*")
+					           FFS("i_mcontr/i_descrproc/nxtTFr*")
+					           FFS("i_mcontr/i_descrproc/nxtTF_p*")
+					           FFS("i_mcontr/i_descrproc/srcAtStart*")
+                          MULTS("i_mcontr/i_descrproc/linAddr*");
 TIMESPEC "TS_DOUBLECYCS3" = FROM "TG_SLOW_SRC3" TO "TG_DOUBLEDEST3" "TS_CLK0" * 2;
 ## Next - redundant?
 ##TIMESPEC "TS_DOUBLECYCS4" =  FROM FFS("*i_chArbit/chNum*") TO  "TG_DOUBLEDEST3" TS_CLK0*2;
-TIMEGRP "TG_HUFFRAMS"=    rams        ("*i_huffman*") ;
+TIMEGRP "TG_HUFFRAMS"=    RAMS        ("*i_huffman*") ;
 
 #FIXME: Constraint <TIMEGRP "TG_HUFFFFS" ... does not match any design objects.
-TIMEGRP "TG_HUFFFFS"=     ffs         ("*i_huffman*")
-                          ffs         ("*i_stuffer*") ; 
+TIMEGRP "TG_HUFFFFS"=     FFS         ("*i_huffman*")
+                          FFS         ("*i_stuffer*") ; 
 								  
-TIMEGRP "TG_HUFFLATCHES"= latches     ("*i_huffman*") ;
+TIMEGRP "TG_HUFFLATCHES"= LATCHES     ("*i_huffman*") ;
 # some registers in Huffman module are isolated from others through latches too - never used?
-##TIMEGRP  "TG_HUFFFFS_ISOLOUT" =  ffs         ("*i_huff_fifo/load_q");
+##TIMEGRP  "TG_HUFFFFS_ISOLOUT" =  FFS         ("*i_huff_fifo/load_q");
 
-TIMEGRP  "TG_STUFFER_WAS_READY_EARLY" = latches ("i_compressor/i_huffman/i_stuffer_was_rdy_early") ;
-TIMEGRP  "TG_HUFF_FIFO_LOAD_Q"        = ffs     ("i_compressor/i_huffman/i_huff_fifo/load_q") ;
-TIMEGRP  "TG_COMPRESSOR"=               ffs     ("*i_compressor*") ;
+TIMEGRP  "TG_STUFFER_WAS_READY_EARLY" = LATCHES ("i_compressor/i_huffman/i_stuffer_was_rdy_early") ;
+TIMEGRP  "TG_HUFF_FIFO_LOAD_Q"        = FFS     ("i_compressor/i_huffman/i_huff_fifo/load_q") ;
+TIMEGRP  "TG_COMPRESSOR"=               FFS     ("*i_compressor*") ;
 ### THe two below constraints are not needed, they are covered by "TS_HUFFLATCHES" and "TS_HUFFLATCHESI"
 ## TIMESPEC "TS_HUFF_FIFO_LOAD_Q"=         FROM "TG_STUFFER_WAS_READY_EARLY"  TO   "TG_HUFFFFS" "TS_CLK0" * 0.625;
 ## TIMESPEC "TS_STUFFER_WAS_READY_EARLY"=  FROM "TG_HUFFFFS" TO   "TG_STUFFER_WAS_READY_EARLY" "TS_CLK0" * 0.7;
@@ -376,8 +376,8 @@ TIMESPEC "TS_PCLK_PCLK2X" = FROM "TNM_PCLK" TO "TNM_PCLK2X" TIG;
 
 
 
-TIMEGRP "TG_HIST_DOUBLE_DEST"= ffs("*hist_post*");
-TIMEGRP "TG_HIST_DOUBLE_SRC "= ffs("*hist_pre*");
+TIMEGRP "TG_HIST_DOUBLE_DEST"= FFS("*hist_post*");
+TIMEGRP "TG_HIST_DOUBLE_SRC "= FFS("*hist_pre*");
 
 TIMESPEC "TS_HIST_DOUBLECYC1" =  FROM FFS("*hist_pre*") TO  FFS("*hist_post*") "TS_CLK1" ;
 
@@ -388,10 +388,10 @@ INST "i_histogram/size_height_*" TIG;
 INST "i_histogram/minus_pos_left_*" TIG;
 INST "i_histogram/pos_left_is_zero*" TIG;
 
-TIMEGRP  "TG_HIST_DOUBLE2_SRC"=  ffs("i_histogram/pix_cntr*");
-TIMEGRP  "TG_HIST_DOUBLE2_DST"=  ffs("i_histogram/pix_cntr*")
-                                 ffs("i_histogram/line_started*")
-                                 ffs("i_histogram/line_ended*") ;
+TIMEGRP  "TG_HIST_DOUBLE2_SRC"=  FFS("i_histogram/pix_cntr*");
+TIMEGRP  "TG_HIST_DOUBLE2_DST"=  FFS("i_histogram/pix_cntr*")
+                                 FFS("i_histogram/line_started*")
+                                 FFS("i_histogram/line_ended*") ;
 TIMESPEC "TS_HIST_DOUBLECYC2" = FROM "TG_HIST_DOUBLE2_SRC" TO "TG_HIST_DOUBLE2_DST" "TS_CLK1" ;
 
 
