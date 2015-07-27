@@ -452,45 +452,34 @@ module dpads32(c,t,d,q,dq);
 endmodule
 
 
-module sddrio16(c0,/*c90,*/c270,d,t,q,dq);  //added an extra FF for the t signal
-    input c0,/*c90,*/c270;
+module sddrio16 #(
+    parameter IOSTANDARD = "SSTL2_I",
+    parameter DRIVE =      12,
+    parameter SLEW =       "SLOW"
+)(c0,c270,d,t,q,dq);  //added an extra FF for the t signal
+    input c0,c270;
     input [31:0] d;
     input t;
     output [31:0] q;
     inout [15:0] dq;
     wire [31:0] q;
-    sddrio0 i_dq0  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[16],d[ 0]}),.t(t),.q({q[16],q[ 0]}),.dq(dq[ 0]));
-    sddrio0 i_dq1  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[17],d[ 1]}),.t(t),.q({q[17],q[ 1]}),.dq(dq[ 1]));
-    sddrio0 i_dq2  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[18],d[ 2]}),.t(t),.q({q[18],q[ 2]}),.dq(dq[ 2]));
-    sddrio0 i_dq3  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[19],d[ 3]}),.t(t),.q({q[19],q[ 3]}),.dq(dq[ 3]));
-    sddrio0 i_dq4  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[20],d[ 4]}),.t(t),.q({q[20],q[ 4]}),.dq(dq[ 4]));
-    sddrio0 i_dq5  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[21],d[ 5]}),.t(t),.q({q[21],q[ 5]}),.dq(dq[ 5]));
-    sddrio0 i_dq6  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[22],d[ 6]}),.t(t),.q({q[22],q[ 6]}),.dq(dq[ 6]));
-    sddrio0 i_dq7  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[23],d[ 7]}),.t(t),.q({q[23],q[ 7]}),.dq(dq[ 7]));
-    sddrio0 i_dq8  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[24],d[ 8]}),.t(t),.q({q[24],q[ 8]}),.dq(dq[ 8]));
-    sddrio0 i_dq9  (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[25],d[ 9]}),.t(t),.q({q[25],q[ 9]}),.dq(dq[ 9]));
-    sddrio0 i_dq10 (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[26],d[10]}),.t(t),.q({q[26],q[10]}),.dq(dq[10]));
-    sddrio0 i_dq11 (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[27],d[11]}),.t(t),.q({q[27],q[11]}),.dq(dq[11]));
-    sddrio0 i_dq12 (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[28],d[12]}),.t(t),.q({q[28],q[12]}),.dq(dq[12]));
-    sddrio0 i_dq13 (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[29],d[13]}),.t(t),.q({q[29],q[13]}),.dq(dq[13]));
-    sddrio0 i_dq14 (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[30],d[14]}),.t(t),.q({q[30],q[14]}),.dq(dq[14]));
-    sddrio0 i_dq15 (.c0(c0),/*.c90(c90),*/.c270(c270),.d({d[31],d[15]}),.t(t),.q({q[31],q[15]}),.dq(dq[15]));
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq0  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq1  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq2  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq3  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq4  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq5  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq6  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq7  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq8  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq9  is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq10 is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq11 is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq12 is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq13 is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq14 is "TRUE"
-// s---ynthesis attribute KEEP_HIERARCHY of i_dq15 is "TRUE"
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq0  (.c0(c0),.c270(c270),.d({d[16],d[ 0]}),.t(t),.q({q[16],q[ 0]}),.dq(dq[ 0]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq1  (.c0(c0),.c270(c270),.d({d[17],d[ 1]}),.t(t),.q({q[17],q[ 1]}),.dq(dq[ 1]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq2  (.c0(c0),.c270(c270),.d({d[18],d[ 2]}),.t(t),.q({q[18],q[ 2]}),.dq(dq[ 2]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq3  (.c0(c0),.c270(c270),.d({d[19],d[ 3]}),.t(t),.q({q[19],q[ 3]}),.dq(dq[ 3]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq4  (.c0(c0),.c270(c270),.d({d[20],d[ 4]}),.t(t),.q({q[20],q[ 4]}),.dq(dq[ 4]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq5  (.c0(c0),.c270(c270),.d({d[21],d[ 5]}),.t(t),.q({q[21],q[ 5]}),.dq(dq[ 5]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq6  (.c0(c0),.c270(c270),.d({d[22],d[ 6]}),.t(t),.q({q[22],q[ 6]}),.dq(dq[ 6]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq7  (.c0(c0),.c270(c270),.d({d[23],d[ 7]}),.t(t),.q({q[23],q[ 7]}),.dq(dq[ 7]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq8  (.c0(c0),.c270(c270),.d({d[24],d[ 8]}),.t(t),.q({q[24],q[ 8]}),.dq(dq[ 8]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq9  (.c0(c0),.c270(c270),.d({d[25],d[ 9]}),.t(t),.q({q[25],q[ 9]}),.dq(dq[ 9]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq10 (.c0(c0),.c270(c270),.d({d[26],d[10]}),.t(t),.q({q[26],q[10]}),.dq(dq[10]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq11 (.c0(c0),.c270(c270),.d({d[27],d[11]}),.t(t),.q({q[27],q[11]}),.dq(dq[11]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq12 (.c0(c0),.c270(c270),.d({d[28],d[12]}),.t(t),.q({q[28],q[12]}),.dq(dq[12]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq13 (.c0(c0),.c270(c270),.d({d[29],d[13]}),.t(t),.q({q[29],q[13]}),.dq(dq[13]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq14 (.c0(c0),.c270(c270),.d({d[30],d[14]}),.t(t),.q({q[30],q[14]}),.dq(dq[14]));
+    sddrio0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq15 (.c0(c0),.c270(c270),.d({d[31],d[15]}),.t(t),.q({q[31],q[15]}),.dq(dq[15]));
+
 endmodule
 // Made for CL=2.5
 // all data to write is expected to be sync to posedge of c0 - phase=0,
@@ -499,7 +488,11 @@ endmodule
 // tristate will be clocked at rising edge of c270
 // All data read will be also sync to rising edge of c0 (LSB will be delayed internally)
 
-module sddrio0(c0,/*c90,*/c270,d,t,q,dq); // made for CL=2.5, LSB first - c0 falling edge is before rising, gets LSB
+module sddrio0 #(
+    parameter IOSTANDARD = "SSTL2_I",
+    parameter DRIVE =      12,
+    parameter SLEW =       "SLOW"
+)(c0,/*c90,*/c270,d,t,q,dq); // made for CL=2.5, LSB first - c0 falling edge is before rising, gets LSB
     input       c0,/*c90,*/c270;
     input  [1:0] d;
     input        t;
@@ -514,7 +507,7 @@ module sddrio0(c0,/*c90,*/c270,d,t,q,dq); // made for CL=2.5, LSB first - c0 fal
   FD    i_d1d (.C(c270),.D(d0[1]),.Q(d1d));    //regular FF, not IOB
 
   FD_1 i_q0  (.C(c0),.D(q00),.Q(q[0]));  //regular FF, not IOB
-  IOBUF i_dq (.I(dr), .T(tr),.O(qp), .IO(dq));
+  IOBUF #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq (.I(dr), .T(tr),.O(qp), .IO(dq));
   FDDRCPE i_dr (.Q(dr),.C0(c270),.C1(!c270),.D0(d0[0]),.D1(d1d),.CE(1'b1),.CLR(1'b0),.PRE(1'b0));
   FD_1 #(.INIT(1'b1)) i_t0 (.C(c0), .D(t), .Q(t0));
   FD  #(.INIT(1'b1))  i_t1 (.C(c0), .D(t0), .Q(t1));
@@ -527,7 +520,11 @@ module sddrio0(c0,/*c90,*/c270,d,t,q,dq); // made for CL=2.5, LSB first - c0 fal
 endmodule
 
 
-module dqs2 (c0,/*c90,*/c270,
+module dqs2 #(
+    parameter IOSTANDARD = "SSTL2_I",
+    parameter DRIVE =      12,
+    parameter SLEW =       "SLOW"
+)(c0,/*c90,*/c270,
              t,          // 1.5 cycles before cmd "write" sent out to the SDRAM, sync to sclk180
              UDQS,        // UDQS I/O pin
              LDQS,        // LDQS I/O pin
@@ -545,12 +542,21 @@ module dqs2 (c0,/*c90,*/c270,
     FD      #(.INIT(1'b1)) i_t1 (.C(c0),.D(t0),.Q(t1));
 ///AF:      FD      #(.INIT(1'b1)) i_t2 (.C(c270),.D(t0),.Q(t2));
     assign tr= t1;
-    dqs2_0 i_dqsu(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({udqsr270,udqsr90}),.dq(UDQS));
-    dqs2_0 i_dqsl(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({ldqsr270,ldqsr90}),.dq(LDQS));
-    
+    dqs2_0 #(.IOSTANDARD(IOSTANDARD),
+             .DRIVE(DRIVE),
+             .SLEW(SLEW))
+              i_dqsu(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({udqsr270,udqsr90}),.dq(UDQS));
+    dqs2_0 #(.IOSTANDARD(IOSTANDARD),
+             .DRIVE(DRIVE),
+             .SLEW(SLEW))
+             i_dqsl(.c0(c0),/*.c90(c90),*/.c270(c270),.t(tr),.q({ldqsr270,ldqsr90}),.dq(LDQS));
 endmodule
 
-module dqs2_0(c0,/*c90,*/c270,t,q,dq);
+module dqs2_0#(
+    parameter IOSTANDARD = "SSTL2_I",
+    parameter DRIVE =  12,
+    parameter SLEW =  "SLOW"
+) (c0,/*c90,*/c270,t,q,dq);
     input       c0,/*c90,*/c270;
     input        t;
     output [1:0] q;
@@ -559,7 +565,7 @@ module dqs2_0(c0,/*c90,*/c270,t,q,dq);
   wire qp;
   wire virtc0; // sync to c0
 
-  IOBUF i_dq (.I(virtc0), .T(t),.O(qp), .IO(dq));
+  IOBUF #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq (.I(virtc0), .T(t),.O(qp), .IO(dq));
 
 // reset DQS when tristated
   FDDRCPE i_dr (.Q(virtc0),.C0(c0),.C1(!c0),.D0(1'b1),.D1(1'b0),.CE(1'b1),.CLR(t),.PRE(1'b0));
@@ -579,22 +585,30 @@ module dqs2_0(c0,/*c90,*/c270,t,q,dq);
 endmodule
 
 //both bits are strobed at rising c270
-module sddrdm(c0,/*c90,*/c270,d,dq);
-    input       c0,/*c90,*/c270;
+module sddrdm #(
+    parameter IOSTANDARD = "SSTL2_I",
+    parameter DRIVE =      12,
+    parameter SLEW =       "SLOW"
+) (c0,c270,d,dq);
+    input       c0,c270;
     input  [1:0] d;
     inout        dq; //SuppressThisWarning Veditor UNUSED
-sddrdm0 i_dq (.c0(c0),/*.c90(c90),*/.c270(c270),.d(d),.dq(dq));
-// s--ynthesis attribute KEEP_HIERARCHY of i_dq is "TRUE"
+
+sddrdm0 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq (.c0(c0),.c270(c270),.d(d),.dq(dq));
 endmodule
 
-module sddrdm0(c0,/*c90,*/c270,d,dq);
-    input       c0,/*c90,*/c270;
+module sddrdm0 #(
+    parameter IOSTANDARD = "SSTL2_I",
+    parameter DRIVE =      12,
+    parameter SLEW =       "SLOW"
+) (c0,c270,d,dq);
+    input       c0,c270;
     input  [1:0] d;
     output      dq;
 
   wire dr,d1d;
   wire [1:0] d0;
-  OBUF i_dq (.I(dr), .O(dq));
+  OBUF #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_dq (.I(dr), .O(dq));
 //  FDDRCPE i_dr (.Q(dr),.C0(c270),.C1(c90),.D0(d0[0]),.D1(d1d),.CE(1'b1),.CLR(1'b0),.PRE(1'b0));
   FDDRCPE i_dr (.Q(dr),.C0(c270),.C1(!c270),.D0(d0[0]),.D1(d1d),.CE(1'b1),.CLR(1'b0),.PRE(1'b0));
   FD    i_d00(.C(c0),.D(d[0]),.Q(d0[0])); //regular FF, not IOB
@@ -608,41 +622,68 @@ endmodule
 
 
 // SDRAM address and ras/cas/we
-module sdo15_2(c,d,q);		// inputs at rising edge, resyncs to falling edge, all go high at reset
+module sdo15_2#(
+    parameter IOSTANDARD =      "SSTL2_I",
+    parameter DRIVE =           12,
+    parameter SLEW =       "SLOW"
+)(c,d,q);		// inputs at rising edge, resyncs to falling edge, all go high at reset
     input c;
     input  [14:0] d;
     output [14:0] q;
- sdo1_2 i_q0  (.c(c),.d(d[ 0]),.q(q[ 0]));
- sdo1_2 i_q1  (.c(c),.d(d[ 1]),.q(q[ 1]));
- sdo1_2 i_q2  (.c(c),.d(d[ 2]),.q(q[ 2]));
- sdo1_2 i_q3  (.c(c),.d(d[ 3]),.q(q[ 3]));
- sdo1_2 i_q4  (.c(c),.d(d[ 4]),.q(q[ 4]));
- sdo1_2 i_q5  (.c(c),.d(d[ 5]),.q(q[ 5]));
- sdo1_2 i_q6  (.c(c),.d(d[ 6]),.q(q[ 6]));
- sdo1_2 i_q7  (.c(c),.d(d[ 7]),.q(q[ 7]));
- sdo1_2 i_q8  (.c(c),.d(d[ 8]),.q(q[ 8]));
- sdo1_2 i_q9  (.c(c),.d(d[ 9]),.q(q[ 9]));
- sdo1_2 i_q10 (.c(c),.d(d[10]),.q(q[10]));
- sdo1_2 i_q11 (.c(c),.d(d[11]),.q(q[11]));
- sdo1_2 i_q12 (.c(c),.d(d[12]),.q(q[12]));
- sdo1_2 i_q13 (.c(c),.d(d[13]),.q(q[13]));
- sdo1_2 i_q14 (.c(c),.d(d[14]),.q(q[14]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q0  (.c(c),.d(d[ 0]),.q(q[ 0]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q1  (.c(c),.d(d[ 1]),.q(q[ 1]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q2  (.c(c),.d(d[ 2]),.q(q[ 2]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q3  (.c(c),.d(d[ 3]),.q(q[ 3]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q4  (.c(c),.d(d[ 4]),.q(q[ 4]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q5  (.c(c),.d(d[ 5]),.q(q[ 5]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q6  (.c(c),.d(d[ 6]),.q(q[ 6]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q7  (.c(c),.d(d[ 7]),.q(q[ 7]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q8  (.c(c),.d(d[ 8]),.q(q[ 8]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q9  (.c(c),.d(d[ 9]),.q(q[ 9]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q10 (.c(c),.d(d[10]),.q(q[10]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q11 (.c(c),.d(d[11]),.q(q[11]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q12 (.c(c),.d(d[12]),.q(q[12]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q13 (.c(c),.d(d[13]),.q(q[13]));
+ sdo1_2 #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW))
+        i_q14 (.c(c),.d(d[14]),.q(q[14]));
 endmodule
 
-module sdo1_2(c,d,q); // input at rising edge, resyncs to falling
+module sdo1_2#(
+    parameter IOSTANDARD =      "SSTL2_I",
+    parameter DRIVE =           12,
+    parameter SLEW =       "SLOW"
+)(c,d,q); // input at rising edge, resyncs to falling
     input c;
     input  d;
     output q;
- sdo0_2	i_q  (.c(c),.d(d),.q(q));
+ sdo0_2	#(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_q  (.c(c),.d(d),.q(q));
 // s--ynthesis attribute KEEP_HIERARCHY of i_q  is "TRUE"
 endmodule
 
-module sdo0_2(c,d,q); // input at rising edge, resyncs to falling, initializes to "1"
+module sdo0_2 #(
+    parameter IOSTANDARD =      "SSTL2_I",
+    parameter DRIVE =           12,
+    parameter SLEW =            "SLOW"
+)(c,d,q); // input at rising edge, resyncs to falling, initializes to "1"
     input c;
     input d;
     output q;
 wire d0, dr;
-OBUF i_q  (.I(dr), .O(q));
+OBUF #(.IOSTANDARD(IOSTANDARD), .DRIVE(DRIVE), .SLEW(SLEW)) i_q  (.I(dr), .O(q));
 FD   #(.INIT(1'b1)) i_d0   (.C(c), .D(d), .Q(d0));
 //FD_1 i_dr (.C(c), .D(d), .Q(dr));
 FD_1 #(.INIT(1'b1)) i_dr (.C(c), .D(d0), .Q(dr));

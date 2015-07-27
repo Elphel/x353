@@ -26,7 +26,10 @@
 **
 */
 // Some placement constraints are in this file
-module dcm333(
+module dcm333#(
+    parameter IOSTANDARD_SDRAM_DIFF = "DIFF_SSTL2_I",
+    parameter SLEW_SDRAM_DIFF =       "SLOW"
+)(
       sclk,   // input global clock, 120MHz, phase=0
       SDCLK,   // positive clock to SDRAM
       SDNCLK,  // negative clock to SDRAM
@@ -99,7 +102,10 @@ DCM #(
     .PSDONE (dcm_done_dcm));
 // BUFG    i_gsdclk (.I(isdclk90), .O(gsdclk));
 
- OBUFDS  i_SDCLK  (.O(SDCLK),.OB(SDNCLK),.I(isdclk));
+ OBUFDS #(
+    .IOSTANDARD(IOSTANDARD_SDRAM_DIFF),
+    .SLEW(SLEW_SDRAM_DIFF))
+    i_SDCLK  (.O(SDCLK),.OB(SDNCLK),.I(isdclk));
 // OBUFDS  i_SDCLK  (.O(SDNCLK),.OB(SDCLK),.I(!isdclk));
 // make dcm_done behave as dcm_ready
    always @ (posedge dcm_clk  or posedge dcm_rst)

@@ -3,188 +3,187 @@
 # Project: ~/PCB/10353/REVB/10353b
 # Created: Sat Jan 20 01:40:47 2007
 
-NET "PXD<0>"             LOC = "J3"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<1>"             LOC = "H6"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<2>"             LOC = "J2"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<3>"             LOC = "H5"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<4>"             LOC = "J1"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<5>"             LOC = "G5"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<6>"             LOC = "H4"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<7>"             LOC = "G4"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<8>"             LOC = "G3"  | IOSTANDARD = "LVCMOS25" ;
-NET "PXD<9>"             LOC = "H3"  | IOSTANDARD = "LVCMOS25" ;
+#Only pinout
+NET "PXD<0>"             LOC = "J3" ;
+NET "PXD<1>"             LOC = "H6" ;
+NET "PXD<2>"             LOC = "J2" ;
+NET "PXD<3>"             LOC = "H5" ;
+NET "PXD<4>"             LOC = "J1" ;
+NET "PXD<5>"             LOC = "G5" ;
+NET "PXD<6>"             LOC = "H4" ;
+NET "PXD<7>"             LOC = "G4" ;
+NET "PXD<8>"             LOC = "G3" ;
+NET "PXD<9>"             LOC = "H3" ;
 
-#NET "DCLK"               LOC = "L3"  | IOSTANDARD = "LVCMOS25"  | SLEW = "SLOW"  | DRIVE = 2 ; # default
-NET "DCLK"               LOC = "L3"  | IOSTANDARD = "LVCMOS25"  | SLEW = "SLOW"  | DRIVE = 4 ; # increased for Eyesis4pi 450mm cable
+NET "DCLK"               LOC = "L3" ;
 
-NET "BPF"                LOC = "K5"  | IOSTANDARD = "LVCMOS25" ;
-NET "VACT"               LOC = "K1"  | IOSTANDARD = "LVCMOS25" ;
-NET "HACT"               LOC = "J5"  | IOSTANDARD = "LVCMOS25" ;
-NET "MRST"               LOC = "E3"  | IOSTANDARD = "LVCMOS25" ;
-NET "ARO"                LOC = "C1"  | IOSTANDARD = "LVCMOS25" ;
-NET "ARST"               LOC = "E1"  | IOSTANDARD = "LVCMOS25" ;
-NET "SCL0"               LOC = "G2"  | IOSTANDARD = "LVCMOS25" ;
-NET "SDA0"               LOC = "E4"  | IOSTANDARD = "LVCMOS25" ;
+NET "BPF"                LOC = "K5" ;
+NET "VACT"               LOC = "K1" ;
+NET "HACT"               LOC = "J5" ;
+NET "MRST"               LOC = "E3" ;
+NET "ARO"                LOC = "C1" ;
+NET "ARST"               LOC = "E1" ;
+NET "SCL0"               LOC = "G2" ;
+NET "SDA0"               LOC = "E4" ;
 
-NET "CNVSYNC"            LOC = "B1"  | IOSTANDARD = "LVCMOS25" ;
-NET "CNVCLK"             LOC = "B2"  | IOSTANDARD = "LVCMOS25" ;
+NET "CNVSYNC"            LOC = "B1" ;
+NET "CNVCLK"             LOC = "B2" ;
 
-NET "SENSPGM"            LOC = "D1"  | IOSTANDARD = "LVCMOS25" ;
+NET "SENSPGM"            LOC = "D1" ;
 
-NET "EXT<0>"             LOC = "C4"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<1>"             LOC = "C5"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<2>"             LOC = "A4"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<3>"             LOC = "A5"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<4>"             LOC = "D6"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<5>"             LOC = "C6"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<6>"             LOC = "C7"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<7>"             LOC = "B7"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<8>"             LOC = "E7"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<9>"             LOC = "D7"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<10>"            LOC = "F8"  | IOSTANDARD = "LVCMOS33" ;
-NET "EXT<11>"            LOC = "E8"  | IOSTANDARD = "LVCMOS33" ;
+NET "EXT<0>"             LOC = "C4" ;
+NET "EXT<1>"             LOC = "C5" ;
+NET "EXT<2>"             LOC = "A4" ;
+NET "EXT<3>"             LOC = "A5" ;
+NET "EXT<4>"             LOC = "D6" ;
+NET "EXT<5>"             LOC = "C6" ;
+NET "EXT<6>"             LOC = "C7" ;
+NET "EXT<7>"             LOC = "B7" ;
+NET "EXT<8>"             LOC = "E7" ;
+NET "EXT<9>"             LOC = "D7" ;
+NET "EXT<10>"            LOC = "F8" ;
+NET "EXT<11>"            LOC = "E8" ;
 
 
-NET "CLK3"               LOC = "A8"  | IOSTANDARD = "LVCMOS33" ;
-NET "CLK2"               LOC = "C9"  | IOSTANDARD = "LVCMOS33" ;
-NET "CLK4"               LOC = "B8"  | IOSTANDARD = "LVCMOS33" ;
-NET "CLK1"               LOC = "A10" | IOSTANDARD = "LVCMOS33" ;
-NET "CLK0"               LOC = "A9"  | IOSTANDARD = "LVCMOS33" ;
+NET "CLK3"               LOC = "A8" ;
+NET "CLK2"               LOC = "C9" ;
+NET "CLK4"               LOC = "B8" ;
+NET "CLK1"               LOC = "A10" ;
+NET "CLK0"               LOC = "A9" ;
 
-NET "LDQS"               LOC = "N8"  | IOSTANDARD = "SSTL2_I" ;
-NET "UDQS"               LOC = "P8"  | IOSTANDARD = "SSTL2_I" ;
+NET "LDQS"               LOC = "N8" ;
+NET "UDQS"               LOC = "P8" ;
 
-NET "SDD<0>"             LOC = "R14" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<1>"             LOC = "T12" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<2>"             LOC = "N12" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<3>"             LOC = "N10" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<4>"             LOC = "R11" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<5>"             LOC = "N9"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<6>"             LOC = "M9"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<7>"             LOC = "L8"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<8>"             LOC = "P9"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<9>"             LOC = "P10" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<10>"            LOC = "M10" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<11>"            LOC = "P11" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<12>"            LOC = "P12" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<13>"            LOC = "R13" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<14>"            LOC = "T13" | IOSTANDARD = "SSTL2_I" ;
-NET "SDD<15>"            LOC = "P14" | IOSTANDARD = "SSTL2_I" ;
+NET "SDD<0>"             LOC = "R14" ;
+NET "SDD<1>"             LOC = "T12" ;
+NET "SDD<2>"             LOC = "N12" ;
+NET "SDD<3>"             LOC = "N10" ;
+NET "SDD<4>"             LOC = "R11" ;
+NET "SDD<5>"             LOC = "N9" ;
+NET "SDD<6>"             LOC = "M9" ;
+NET "SDD<7>"             LOC = "L8" ;
+NET "SDD<8>"             LOC = "P9" ;
+NET "SDD<9>"             LOC = "P10" ;
+NET "SDD<10>"            LOC = "M10" ;
+NET "SDD<11>"            LOC = "P11" ;
+NET "SDD<12>"            LOC = "P12" ;
+NET "SDD<13>"            LOC = "R13" ;
+NET "SDD<14>"            LOC = "T13" ;
+NET "SDD<15>"            LOC = "P14" ;
 
-NET "SDA<0>"             LOC = "P1"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<1>"             LOC = "K3"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<2>"             LOC = "M1"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<3>"             LOC = "K2"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<4>"             LOC = "T4"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<5>"             LOC = "M4"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<6>"             LOC = "T5"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<7>"             LOC = "P5"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<8>"             LOC = "N5"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<9>"             LOC = "R6"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<10>"            LOC = "N1"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<11>"            LOC = "P6"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<12>"            LOC = "P7"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<13>"            LOC = "P2"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDA<14>"            LOC = "L4"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDA<0>"             LOC = "P1" ;
+NET "SDA<1>"             LOC = "K3" ;
+NET "SDA<2>"             LOC = "M1" ;
+NET "SDA<3>"             LOC = "K2" ;
+NET "SDA<4>"             LOC = "T4" ;
+NET "SDA<5>"             LOC = "M4" ;
+NET "SDA<6>"             LOC = "T5" ;
+NET "SDA<7>"             LOC = "P5" ;
+NET "SDA<8>"             LOC = "N5" ;
+NET "SDA<9>"             LOC = "R6" ;
+NET "SDA<10>"            LOC = "N1" ;
+NET "SDA<11>"            LOC = "P6" ;
+NET "SDA<12>"            LOC = "P7" ;
+NET "SDA<13>"            LOC = "P2" ;
+NET "SDA<14>"            LOC = "L4" ;
 
-NET "SDWE"               LOC = "M7"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDCAS"              LOC = "N7"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDRAS"              LOC = "M6"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDWE"               LOC = "M7" ;
+NET "SDCAS"              LOC = "N7" ;
+NET "SDRAS"              LOC = "M6" ;
 
-NET "SDLDM"              LOC = "M8"  | IOSTANDARD = "SSTL2_I" ;
-NET "SDUDM"              LOC = "T8"  | IOSTANDARD = "SSTL2_I" ;
+NET "SDLDM"              LOC = "M8" ;
+NET "SDUDM"              LOC = "T8" ;
 
-NET "SDCLK"  LOC = "R2" | IOSTANDARD = DIFF_SSTL2_I ; 
-NET "SDCLK_FB"  LOC = "R3" | IOSTANDARD = DIFF_SSTL2_I ; 
-NET "SDNCLK"  LOC = "R1" | IOSTANDARD = DIFF_SSTL2_I ; 
-NET "SDNCLK_FB"  LOC = "T3" | IOSTANDARD = DIFF_SSTL2_I ; 
+#NET "SDCLK"              LOC = "R2" | IOSTANDARD = "DIFF_SSTL2_I" ; 
+NET "SDCLK"              LOC = "R2" ; 
+NET "SDCLK_FB"           LOC = "R3" ; 
+NET "SDNCLK"             LOC = "R1" ; 
+NET "SDNCLK_FB"          LOC = "T3" ; 
 
-#NET "SDNCLK_FB"          LOC = "T3"  | IOSTANDARD = "DIFF_SSTL2_I" ;
-#NET "SDCLK_FB"           LOC = "R3"  | IOSTANDARD = "DIFF_SSTL2_I" ;
 
-#NET "SDCLK"              LOC = "R2"  | IOSTANDARD = "DIFF_SSTL2_I ";
-#NET "SDNCLK"             LOC = "R1"  | IOSTANDARD = "DIFF_SSTL2_I ";
+NET "SDCLKE"             LOC = "N6"  ;
 
-NET "SDCLKE"             LOC = "N6"  | IOSTANDARD = "SSTL2_I" ;
+NET "D<0>"               LOC = "M16" ;
+NET "D<1>"               LOC = "N15" ;
+NET "D<2>"               LOC = "N16" ;
+NET "D<3>"               LOC = "L13" ;
+NET "D<4>"               LOC = "P16" ;
+NET "D<5>"               LOC = "N14" ;
+NET "D<6>"               LOC = "R16" ;
+NET "D<7>"               LOC = "P15" ;
+NET "D<8>"               LOC = "R15" ;
+NET "D<9>"               LOC = "L12" ;
+NET "D<10>"              LOC = "C11" ;
+NET "D<11>"              LOC = "A13" ;
+NET "D<12>"              LOC = "B11" ;
+NET "D<13>"              LOC = "D9"  ;
+NET "D<14>"              LOC = "B10" ;
+NET "D<15>"              LOC = "A12" ;
+NET "D<16>"              LOC = "A7"  ;
+NET "D<17>"              LOC = "K12" ;
+NET "D<18>"              LOC = "E9"  ;
+NET "D<19>"              LOC = "B4"  ;
+NET "D<20>"              LOC = "F9"  ;
+NET "D<21>"              LOC = "C3"  ;
+NET "D<22>"              LOC = "H11" ;
+NET "D<23>"              LOC = "B6"  ;
+NET "D<24>"              LOC = "K14" ;
+NET "D<25>"              LOC = "E10" ;
+NET "D<26>"              LOC = "K15" ;
+NET "D<27>"              LOC = "L14" ;
+NET "D<28>"              LOC = "L15" ;
+NET "D<29>"              LOC = "K13" ;
+NET "D<30>"              LOC = "C8"  ;
+NET "D<31>"              LOC = "D8"  ;
 
-NET "D<0>"               LOC = "M16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<1>"               LOC = "N15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<2>"               LOC = "N16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<3>"               LOC = "L13" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<4>"               LOC = "P16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<5>"               LOC = "N14" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<6>"               LOC = "R16" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<7>"               LOC = "P15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<8>"               LOC = "R15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<9>"               LOC = "L12" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<10>"              LOC = "C11" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<11>"              LOC = "A13" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<12>"              LOC = "B11" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<13>"              LOC = "D9"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<14>"              LOC = "B10" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<15>"              LOC = "A12" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<16>"              LOC = "A7"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<17>"              LOC = "K12" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<18>"              LOC = "E9"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<19>"              LOC = "B4"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<20>"              LOC = "F9"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<21>"              LOC = "C3"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<22>"              LOC = "H11" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<23>"              LOC = "B6"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<24>"              LOC = "K14" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<25>"              LOC = "E10" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<26>"              LOC = "K15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<27>"              LOC = "L14" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<28>"              LOC = "L15" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<29>"              LOC = "K13" | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<30>"              LOC = "C8"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
-NET "D<31>"              LOC = "D8"  | IOSTANDARD = "LVCMOS33"  | SLEW = "SLOW"  | DRIVE = 8 ;
+NET "A<0>"               LOC = "D14" ;
+NET "A<1>"               LOC = "F13" ;
+NET "A<2>"               LOC = "F12" ;
+NET "A<3>"               LOC = "E11" ;
+NET "A<4>"               LOC = "E13" ;
+NET "A<5>"               LOC = "E16" ;
+NET "A<6>"               LOC = "F14" ;
+NET "A<7>"               LOC = "F15" ;
+NET "A<8>"               LOC = "G14" ;
+NET "A<9>"               LOC = "G13" ;
+NET "A<10>"              LOC = "G16" ;
+NET "A<11>"              LOC = "G15" ;
+NET "A<12>"              LOC = "H12" ;
+NET "BA<0>"              LOC = "H14" ;
+NET "BA<1>"              LOC = "H15" ;
 
-NET "A<0>"               LOC = "D14" | IOSTANDARD = "LVCMOS33" ;
-NET "A<1>"               LOC = "F13" | IOSTANDARD = "LVCMOS33" ;
-NET "A<2>"               LOC = "F12" | IOSTANDARD = "LVCMOS33" ;
-NET "A<3>"               LOC = "E11" | IOSTANDARD = "LVCMOS33" ;
-NET "A<4>"               LOC = "E13" | IOSTANDARD = "LVCMOS33" ;
-NET "A<5>"               LOC = "E16" | IOSTANDARD = "LVCMOS33" ;
-NET "A<6>"               LOC = "F14" | IOSTANDARD = "LVCMOS33" ;
-NET "A<7>"               LOC = "F15" | IOSTANDARD = "LVCMOS33" ;
-NET "A<8>"               LOC = "G14" | IOSTANDARD = "LVCMOS33" ;
-NET "A<9>"               LOC = "G13" | IOSTANDARD = "LVCMOS33" ;
-NET "A<10>"              LOC = "G16" | IOSTANDARD = "LVCMOS33" ;
-NET "A<11>"              LOC = "G15" | IOSTANDARD = "LVCMOS33" ;
-NET "A<12>"              LOC = "H12" | IOSTANDARD = "LVCMOS33" ;
-NET "BA<0>"              LOC = "H14" | IOSTANDARD = "LVCMOS33" ;
-NET "BA<1>"              LOC = "H15" | IOSTANDARD = "LVCMOS33" ;
+NET "SYS_SDWE"           LOC = "J13" ;
+NET "SYS_SDCAS"          LOC = "J16" ;
+NET "SYS_SDRAS"          LOC = "K16" ;
 
-NET "SYS_SDWE"           LOC = "J13" | IOSTANDARD = "LVCMOS33" ;
-NET "SYS_SDCAS"          LOC = "J16" | IOSTANDARD = "LVCMOS33" ;
-NET "SYS_SDRAS"          LOC = "K16" | IOSTANDARD = "LVCMOS33" ;
+NET "SYS_SDCLKI"         LOC = "J12" ;
+NET "SYS_SDCLK"          LOC = "J14" ;
+NET "SYS_BUSEN"          LOC = "C16" ;
 
-NET "SYS_SDCLKI"         LOC = "J12" | IOSTANDARD = "LVCMOS33" ;
-NET "SYS_SDCLK"          LOC = "J14" | IOSTANDARD = "LVCMOS33" ;
-NET "SYS_BUSEN"          LOC = "C16" | IOSTANDARD = "LVCMOS33" ;
+NET "WE"                 LOC = "M13" ;
+NET "OE"                 LOC = "M14" ;
+NET "CE"                 LOC = "D16" ;
+NET "CE1"                LOC = "E14" ;
 
-NET "WE"                 LOC = "M13" | IOSTANDARD = "LVCMOS33" ;
-NET "OE"                 LOC = "M14" | IOSTANDARD = "LVCMOS33" ;
-NET "CE"                 LOC = "D16" | IOSTANDARD = "LVCMOS33" ;
-NET "CE1"                LOC = "E14" | IOSTANDARD = "LVCMOS33" ;
+NET "DREQ0"              LOC = "C15" ;
+NET "DACK0"              LOC = "B14" ;
+NET "DREQ1"              LOC = "D10" ;
+NET "DACK1"              LOC = "A14" ;
 
-NET "DREQ0"              LOC = "C15" | IOSTANDARD = "LVCMOS33" | SLEW = "SLOW"  | DRIVE = 4 ; # default
-NET "DACK0"              LOC = "B14" | IOSTANDARD = "LVCMOS33" ;
-NET "DREQ1"              LOC = "D10" | IOSTANDARD = "LVCMOS33" | SLEW = "SLOW"  | DRIVE = 4 ; # default
-NET "DACK1"              LOC = "A14" | IOSTANDARD = "LVCMOS33" ;
-
-NET "IRQ"                LOC = "D15" | IOSTANDARD = "LVCMOS33" ;
-NET "BG"                 LOC = "D11" | IOSTANDARD = "LVCMOS33" ;
-NET "BRIN"               LOC = "B16" | IOSTANDARD = "LVCMOS33" ;
-NET "BROUT"              LOC = "B13" | IOSTANDARD = "LVCMOS33" ;
+NET "IRQ"                LOC = "D15" ;
+NET "BG"                 LOC = "D11" ;
+NET "BRIN"               LOC = "B16" ;
+NET "BROUT"              LOC = "B13" ;
 
 #assign an output with SSTL2_I so VREF will be used in bank 3
-NET "DUMMYVFEF"          LOC = "J4"  | IOSTANDARD = "SSTL2_I" ;
+NET "DUMMYVFEF"          LOC = "J4" ;
 
 #week pulldown to fool the software into keeping signals
-NET "ALWAYS0"            LOC = "J6"  | IOSTANDARD = "LVCMOS25" ;
+NET "ALWAYS0"            LOC = "J6" ;
 
+#end of pinout
+
+################### Timing Constraints #########################
 
 NET "CLK0" TNM_NET = "CLK0";
 NET "CLK1" TNM_NET = "CLK1";

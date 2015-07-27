@@ -31,15 +31,86 @@
  `define debug_compressor
  `define debug_mcontr_reset
 // `define DEBUG_IMU
-module x353(PXD,DCLK,BPF,VACT,HACT,MRST,ARO,ARST,SCL0,SDA0,CNVSYNC,CNVCLK, SENSPGM,
-            DUMMYVFEF,  ALWAYS0,
-            EXT,
-            CLK3,CLK2,CLK4,CLK1,CLK0,
-            UDQS,LDQS,SDD,SDA,SDWE,SDCAS,SDRAS,SDUDM,SDLDM,SDCLK_FB,SDCLK,SDNCLK,SDNCLK_FB,SDCLKE,
-            D,A,
-            BA,SYS_SDWE,SYS_SDCAS,SYS_SDRAS,SYS_SDCLKI,SYS_SDCLK,SYS_BUSEN,
-            WE,OE,CE,CE1,DREQ0,DACK0,DREQ1,DACK1,
-            IRQ,BG,BRIN,BROUT);
+module x353 #(
+    parameter IOSTANDARD_EXT =        "LVCMOS33",
+    parameter SLEW_EXT =              "SLOW",
+    parameter DRIVE_EXT =             12,
+    
+    parameter IOSTANDARD_SENSOR =     "LVCMOS33",
+    parameter SLEW_SENSOR =           "SLOW",
+    parameter DRIVE_SENSOR =          4,
+    
+    parameter IOSTANDARD_SENSOR_CLK = "LVCMOS33",
+    parameter SLEW_SENSOR_CLK =       "SLOW",
+    parameter DRIVE_SENSOR_CLK =      4,
+    
+    parameter IOSTANDARD_SDRAM =      "SSTL2_I",
+    parameter DRIVE_SDRAM_DATA =      12,
+    parameter SLEW_SDRAM_DATA =       "SLOW",
+    parameter DRIVE_SDRAM_ABC =       12,
+    parameter SLEW_SDRAM_ABC =        "SLOW",
+    parameter IOSTANDARD_SDRAM_DIFF = "DIFF_SSTL2_I",
+    parameter SLEW_SDRAM_DIFF =       "SLOW"
+    
+    ) (
+    inout   [9:0] PXD,
+    inout         DCLK,
+    inout         BPF,
+    input         VACT,
+    input         HACT,
+    inout         MRST,
+    output        ARO,
+    output        ARST,
+    inout         SCL0,
+    inout         SDA0,
+    inout         CNVSYNC,
+    inout         CNVCLK,
+    inout         SENSPGM,
+    inout         DUMMYVFEF, // output is not enough
+    inout         ALWAYS0,   // will be pulled down to fool the software - it does not know it is always 0.
+    
+    inout  [11:0] EXT,
+    input         CLK3,
+    input         CLK2,
+    input         CLK4,
+    input         CLK1,
+    input         CLK0,
+    
+    inout         UDQS,
+    inout         LDQS,
+    inout  [15:0] SDD,
+    output [14:0] SDA,
+    output        SDWE,
+    output        SDCAS,
+    output        SDRAS,
+    output        SDUDM,
+    output        SDLDM,
+    input         SDCLK_FB,
+    output        SDCLK,
+    output        SDNCLK,
+    input         SDNCLK_FB,
+    output        SDCLKE,
+    inout  [31:0] D,
+    inout  [12:0] A,
+    inout   [1:0] BA,
+    output        SYS_SDWE,
+    output        SYS_SDCAS,
+    output        SYS_SDRAS,
+    input         SYS_SDCLKI,
+    output        SYS_SDCLK,
+    output        SYS_BUSEN,
+    input         WE,
+    input         OE,
+    input         CE,
+    input         CE1,
+    output        DREQ0,
+    input         DACK0,
+    output        DREQ1,
+    input         DACK1,
+    output        IRQ,
+    output        BG,
+    input         BRIN,
+    output        BROUT);
       parameter MODELREV=32'h0353402b;    // adding more bits to motors positions
 //      parameter MODELREV=32'h0353402a;    // IMU restart after ready (DIO2)
 //      parameter MODELREV=32'h03534029;    // working on IMU
@@ -160,91 +231,13 @@ module x353(PXD,DCLK,BPF,VACT,HACT,MRST,ARO,ARST,SCL0,SDA0,CNVSYNC,CNVCLK, SENSP
 //  parameter MODELREV=32'h0333000f; // temporarily reusing for rev B
 //  parameter MODELREV=32'h0333000e; // restoring JPEG
 
-      inout [9:0] PXD;
-      inout       BPF;
-    input         HACT;
-    input         VACT;
-    input         CLK4;
-    input         CLK3;
-    input         CLK2;
-    input         CLK1;
-    input         CLK0;
-    input         SDCLK_FB;
-    input         SDNCLK_FB;
-
-    inout  [12:0] A;
-    output [ 1:0] BA;
-    input         WE;
-    input         OE;
-    input         CE;
-    input         CE1;
-    input         DACK0;
-    input         DACK1;
-
-    inout         SCL0;
-    inout         SDA0;
-
-
-    inout  [11:0] EXT;
-
-
-    inout  [15:0] SDD;
-    inout         UDQS;
-    inout         LDQS;
-    inout  [31:0] D;
-
-    inout         DCLK;
-    inout         MRST;
-    output        ARO;
-    output        ARST;
-    inout         CNVSYNC;
-    inout         CNVCLK;
-    output [14:0] SDA;
-    output        SDCLK;
-    output        SDNCLK;
-    output        SDCLKE;
-    output        SDWE;
-    output        SDCAS;
-    output        SDRAS;
-    output        SDUDM;
-    output        SDLDM;
-    output        DREQ0;
-    output        DREQ1;
-    output        IRQ;
-    
-    inout         SENSPGM; // grounded on 10338
-    
-    output       SYS_SDWE, SYS_SDCAS, SYS_SDRAS,SYS_SDCLK,SYS_BUSEN,BG,BROUT;
-    input        SYS_SDCLKI,BRIN;
   
     
-    inout DUMMYVFEF;  // output is not enough
-    inout ALWAYS0;  // will be pulled down to fool the software - it does not know it is always 0.
  PULLDOWN i_PD_ALWAYS0(.O(ALWAYS0));     // Pulldown output (connect directly to top-level port)
 
 `ifdef debug_mcontr_reset
 wire [31:0] debug_mcontr_reset_data;
 `endif
-  
-// external wires
-   wire [14:0] SDA;        //+
-   wire        SDRAS;      //+
-   wire        SDCAS;      //+
-   wire        SDWE;       //+
-
-   wire        DCLK;
-   wire        MRST;
-   wire        ARO;
-   wire        ARST;
-   wire        CNVSYNC;
-   wire        CNVCLK;
-///AF:     wire        XRST;
-///AF:     wire        AUXCLK;
-   wire        SDCLK;
-   wire        DREQ0,DREQ1;
-   wire        IRQ;
-
-
 
 // internal wires
 wire  iclk3;
@@ -705,20 +698,55 @@ wire    [3:0] restart; // reinitialize mcontr channels (normally after frame syn
 
 // will change bits later (with software) to separate MRST and CLK sensor polarity
 // IO pads and related FFs
-     sddrio16      i_SDDd   (.c0(sclk0),/*.c90(sclk90),*/.c270(sclk270),
-                             .d(sddo_p[31:0]),.t(pretrist),
-                             .q(sddi_r[31:0]),.dq(SDD[15:0]));
-     sddrdm        i_SDUDM  (.c0(sclk0),/*.c90(sclk90),*/.c270(sclk270),.d(sddm_p[1:0]),.dq(SDUDM));
-     sddrdm        i_SDLDM  (.c0(sclk0),/*.c90(sclk90),*/.c270(sclk270),.d(sddm_p[1:0]),.dq(SDLDM));
-     sdo15_2       i_SDA    (.c(sclk0),.d({sdba_p[1:0],sda_p[12:0]}),.q(SDA[14:0]));
-     sdo1_2        i_SDRAS  (.c(sclk0),.d(sdras_p),.q(SDRAS));
-     sdo1_2        i_SDCAS  (.c(sclk0),.d(sdcas_p),.q(SDCAS));
-     sdo1_2        i_SDWE   (.c(sclk0),.d(sdwe_p),. q(SDWE ));
+     sddrio16 #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_DATA),
+                  .SLEW       (SLEW_SDRAM_DATA))
+            i_SDDd   (.c0(sclk0),.c270(sclk270),
+                      .d(sddo_p[31:0]),.t(pretrist),
+                      .q(sddi_r[31:0]),.dq(SDD[15:0]));
+     sddrdm #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_DATA),
+                  .SLEW       (SLEW_SDRAM_DATA))
+                    i_SDUDM  (.c0(sclk0),.c270(sclk270),.d(sddm_p[1:0]),.dq(SDUDM));
+     sddrdm  #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_DATA),
+                  .SLEW       (SLEW_SDRAM_DATA))
+                   i_SDLDM  (.c0(sclk0),.c270(sclk270),.d(sddm_p[1:0]),.dq(SDLDM));
+     sdo15_2 #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_ABC),
+                  .SLEW       (SLEW_SDRAM_ABC))
+            i_SDA    (.c(sclk0),.d({sdba_p[1:0],sda_p[12:0]}),.q(SDA[14:0]));
+     sdo1_2 #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_ABC),
+                  .SLEW       (SLEW_SDRAM_ABC))
+            i_SDRAS  (.c(sclk0),.d(sdras_p),.q(SDRAS));
+     sdo1_2 #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_ABC),
+                  .SLEW       (SLEW_SDRAM_ABC))
+            i_SDCAS  (.c(sclk0),.d(sdcas_p),.q(SDCAS));
+     sdo1_2 #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_ABC),
+                  .SLEW       (SLEW_SDRAM_ABC))
+            i_SDWE   (.c(sclk0),.d(sdwe_p),. q(SDWE ));
 
-     sdo1_2        i_SDCLKE (.c(sclk0),.d(1'b1),. q(SDCLKE ));
+     sdo1_2 #(
+                  .IOSTANDARD (IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_ABC),
+                  .SLEW       (SLEW_SDRAM_ABC))
+            i_SDCLKE (.c(sclk0),.d(1'b1),. q(SDCLKE ));
 
 // temporary change behaviour of dqs2 to fix pinout problem - will influence adjustment goal
-       dqs2 i_sddqs(.c0(sclk0),/*.c90(sclk90),*/.c270(sclk270),
+     dqs2 #(.IOSTANDARD(IOSTANDARD_SDRAM),
+                  .DRIVE      (DRIVE_SDRAM_DATA),
+                  .SLEW       (SLEW_SDRAM_DATA))
+              i_sddqs(.c0(sclk0), .c270(sclk270),
                   .t       (sddqt),       // 1/2 cycle before cmd "write" sent out to the SDRAM, sync to sclk180
                   .UDQS    (UDQS),         // UDQS I/O pin
                   .LDQS    (LDQS),         // LDQS I/O pin
@@ -898,7 +926,7 @@ timestamp353 i_timestamp353(.mclk(sclk0),    // system clock (negedge)
 //SDCLK_FB  // feedback input from SDCLK pin
 //SDNCLK_FB // feedback input from SDCLK pin
 //     IBUFDS        i_sdcl_fb(.O(sdcl_fb),.I(SDCLK_FB),.IB(SDNCLK_FB)); // not used
-     IBUFDS        i_sdcl_fb(.O(sdcl_fb),.I(SDNCLK_FB),.IB(SDCLK_FB)); // not used
+     IBUFDS #(.IOSTANDARD(IOSTANDARD_SDRAM_DIFF))  i_sdcl_fb(.O(sdcl_fb),.I(SDNCLK_FB),.IB(SDCLK_FB)); // not used
 // synthesis attribute KEEP of i_sdcl_fb  is "TRUE"
 
 // assumed CL=2.5
@@ -961,7 +989,10 @@ BUFGMUX i_pclk  (.O(pclk),  .I0(pclki), .I1(sens_clk), .S(|cb_pclksrc[1:0]));
 
                           
                               
- dcm333 i_dcm333(  .sclk(sclk0),       // input clock pad - 120MHz
+ dcm333  #(
+      .IOSTANDARD_SDRAM_DIFF (IOSTANDARD_SDRAM_DIFF),
+      .SLEW_SDRAM_DIFF       (SLEW_SDRAM_DIFF)
+      ) i_dcm333 ( .sclk(sclk0),       // input clock pad - 120MHz
                    .SDCLK(SDCLK),   // positive clock to SDRAM
                    .SDNCLK(SDNCLK),  // negative clock to SDRAM
                    .sdcl_fb(sdcl_fb),
@@ -1007,7 +1038,14 @@ always @ (posedge pclk) begin
 end
 
 
-  sensorpads   i_sensorpads (
+  sensorpads   #(
+        .IOSTANDARD_SENSOR      (IOSTANDARD_SENSOR),
+        .SLEW_SENSOR            (SLEW_SENSOR),
+        .DRIVE_SENSOR           (DRIVE_SENSOR),
+        .IOSTANDARD_SENSOR_CLK  (IOSTANDARD_SENSOR_CLK),
+        .SLEW_SENSOR_CLK        (SLEW_SENSOR_CLK),
+        .DRIVE_SENSOR_CLK       (DRIVE_SENSOR_CLK)
+  )  i_sensorpads(
                      .sclk(sclk0),       // system clock, @negedge
                      .cmd(idi[10:4]),    // [6:0] command for phase adjustment @ negedge (slck) (MSB - reset x2 DCM)
 							.wcmd(da_dcm),       // write command@ negedge (slck)
@@ -1725,20 +1763,30 @@ wire   iclk4; // SuppressThisWarning Veditor UNUSED
 ///AF:    assign sr_sda1=io_pins[1];
 ///AF:    assign sr_scl1=io_pins[0];
 
-  IOBUF i_iopins0 (.I(io_do[ 0]), .T(io_t[ 0]), .O(io_pins[ 0]), .IO(EXT[ 0]));
-  IOBUF i_iopins1 (.I(io_do[ 1]), .T(io_t[ 1]), .O(io_pins[ 1]), .IO(EXT[ 1]));
-  IOBUF i_iopins2 (.I(io_do[ 2]), .T(io_t[ 2]), .O(io_pins[ 2]), .IO(EXT[ 2]));
-  IOBUF i_iopins3 (.I(io_do[ 3]), .T(io_t[ 3]), .O(io_pins[ 3]), .IO(EXT[ 3]));
-  IOBUF i_iopins4 (.I(io_do[ 4]), .T(io_t[ 4]), .O(io_pins[ 4]), .IO(EXT[ 4]));
-  IOBUF i_iopins5 (.I(io_do[ 5]), .T(io_t[ 5]), .O(io_pins[ 5]), .IO(EXT[ 5]));
-  IOBUF i_iopins6 (.I(io_do[ 6]), .T(io_t[ 6]), .O(io_pins[ 6]), .IO(EXT[ 6]));
-  IOBUF i_iopins7 (.I(io_do[ 7]), .T(io_t[ 7]), .O(io_pins[ 7]), .IO(EXT[ 7]));
-  IOBUF i_iopins8 (.I(io_do[ 8]), .T(io_t[ 8]), .O(io_pins[ 8]), .IO(EXT[ 8]));
-  IOBUF i_iopins9 (.I(io_do[ 9]), .T(io_t[ 9]), .O(io_pins[ 9]), .IO(EXT[ 9]));
-  IOBUF i_iopins10(.I(io_do[10]), .T(io_t[10]), .O(io_pins[10]), .IO(EXT[10]));
-  IOBUF i_iopins11(.I(io_do[11]), .T(io_t[11]), .O(io_pins[11]), .IO(EXT[11]));
-
-  
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins0 (.I(io_do[ 0]), .T(io_t[ 0]), .O(io_pins[ 0]), .IO(EXT[ 0]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins1 (.I(io_do[ 1]), .T(io_t[ 1]), .O(io_pins[ 1]), .IO(EXT[ 1]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins2 (.I(io_do[ 2]), .T(io_t[ 2]), .O(io_pins[ 2]), .IO(EXT[ 2]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins3 (.I(io_do[ 3]), .T(io_t[ 3]), .O(io_pins[ 3]), .IO(EXT[ 3]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins4 (.I(io_do[ 4]), .T(io_t[ 4]), .O(io_pins[ 4]), .IO(EXT[ 4]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins5 (.I(io_do[ 5]), .T(io_t[ 5]), .O(io_pins[ 5]), .IO(EXT[ 5]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins6 (.I(io_do[ 6]), .T(io_t[ 6]), .O(io_pins[ 6]), .IO(EXT[ 6]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins7 (.I(io_do[ 7]), .T(io_t[ 7]), .O(io_pins[ 7]), .IO(EXT[ 7]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins8 (.I(io_do[ 8]), .T(io_t[ 8]), .O(io_pins[ 8]), .IO(EXT[ 8]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins9 (.I(io_do[ 9]), .T(io_t[ 9]), .O(io_pins[ 9]), .IO(EXT[ 9]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins10(.I(io_do[10]), .T(io_t[10]), .O(io_pins[10]), .IO(EXT[10]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_EXT), .SLEW(SLEW_EXT), .DRIVE(DRIVE_EXT))
+          i_iopins11(.I(io_do[11]), .T(io_t[11]), .O(io_pins[11]), .IO(EXT[11]));
 endmodule
 
 
