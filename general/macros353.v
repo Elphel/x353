@@ -82,7 +82,7 @@ parameter DATA_2DEPTH=(1<<DATA_DEPTH)-1;
     assign	QR= ram[AR];
 endmodule
 
-// Fixing Xilinx SLR16_x
+// Modifying Xilinx SLR16_x to better simulate real hardware
 module SRL16_MOD #(
     parameter INIT = 16'h0000,
     parameter INVERT = 0 // *_1 - invert
@@ -100,9 +100,10 @@ module SRL16_MOD #(
     wire        clk_;
     wire  [3:0] a = {A3, A2, A1, A0};
 
+    assign Q = (|data) ? ((&data) ? 1'b1 : data[a]) :  1'b0 ;
 
-    assign Q = (data == 16'h0) ? 1'b0 :
-               ((data == 16'hffff) ? 1'b1 : data[a]);
+//    assign Q = (data == 16'h0) ? 1'b0 :
+//               ((data == 16'hffff) ? 1'b1 : data[a]);
     assign clk_ = INVERT? (~CLK) : CLK;
 
     initial

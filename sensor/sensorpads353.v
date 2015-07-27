@@ -31,22 +31,22 @@
 module	sensorpads (/// interface to DCM
                      sclk,       // system clock, @negedge
                      cmd,        // [6:0] command for phase adjustment @ negedge (sclk) MSB - reset pclk2x DCM
-							wcmd,       // write command@ negedge (slck)
+					 wcmd,       // write command@ negedge (slck)
                      dcm_done,   // DCM command done
                      dcm_status, // [7:0] output dcm status (bit 1 - dcm clkin stopped)
                      dcm_locked, //   DCM locked
-							clk_sel,    // 0 - use clk, 1 - sensor dclk (bpf pad) for DCM input (if dclkmode - use clk if 0)
-							hact_length,// [13:0] WOI width-1 (to overwrite sensor HACT duration)
+					 clk_sel,    // 0 - use clk, 1 - sensor dclk (bpf pad) for DCM input (if dclkmode - use clk if 0)
+					 hact_length,// [13:0] WOI width-1 (to overwrite sensor HACT duration)
                      hact_regen, // 0 - use hact from sensor, 1 - regenerate using hact_lengh
                      clk,        //pixel clock, posedge
                      pclk2x,     // output - twice pixel clock
                      vact,       // VACT pad, inout
-							hact,       // HACT pad, inout
-							bpf,        // BPF  pad, inout
-							pxd,        // [11:0] pads {PXD [9:0],CNVCLK, CNVSYNC} inout
-							mrst,       // MRST pad, inoput (input in JTAG external FPGA programming mode)
-							arst,       // ARST pad, output (output in JTAG external FPGA programming mode)
-							aro,        // ARO pad, output
+					 hact,       // HACT pad, inout
+					 bpf,        // BPF  pad, inout
+					 pxd,        // [11:0] pads {PXD [9:0],CNVCLK, CNVSYNC} inout
+					 mrst,       // MRST pad, inoput (input in JTAG external FPGA programming mode)
+					 arst,       // ARST pad, output (output in JTAG external FPGA programming mode)
+					 aro,        // ARO pad, output
                      dclkmode,   // input 0 - DCLK is clock to sensor, 1 - combined sync from sensor (like 10347)
                      pxd14,      // input 1 - use {vact,hact} as 2 LSB in 14-bit data
                      debug, // 2-bit debug mode input

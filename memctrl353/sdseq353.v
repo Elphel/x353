@@ -186,7 +186,6 @@ module sdseq (clk0,	// global clock 75-100MHz (hope to get to 120MHz with Sparta
      next <= prenext_refr || prenext_wr || (!drun_wr && pre_next_old); // add m0 and refr here too
      decLeft <= (prenext_m1s || prenext_m1d || prenext_m0); // add m0 and refr here too
      if (first) left[4:0] <= (mode)? 5'h14:((param[4:0]==5'b0)?5'h1f:param[4:0]);
-///AF2015 - revert:    	 if (first || rst) left[4:0] <= (mode)? 5'h14:((param[4:0]==5'b0)?5'h1f:param[4:0]);
      else if (decLeft)   left[4:0] <= left[4:0] -1;
    end
 
