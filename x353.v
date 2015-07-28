@@ -71,8 +71,8 @@ module x353 #(
     parameter SLEW_SENSOR_CLK =       "SLOW",
     parameter DRIVE_SENSOR_CLK =      4,
 
-    parameter IFD_DELAY_SENSOR_PXD =  "0",
-    parameter IFD_DELAY_SENSOR_VHACT ="0",
+    parameter IFD_DELAY_SENSOR_PXD =  "AUTO",
+    parameter IFD_DELAY_SENSOR_VHACT ="AUTO",
     parameter IBUF_DELAY_SENSOR_PXD =  "0",
     parameter IBUF_DELAY_SENSOR_VHACT ="0",
     
@@ -143,7 +143,8 @@ module x353 #(
     output        BG,
     input         BRIN,
     output        BROUT);
-      parameter MODELREV=32'h0353402b;    // adding more bits to motors positions
+      parameter MODELREV=32'h03535000;    // Trying ISE 14.7
+//      parameter MODELREV=32'h0353402b;    // adding more bits to motors positions
 //      parameter MODELREV=32'h0353402a;    // IMU restart after ready (DIO2)
 //      parameter MODELREV=32'h03534029;    // working on IMU
 //      parameter MODELREV=32'h03534028;    // DMA for logging, changing DMA control (neds drivers update)

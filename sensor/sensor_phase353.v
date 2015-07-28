@@ -293,6 +293,10 @@ BUFGMUX i_pclk  (.O(gclk_idata),  .I0(dcm2x), .I1(dcm2x180), .S(inv_gclk_idata))
         .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_VHACT),
         .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_VHACT)
    ) i_vact	(.I(VACT), .O(ivact));
+
+// synthesis attribute IOB     of i_hact       is "TRUE"
+// synthesis attribute IOB     of i_vact       is "TRUE"
+   
   always @ (posedge gclk_idata)  begin
     hact_q1 <= ihact00;
     vact_q1 <= ivact00;
@@ -333,6 +337,20 @@ BUFGMUX i_pclk  (.O(gclk_idata),  .I0(dcm2x), .I1(dcm2x180), .S(inv_gclk_idata))
     FDCE i_idi_9       (.Q(idi[ 9]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[ 9]));
     FDCE i_idi_10      (.Q(idi[10]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[10]));
     FDCE i_idi_11      (.Q(idi[11]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[11]));
+// are they still needed - seems yes    
+// synthesis attribute IOB     of i_sync_alt_d0 is "TRUE"
+// synthesis attribute IOB     of i_idi_0       is "TRUE"
+// synthesis attribute IOB     of i_idi_1       is "TRUE"
+// synthesis attribute IOB     of i_idi_2       is "TRUE"
+// synthesis attribute IOB     of i_idi_3       is "TRUE"
+// synthesis attribute IOB     of i_idi_4       is "TRUE"
+// synthesis attribute IOB     of i_idi_5       is "TRUE"
+// synthesis attribute IOB     of i_idi_6       is "TRUE"
+// synthesis attribute IOB     of i_idi_7       is "TRUE"
+// synthesis attribute IOB     of i_idi_8       is "TRUE"
+// synthesis attribute IOB     of i_idi_9       is "TRUE"
+// synthesis attribute IOB     of i_idi_10      is "TRUE"
+// synthesis attribute IOB     of i_idi_11      is "TRUE"
 
 reg  [1:0] shact_zero; // shact was zero (inactive), sync to gclk_data
   always @ (posedge gclk_idata) if (en_idata) begin

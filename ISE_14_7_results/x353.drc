@@ -1,0 +1,33 @@
+Release 14.7 Drc P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Tue Jul 28 15:43:52 2015
+
+drc -z x353.ncd x353.pcf
+
+WARNING:PhysDesignRules:372 - Gated clock. Clock net i_sensorpads/fifo_clkin is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   cb_xt_pol_virt_trig_MUX_728_o is sourced by a combinatorial pin. This is not
+   good design practice. Use the CE pin to control the loading of data into the
+   flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net compressor_eot is sourced
+   by a combinatorial pin. This is not good design practice. Use the CE pin to
+   control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:1063 - Issue with pin connections and/or configuration
+   on block:<i_compressor/i_color_proc/i_y_buff.A>:<RAMB16_RAMB16A>.  The block
+   is configured to use an input parity pins. There is a dangling output parity
+   pin.
+WARNING:PhysDesignRules:1067 - Issue with pin connections and/or configuration
+   on block:<i_sensorpix/i_cstableh.B>:<RAMB16_RAMB16B>.  The block is
+   configured to use an input parity pin. There is a dangling output parity pin.
+WARNING:PhysDesignRules:1067 - Issue with pin connections and/or configuration
+   on block:<i_sensorpix/i_cstablel.B>:<RAMB16_RAMB16B>.  The block is
+   configured to use an input parity pin. There is a dangling output parity pin.
+WARNING:PhysDesignRules:1063 - Issue with pin connections and/or configuration
+   on block:<i_compressor/i_color_proc/i_CrCb_buff.A>:<RAMB16_RAMB16A>.  The
+   block is configured to use an input parity pins. There is a dangling output
+   parity pin.
+DRC detected 0 errors and 7 warnings.  Please see the previously displayed
+individual error or warning messages for more details.

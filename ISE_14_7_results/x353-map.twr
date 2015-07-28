@@ -1,0 +1,917 @@
+--------------------------------------------------------------------------------
+Release 14.7 Trace  (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/trce -o x353-map.twr -xml
+x353-map.twx x353.ncd x353.pcf
+
+Design file:              x353.ncd
+Physical constraint file: x353.pcf
+Device,package,speed:     xc3s1200e,ft256,-4 (PRODUCTION 1.27 2013-10-13)
+Report level:             summary report, limited to 0 items per constraint
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:3386 - Intersecting Constraints found and resolved.  For more 
+   information, see the TSI report.  Please consult the Xilinx Command Line 
+   Tools User Guide for information on generating a TSI report.
+INFO:Timing:3412 - To improve timing, see the Timing Closure User Guide (UG612).
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3284 - This timing report was generated using estimated delay 
+   information.  For accurate numbers, please refer to the post Place and Route 
+   timing report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+INFO:Timing:3390 - This architecture does not support a default System Jitter 
+   value, please add SYSTEM_JITTER constraint to the UCF to modify the Clock 
+   Uncertainty calculation.
+INFO:Timing:3389 - This architecture does not support 'Discrete Jitter' and 
+   'Phase Error' calculations, these terms will be zero in the Clock 
+   Uncertainty calculation.  Please make appropriate modification to 
+   SYSTEM_JITTER to account for the unsupported Discrete Jitter and Phase 
+   Error.
+Number of Timing Constraints that were not applied: 4
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+----------------------------------------------------------------------------------------------------------
+  Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
+                                            |             |    Slack   | Achievable | Errors |    Score   
+----------------------------------------------------------------------------------------------------------
+  TS_CLK1 = PERIOD TIMEGRP "CLK1" 10.4 ns H | SETUP       |     0.593ns|     9.807ns|       0|           0
+  IGH 50%                                   | HOLD        |     0.424ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_pclk2xi = PERIOD TIMEGRP  | SETUP       |     0.723ns|     4.477ns|       0|           0
+  "i_sensorpads_pclk2xi" TS_CLK1 / 2        | HOLD        |     0.439ns|            |       0|           0
+    HIGH 50%                                |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_i_iclockios_isclk0 = PERIOD TIMEGRP "i | SETUP       |     0.910ns|     6.190ns|       0|           0
+  _iclockios_isclk0" TS_CLK0 HIGH 50%       | HOLD        |     0.380ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_HUFFLATCHESI = MAXDELAY FROM TIMEGRP " | SETUP       |     1.212ns|     3.136ns|       0|           0
+  TG_HUFFFFS" TO TIMEGRP         "TG_HUFFLA |             |            |            |        |            
+  TCHES" TS_CLK0 * 0.6125                   |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_HUFFLATCHES = MAXDELAY FROM TIMEGRP "T | SETUP       |     1.216ns|     3.221ns|       0|           0
+  G_HUFFLATCHES" TO TIMEGRP         "TG_HUF |             |            |            |        |            
+  FFFS" TS_CLK0 * 0.625                     |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_dcm2x180 = | SETUP       |     1.550ns|     2.868ns|       0|           0
+   PERIOD TIMEGRP         "i_sensorpads_i_s | HOLD        |     0.451ns|            |       0|           0
+  ensor_phase_dcm2x180" TS_CLK1 / 2 PHASE 2 | MINLOWPULSE |     2.008ns|     3.192ns|       0|           0
+  .6 ns HIGH         50%                    |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_dcm2x = PE | MINLOWPULSE |     2.008ns|     3.192ns|       0|           0
+  RIOD TIMEGRP         "i_sensorpads_i_sens |             |            |            |        |            
+  or_phase_dcm2x" TS_CLK1 / 2 HIGH 50%      |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_i_iclockios_isclk270 = PERIOD TIMEGRP  | SETUP       |     2.213ns|     2.674ns|       0|           0
+  "i_iclockios_isclk270" TS_CLK0 PHASE      | HOLD        |     1.022ns|            |       0|           0
+      5.325 ns HIGH 50%                     | MINLOWPULSE |     3.908ns|     3.192ns|       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_HUFFRAMS = MAXDELAY FROM TIMEGRP "TG_H | SETUP       |     2.285ns|     3.749ns|       0|           0
+  UFFRAMS" TO TIMEGRP "TG_HUFFLATCHES"      |             |            |            |        |            
+      TS_CLK0 * 0.85                        |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_CLK0 = PERIOD TIMEGRP "CLK0" 7.1 ns HI | MINLOWPULSE |     2.300ns|     4.800ns|       0|           0
+  GH 50%                                    |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_HUFFRAMSA = MAXDELAY FROM TIMEGRP "TG_ | SETUP       |     4.577ns|     1.546ns|       0|           0
+  HUFFLATCHES" TO TIMEGRP "TG_HUFFRAMS"     |             |            |            |        |            
+       TS_CLK0 * 0.8625                     |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_HIST_DOUBLECYC2 = MAXDELAY FROM TIMEGR | SETUP       |     5.607ns|     4.793ns|       0|           0
+  P "TG_HIST_DOUBLE2_SRC" TO TIMEGRP        |             |            |            |        |            
+    "TG_HIST_DOUBLE2_DST" TS_CLK1           |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_DOUBLECYCS3 = MAXDELAY FROM TIMEGRP "T | SETUP       |     5.752ns|     8.448ns|       0|           0
+  G_SLOW_SRC3" TO TIMEGRP         "TG_DOUBL |             |            |            |        |            
+  EDEST3" TS_CLK0 * 2                       |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_OE_TO_DATA = MAXDELAY FROM TIMEGRP "OE | MAXDELAY    |     6.110ns|     5.890ns|       0|           0
+  " TO TIMEGRP "CPU_DATA" 12 ns             |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_WR_DATA = MAXDELAY FROM TIMEGRP "CPU_D | SETUP       |     6.460ns|     2.540ns|       0|           0
+  ATA" TO TIMEGRP "TG_CWRDEST" 9 ns         |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_AXIS_READ = MAXDELAY FROM TIMEGRP "CPU | MAXDELAY    |     6.769ns|    10.231ns|       0|           0
+  _ADDRCE" TO TIMEGRP "CPU_DATA" 17 ns      |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_WE = MAXDELAY FROM TIMEGRP "WE" TO TIM | MAXDELAY    |     7.313ns|     4.187ns|       0|           0
+  EGRP "TNM_CWR" 11.5 ns                    |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_DOUBLECYC_IDATA = MAXDELAY FROM TIMEGR | SETUP       |     8.068ns|     2.332ns|       0|           0
+  P "TNM_EN_IDATA" TO TIMEGRP         "TNM_ |             |            |            |        |            
+  EN_IDATA" TS_CLK1                         |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_DACK0 = MAXDELAY FROM TIMEGRP "DACK" T | MAXDELAY    |     8.416ns|     8.584ns|       0|           0
+  O TIMEGRP "ALLPADS" 17 ns                 |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_DOUBLECYCS2 = MAXDELAY FROM TIMEGRP "T | SETUP       |     8.759ns|     5.441ns|       0|           0
+  G_DOUBLECYCS2" TO TIMEGRP         "TG_ALL |             |            |            |        |            
+  _SYNC" TS_CLK0 * 2                        |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_pre_pre_en | MINPERIOD   |     8.804ns|     1.596ns|       0|           0
+  _idata = PERIOD TIMEGRP         "i_sensor |             |            |            |        |            
+  pads_i_sensor_phase_pre_pre_en_idata" TS_ |             |            |            |        |            
+  CLK1 PHASE 2.6 ns         HIGH 50%        |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_i_sensorpads_i_sensor_phase_pre_pre_en | MINPERIOD   |     8.804ns|     1.596ns|       0|           0
+  _idata90 = PERIOD TIMEGRP         "i_sens |             |            |            |        |            
+  orpads_i_sensor_phase_pre_pre_en_idata90" |             |            |            |        |            
+   TS_CLK1 PHASE 5.2 ns         HIGH 50%    |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  PATH "TS_PCLK_PCLK2X_path" TIG            | SETUP       |         N/A|     1.528ns|     N/A|           0
+----------------------------------------------------------------------------------------------------------
+  PATH "TS_GCLK_IDATA_PCLK_path" TIG        | SETUP       |         N/A|     6.317ns|     N/A|           0
+----------------------------------------------------------------------------------------------------------
+  PATH "TS_PCLK_GCLK_IDATA_path" TIG        | SETUP       |         N/A|     5.796ns|     N/A|           0
+----------------------------------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for TS_CLK0
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_CLK0                        |      7.100ns|      4.800ns|      6.190ns|            0|            0|            0|        34422|
+| TS_DOUBLECYCS2                |     14.200ns|      5.441ns|          N/A|            0|            0|          457|            0|
+| TS_DOUBLECYCS3                |     14.200ns|      8.448ns|          N/A|            0|            0|         9051|            0|
+| TS_HUFFRAMS                   |      6.035ns|      3.749ns|          N/A|            0|            0|           36|            0|
+| TS_HUFFLATCHES                |      4.438ns|      3.221ns|          N/A|            0|            0|          109|            0|
+| TS_HUFFRAMSA                  |      6.124ns|      1.546ns|          N/A|            0|            0|           21|            0|
+| TS_HUFFLATCHESI               |      4.349ns|      3.136ns|          N/A|            0|            0|          105|            0|
+| TS_i_iclockios_isclk0         |      7.100ns|      6.190ns|          N/A|            0|            0|        24555|            0|
+| TS_i_iclockios_isclk270       |      7.100ns|      3.192ns|          N/A|            0|            0|           88|            0|
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_CLK1
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_CLK1                        |     10.400ns|      9.807ns|      8.954ns|            0|            0|        66829|         1872|
+| TS_DOUBLECYC_IDATA            |     10.400ns|      2.332ns|          N/A|            0|            0|          242|            0|
+| TS_HIST_DOUBLECYC2            |     10.400ns|      4.793ns|          N/A|            0|            0|          117|            0|
+| TS_i_sensorpads_pclk2xi       |      5.200ns|      4.477ns|          N/A|            0|            0|         1393|            0|
+| TS_i_sensorpads_i_sensor_phase|     10.400ns|      1.596ns|          N/A|            0|            0|            0|            0|
+| _pre_pre_en_idata             |             |             |             |             |             |             |             |
+| TS_i_sensorpads_i_sensor_phase|     10.400ns|      1.596ns|          N/A|            0|            0|            0|            0|
+| _pre_pre_en_idata90           |             |             |             |             |             |             |             |
+| TS_i_sensorpads_i_sensor_phase|      5.200ns|      3.192ns|          N/A|            0|            0|            0|            0|
+| _dcm2x                        |             |             |             |             |             |             |             |
+| TS_i_sensorpads_i_sensor_phase|      5.200ns|      3.192ns|          N/A|            0|            0|          120|            0|
+| _dcm2x180                     |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+All constraints were met.
+INFO:Timing:2761 - N/A entries in the Constraints List may indicate that the 
+   constraint is not analyzed due to the following: No paths covered by this 
+   constraint; Other constraints intersect with this constraint; or This 
+   constraint was disabled by a Path Tracing Control. Please run the Timespec 
+   Interaction Report (TSI) via command line (trce tsi) or Timing Analyzer GUI.
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Setup/Hold to clock BPF
+------------+------------+------------+--------------------------------------+--------+
+            |Max Setup to|Max Hold to |                                      | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s)                     | Phase  |
+------------+------------+------------+--------------------------------------+--------+
+DCLK        |    0.127(R)|    4.639(R)|i_sensorpads/i_sensor_phase/gclk_idata|   2.600|
+------------+------------+------------+--------------------------------------+--------+
+
+Setup/Hold to clock CE
+------------+------------+------------+------------------+--------+
+            |Max Setup to|Max Hold to |                  | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+------------+------------+------------+------------------+--------+
+D<0>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<1>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<2>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<3>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<4>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<5>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<6>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<7>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<8>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<9>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<10>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<11>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<12>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<13>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<14>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<15>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<16>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<17>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<18>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<19>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<20>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<21>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<22>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<23>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<24>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<25>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<26>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<27>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<28>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<29>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<30>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<31>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock CE1
+------------+------------+------------+------------------+--------+
+            |Max Setup to|Max Hold to |                  | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+------------+------------+------------+------------------+--------+
+D<0>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<1>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<2>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<3>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<4>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<5>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<6>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<7>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<8>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<9>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<10>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<11>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<12>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<13>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<14>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<15>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<16>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<17>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<18>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<19>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<20>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<21>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<22>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<23>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<24>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<25>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<26>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<27>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<28>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<29>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<30>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<31>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock CLK1
+------------+------------+------------+--------------------------------------+--------+
+            |Max Setup to|Max Hold to |                                      | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s)                     | Phase  |
+------------+------------+------------+--------------------------------------+--------+
+DCLK        |   -1.565(R)|    5.065(R)|i_sensorpads/i_sensor_phase/gclk_idata|   2.600|
+------------+------------+------------+--------------------------------------+--------+
+
+Setup/Hold to clock OE
+------------+------------+------------+------------------+--------+
+            |Max Setup to|Max Hold to |                  | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+------------+------------+------------+------------------+--------+
+D<0>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<1>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<2>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<3>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<4>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<5>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<6>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<7>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<8>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<9>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<10>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<11>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<12>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<13>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<14>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<15>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<16>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<17>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<18>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<19>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<20>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<21>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<22>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<23>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<24>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<25>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<26>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<27>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<28>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<29>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<30>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<31>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock WE
+------------+------------+------------+------------------+--------+
+            |Max Setup to|Max Hold to |                  | Clock  |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+------------+------------+------------+------------------+--------+
+D<0>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<1>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<2>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<3>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<4>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<5>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<6>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<7>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<8>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<9>        |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<10>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<11>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<12>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<13>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<14>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<15>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<16>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<17>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<18>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<19>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<20>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<21>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<22>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<23>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<24>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<25>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<26>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<27>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<28>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<29>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<30>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+D<31>       |   -0.955(R)|    2.949(R)|i_sysinterface/cwr|   0.000|
+------------+------------+------------+------------------+--------+
+
+Clock DACK0 to Pad
+------------+------------+------------------+--------+
+            | clk (edge) |                  | Clock  |
+Destination |   to PAD   |Internal Clock(s) | Phase  |
+------------+------------+------------------+--------+
+D<0>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<1>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<2>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<3>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<4>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<5>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<6>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<7>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<8>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<9>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<10>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<11>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<12>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<13>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<14>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<15>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<16>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<17>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<18>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<19>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<20>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<21>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<22>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<23>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+D<24>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<25>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<26>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<27>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<28>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<29>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<30>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+D<31>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+------------+------------+------------------+--------+
+
+Clock DACK1 to Pad
+------------+------------+------------------+--------+
+            | clk (edge) |                  | Clock  |
+Destination |   to PAD   |Internal Clock(s) | Phase  |
+------------+------------+------------------+--------+
+D<0>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<1>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<2>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<3>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<4>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<5>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<6>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<7>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<8>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<9>        |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<10>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<11>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<12>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<13>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<14>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<15>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<16>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<17>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<18>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<19>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<20>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<21>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<22>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<23>       |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<24>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<25>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<26>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<27>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<28>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<29>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<30>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<31>       |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+------------+------------+------------------+--------+
+
+Clock OE to Pad
+------------+------------+------------------+--------+
+            | clk (edge) |                  | Clock  |
+Destination |   to PAD   |Internal Clock(s) | Phase  |
+------------+------------+------------------+--------+
+D<0>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<1>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<2>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<3>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<4>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<5>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<6>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<7>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<8>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<9>        |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<10>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<11>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<12>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<13>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<14>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<15>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<16>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<17>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<18>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<19>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<20>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<21>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<22>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<23>       |   12.609(R)|i_dma_fifo0/swclk |   0.000|
+            |   12.609(R)|i_dma_fifo1/swclk |   0.000|
+D<24>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<25>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<26>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<27>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<28>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<29>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<30>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+D<31>       |   13.092(R)|i_dma_fifo0/swclk |   0.000|
+            |   13.092(R)|i_dma_fifo1/swclk |   0.000|
+------------+------------+------------------+--------+
+
+Clock to Setup on destination clock BPF
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+BPF            |    9.807|    1.050|         |         |
+CLK1           |    9.807|    1.050|         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock CE
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+WE             |         |         |   -0.955|   -0.955|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock CE1
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+WE             |         |         |   -0.955|   -0.955|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock CLK0
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLK0           |    5.940|    2.332|    3.221|    8.448|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock CLK1
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+BPF            |    9.807|    1.050|         |         |
+CLK1           |    9.807|    1.050|         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock OE
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+WE             |         |         |   -0.955|   -0.955|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock WE
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+WE             |         |         |   -0.955|   -0.955|
+---------------+---------+---------+---------+---------+
+
+Pad to Pad
+---------------+---------------+---------+
+Source Pad     |Destination Pad|  Delay  |
+---------------+---------------+---------+
+A<0>           |D<0>           |    9.910|
+A<0>           |D<1>           |    9.910|
+A<0>           |D<2>           |    9.910|
+A<0>           |D<3>           |    9.910|
+A<0>           |D<4>           |    9.910|
+A<0>           |D<5>           |    9.161|
+A<0>           |D<6>           |    9.161|
+A<0>           |D<7>           |    9.910|
+A<0>           |D<8>           |    9.910|
+A<0>           |D<9>           |   10.231|
+A<0>           |D<10>          |    9.910|
+A<0>           |D<11>          |    9.161|
+A<0>           |D<12>          |    9.427|
+A<0>           |D<13>          |    9.910|
+A<0>           |D<14>          |    8.678|
+A<0>           |D<15>          |    8.678|
+A<0>           |D<16>          |    8.944|
+A<0>           |D<17>          |    8.944|
+A<0>           |D<18>          |    8.623|
+A<0>           |D<19>          |    8.623|
+A<0>           |D<20>          |    8.944|
+A<0>           |D<21>          |    9.427|
+A<0>           |D<22>          |    8.944|
+A<0>           |D<23>          |    9.427|
+A<0>           |D<24>          |    9.106|
+A<0>           |D<25>          |    9.427|
+A<0>           |D<26>          |    9.910|
+A<0>           |D<27>          |   10.231|
+A<0>           |D<28>          |    9.910|
+A<0>           |D<29>          |    9.945|
+A<0>           |D<30>          |    9.910|
+A<0>           |D<31>          |    9.106|
+A<1>           |D<0>           |    9.910|
+A<1>           |D<1>           |    9.910|
+A<1>           |D<2>           |    9.910|
+A<1>           |D<3>           |    9.910|
+A<1>           |D<4>           |    9.910|
+A<1>           |D<5>           |    9.910|
+A<1>           |D<6>           |    9.910|
+A<1>           |D<7>           |    9.910|
+A<1>           |D<8>           |    9.910|
+A<1>           |D<9>           |   10.231|
+A<1>           |D<10>          |    9.910|
+A<1>           |D<11>          |    9.910|
+A<1>           |D<12>          |    9.427|
+A<1>           |D<13>          |    9.910|
+A<1>           |D<14>          |    8.678|
+A<1>           |D<15>          |    8.678|
+A<1>           |D<16>          |    8.944|
+A<1>           |D<17>          |    9.427|
+A<1>           |D<18>          |    9.427|
+A<1>           |D<19>          |    9.427|
+A<1>           |D<20>          |    8.944|
+A<1>           |D<21>          |    9.427|
+A<1>           |D<22>          |    8.944|
+A<1>           |D<23>          |    9.427|
+A<1>           |D<24>          |    9.106|
+A<1>           |D<25>          |    9.427|
+A<1>           |D<26>          |    9.910|
+A<1>           |D<27>          |   10.231|
+A<1>           |D<28>          |    9.910|
+A<1>           |D<29>          |    9.945|
+A<1>           |D<30>          |    9.910|
+A<1>           |D<31>          |    9.106|
+A<2>           |D<0>           |    9.910|
+A<2>           |D<1>           |    9.910|
+A<2>           |D<2>           |    9.910|
+A<2>           |D<3>           |    9.910|
+A<2>           |D<4>           |    9.910|
+A<2>           |D<5>           |    9.910|
+A<2>           |D<6>           |    9.910|
+A<2>           |D<7>           |    9.910|
+A<2>           |D<8>           |    9.910|
+A<2>           |D<9>           |   10.231|
+A<2>           |D<10>          |    9.910|
+A<2>           |D<11>          |    9.910|
+A<2>           |D<12>          |    9.427|
+A<2>           |D<13>          |    9.910|
+A<2>           |D<14>          |    9.427|
+A<2>           |D<15>          |    9.427|
+A<2>           |D<16>          |    8.944|
+A<2>           |D<17>          |    9.427|
+A<2>           |D<18>          |    9.427|
+A<2>           |D<19>          |    9.427|
+A<2>           |D<20>          |    9.427|
+A<2>           |D<21>          |    9.427|
+A<2>           |D<22>          |    9.427|
+A<2>           |D<23>          |    9.427|
+A<2>           |D<24>          |    9.910|
+A<2>           |D<25>          |    9.910|
+A<2>           |D<26>          |    9.910|
+A<2>           |D<27>          |   10.231|
+A<2>           |D<28>          |    9.910|
+A<2>           |D<29>          |    9.945|
+A<2>           |D<30>          |    9.910|
+A<2>           |D<31>          |    9.910|
+A<3>           |D<0>           |    9.161|
+A<3>           |D<1>           |    9.161|
+A<3>           |D<2>           |    9.161|
+A<3>           |D<3>           |    9.161|
+A<3>           |D<4>           |    9.161|
+A<3>           |D<5>           |    9.161|
+A<3>           |D<6>           |    9.161|
+A<3>           |D<7>           |    9.161|
+A<3>           |D<8>           |    9.161|
+A<3>           |D<9>           |    9.161|
+A<3>           |D<10>          |    9.161|
+A<3>           |D<11>          |    9.161|
+A<3>           |D<12>          |    9.161|
+A<3>           |D<13>          |    9.161|
+A<3>           |D<14>          |    9.427|
+A<3>           |D<15>          |    9.427|
+A<3>           |D<16>          |    8.944|
+A<3>           |D<17>          |    9.427|
+A<3>           |D<18>          |    9.427|
+A<3>           |D<19>          |    9.427|
+A<3>           |D<20>          |    9.427|
+A<3>           |D<21>          |    9.427|
+A<3>           |D<22>          |    9.427|
+A<3>           |D<23>          |    9.427|
+A<3>           |D<24>          |    9.910|
+A<3>           |D<25>          |    9.910|
+A<3>           |D<26>          |    9.910|
+A<3>           |D<27>          |    9.161|
+A<3>           |D<28>          |    9.910|
+A<3>           |D<29>          |    9.161|
+A<3>           |D<30>          |    9.106|
+A<3>           |D<31>          |    9.910|
+A<4>           |D<0>           |    8.302|
+A<4>           |D<1>           |    8.302|
+A<4>           |D<2>           |    8.302|
+A<4>           |D<3>           |    8.302|
+A<4>           |D<4>           |    8.302|
+A<4>           |D<5>           |    8.302|
+A<4>           |D<6>           |    8.302|
+A<4>           |D<7>           |    8.302|
+A<4>           |D<8>           |    8.302|
+A<4>           |D<9>           |    8.302|
+A<4>           |D<10>          |    8.302|
+A<4>           |D<11>          |    8.302|
+A<4>           |D<12>          |    8.302|
+A<4>           |D<13>          |    8.302|
+A<4>           |D<14>          |    8.623|
+A<4>           |D<15>          |    8.623|
+A<4>           |D<16>          |    8.944|
+A<4>           |D<17>          |    7.819|
+A<4>           |D<18>          |    8.623|
+A<4>           |D<19>          |    8.623|
+A<4>           |D<20>          |    8.623|
+A<4>           |D<21>          |    8.623|
+A<4>           |D<22>          |    8.623|
+A<4>           |D<23>          |    8.623|
+A<4>           |D<24>          |    9.106|
+A<4>           |D<25>          |    9.106|
+A<4>           |D<26>          |    9.106|
+A<4>           |D<27>          |    8.623|
+A<4>           |D<28>          |    9.106|
+A<4>           |D<29>          |    8.623|
+A<4>           |D<30>          |    8.302|
+A<4>           |D<31>          |    9.106|
+A<5>           |D<0>           |    8.302|
+A<5>           |D<1>           |    8.302|
+A<5>           |D<2>           |    8.302|
+A<5>           |D<3>           |    8.302|
+A<5>           |D<4>           |    8.302|
+A<5>           |D<5>           |    8.302|
+A<5>           |D<6>           |    8.302|
+A<5>           |D<7>           |    8.302|
+A<5>           |D<8>           |    8.302|
+A<5>           |D<9>           |    8.302|
+A<5>           |D<10>          |    8.302|
+A<5>           |D<11>          |    8.302|
+A<5>           |D<12>          |    8.302|
+A<5>           |D<13>          |    8.302|
+A<5>           |D<14>          |    7.819|
+A<5>           |D<15>          |    7.819|
+A<5>           |D<16>          |    8.944|
+A<5>           |D<17>          |    7.819|
+A<5>           |D<18>          |    7.819|
+A<5>           |D<19>          |    7.819|
+A<5>           |D<20>          |    7.819|
+A<5>           |D<21>          |    7.819|
+A<5>           |D<22>          |    7.819|
+A<5>           |D<23>          |    7.819|
+A<5>           |D<24>          |    8.302|
+A<5>           |D<25>          |    8.302|
+A<5>           |D<26>          |    8.302|
+A<5>           |D<27>          |    8.623|
+A<5>           |D<28>          |    8.302|
+A<5>           |D<29>          |    8.623|
+A<5>           |D<30>          |    7.819|
+A<5>           |D<31>          |    8.302|
+A<6>           |D<0>           |    6.694|
+A<6>           |D<1>           |    6.694|
+A<6>           |D<2>           |    6.694|
+A<6>           |D<3>           |    6.694|
+A<6>           |D<4>           |    6.694|
+A<6>           |D<5>           |    5.890|
+A<6>           |D<6>           |    5.890|
+A<6>           |D<7>           |    6.694|
+A<6>           |D<8>           |    6.694|
+A<6>           |D<9>           |    6.694|
+A<6>           |D<10>          |    6.694|
+A<6>           |D<11>          |    6.694|
+A<6>           |D<12>          |    6.694|
+A<6>           |D<13>          |    6.694|
+A<6>           |D<14>          |    5.925|
+A<6>           |D<15>          |    5.925|
+A<6>           |D<16>          |    6.211|
+A<6>           |D<17>          |    5.925|
+A<6>           |D<18>          |    5.925|
+A<6>           |D<19>          |    5.925|
+A<6>           |D<20>          |    5.925|
+A<6>           |D<21>          |    5.925|
+A<6>           |D<22>          |    5.925|
+A<6>           |D<23>          |    5.925|
+A<6>           |D<24>          |    7.819|
+A<6>           |D<25>          |    7.819|
+A<6>           |D<26>          |    7.819|
+A<6>           |D<27>          |    8.302|
+A<6>           |D<28>          |    7.819|
+A<6>           |D<29>          |    8.302|
+A<6>           |D<30>          |    6.729|
+A<6>           |D<31>          |    7.498|
+CE             |D<0>           |    5.890|
+CE             |D<1>           |    5.890|
+CE             |D<2>           |    5.890|
+CE             |D<3>           |    5.890|
+CE             |D<4>           |    5.890|
+CE             |D<5>           |    5.890|
+CE             |D<6>           |    5.890|
+CE             |D<7>           |    5.890|
+CE             |D<8>           |    5.890|
+CE             |D<9>           |    5.890|
+CE             |D<10>          |    5.890|
+CE             |D<11>          |    5.890|
+CE             |D<12>          |    5.890|
+CE             |D<13>          |    5.890|
+CE             |D<14>          |    5.890|
+CE             |D<15>          |    5.890|
+CE             |D<16>          |    5.890|
+CE             |D<17>          |    5.890|
+CE             |D<18>          |    5.890|
+CE             |D<19>          |    5.890|
+CE             |D<20>          |    5.890|
+CE             |D<21>          |    5.890|
+CE             |D<22>          |    5.890|
+CE             |D<23>          |    5.890|
+CE             |D<24>          |    5.890|
+CE             |D<25>          |    5.890|
+CE             |D<26>          |    5.890|
+CE             |D<27>          |    5.890|
+CE             |D<28>          |    5.890|
+CE             |D<29>          |    5.890|
+CE             |D<30>          |    5.890|
+CE             |D<31>          |    5.890|
+CE1            |D<0>           |    5.890|
+CE1            |D<1>           |    5.890|
+CE1            |D<2>           |    5.890|
+CE1            |D<3>           |    5.890|
+CE1            |D<4>           |    5.890|
+CE1            |D<5>           |    5.890|
+CE1            |D<6>           |    5.890|
+CE1            |D<7>           |    5.890|
+CE1            |D<8>           |    5.890|
+CE1            |D<9>           |    5.890|
+CE1            |D<10>          |    5.890|
+CE1            |D<11>          |    5.890|
+CE1            |D<12>          |    5.890|
+CE1            |D<13>          |    5.890|
+CE1            |D<14>          |    5.890|
+CE1            |D<15>          |    5.890|
+CE1            |D<16>          |    5.890|
+CE1            |D<17>          |    5.890|
+CE1            |D<18>          |    5.890|
+CE1            |D<19>          |    5.890|
+CE1            |D<20>          |    5.890|
+CE1            |D<21>          |    5.890|
+CE1            |D<22>          |    5.890|
+CE1            |D<23>          |    5.890|
+CE1            |D<24>          |    5.890|
+CE1            |D<25>          |    5.890|
+CE1            |D<26>          |    5.890|
+CE1            |D<27>          |    5.890|
+CE1            |D<28>          |    5.890|
+CE1            |D<29>          |    5.890|
+CE1            |D<30>          |    5.890|
+CE1            |D<31>          |    5.890|
+OE             |D<0>           |    5.890|
+OE             |D<1>           |    5.890|
+OE             |D<2>           |    5.890|
+OE             |D<3>           |    5.890|
+OE             |D<4>           |    5.890|
+OE             |D<5>           |    5.890|
+OE             |D<6>           |    5.890|
+OE             |D<7>           |    5.890|
+OE             |D<8>           |    5.890|
+OE             |D<9>           |    5.890|
+OE             |D<10>          |    5.890|
+OE             |D<11>          |    5.890|
+OE             |D<12>          |    5.890|
+OE             |D<13>          |    5.890|
+OE             |D<14>          |    5.890|
+OE             |D<15>          |    5.890|
+OE             |D<16>          |    5.890|
+OE             |D<17>          |    5.890|
+OE             |D<18>          |    5.890|
+OE             |D<19>          |    5.890|
+OE             |D<20>          |    5.890|
+OE             |D<21>          |    5.890|
+OE             |D<22>          |    5.890|
+OE             |D<23>          |    5.890|
+OE             |D<24>          |    5.890|
+OE             |D<25>          |    5.890|
+OE             |D<26>          |    5.890|
+OE             |D<27>          |    5.890|
+OE             |D<28>          |    5.890|
+OE             |D<29>          |    5.890|
+OE             |D<30>          |    5.890|
+OE             |D<31>          |    5.890|
+---------------+---------------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
+
+Constraints cover 105126 paths, 0 nets, and 23485 connections
+
+Design statistics:
+   Minimum period:   9.807ns   (Maximum frequency: 101.968MHz)
+   Maximum path delay from/to any node:  10.231ns
+
+
+Analysis completed Tue Jul 28 15:40:52 2015 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 507 MB
+
+
+

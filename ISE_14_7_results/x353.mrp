@@ -1,0 +1,719 @@
+Release 14.7 Map P.20131013 (lin64)
+Xilinx Mapping Report File for Design 'x353'
+
+Design Information
+------------------
+Command Line   : map -o x353.ncd -cm speed -ir off -ol high -p xc3s1200eft256-4
+-register_duplication on -w x353.ngd x353.pcf 
+Target Device  : xc3s1200e
+Target Package : ft256
+Target Speed   : -4
+Mapper Version : spartan3e -- $Revision: 1.55 $
+Mapped Date    : Tue Jul 28 15:40:31 2015
+
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:   20
+Logic Utilization:
+  Total Number Slice Registers:       7,573 out of  17,344   43%
+    Number used as Flip Flops:        7,515
+    Number used as Latches:              58
+  Number of 4 input LUTs:             8,802 out of  17,344   50%
+Logic Distribution:
+  Number of occupied Slices:          6,969 out of   8,672   80%
+    Number of Slices containing only related logic:   6,969 out of   6,969 100%
+    Number of Slices containing unrelated logic:          0 out of   6,969   0%
+      *See NOTES below for an explanation of the effects of unrelated logic.
+  Total Number of 4 input LUTs:       9,293 out of  17,344   53%
+    Number used as logic:             7,833
+    Number used as a route-thru:        491
+    Number used as 16x1 RAMs:            13
+    Number used for Dual Port RAMs:     676
+      (Two LUTs used per Dual Port RAM)
+    Number used as Shift registers:     280
+
+  The Slice Logic Distribution report is not meaningful if the design is
+  over-mapped for a non-slice resource or if Placement fails.
+
+  Number of bonded IOBs:                142 out of     190   74%
+    IOB Flip Flops:                      66
+    IOB Latches:                          9
+    IOB Master Pads:                      2
+    IOB Slave Pads:                       2
+  Number of IDDR2s used:                 18
+    Number of DDR_ALIGNMENT = NONE       18
+    Number of DDR_ALIGNMENT = C0          0
+    Number of DDR_ALIGNMENT = C1          0
+  Number of ODDR2s used:                 20
+    Number of DDR_ALIGNMENT = NONE       20
+    Number of DDR_ALIGNMENT = C0          0
+    Number of DDR_ALIGNMENT = C1          0
+  Number of RAMB16s:                     22 out of      28   78%
+  Number of BUFGMUXs:                     9 out of      24   37%
+  Number of DCMs:                         4 out of       8   50%
+  Number of MULT18X18SIOs:               19 out of      28   67%
+
+Average Fanout of Non-Clock Nets:                2.90
+
+Peak Memory Usage:  749 MB
+Total REAL time to MAP completion:  9 secs 
+Total CPU time to MAP completion:   9 secs 
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity - e.g. two
+   LUTs are "related" if they share common inputs.  When assembling slices,
+   Map gives priority to combine logic that is related.  Doing so results in
+   the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin packing
+   unrelated logic into a slice once 99% of the slices are occupied through
+   related logic packing.
+
+   Note that once logic distribution reaches the 99% level through related
+   logic packing, this does not mean the device is completely utilized.
+   Unrelated logic packing will then begin, continuing until all usable LUTs
+   and FFs are occupied.  Depending on your timing budget, increased levels of
+   unrelated logic packing may adversely affect the overall timing performance
+   of your design.
+
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group and Partition Summary
+Section 10 - Timing Report
+Section 11 - Configuration String Information
+Section 12 - Control Set Information
+Section 13 - Utilization by Hierarchy
+
+Section 1 - Errors
+------------------
+
+Section 2 - Warnings
+--------------------
+WARNING:Map:122 - The command line option -ol can only be used when running in
+   timing mode (-timing option).  The option will be ignored.
+WARNING:Map:125 - The command line option -register_duplication can only be used
+   when running in timing mode (-timing option).  The option will be ignored.
+WARNING:MapLib:701 - Signal CLK2 connected to top level port CLK2 has been
+   removed.
+WARNING:MapLib:701 - Signal CLK4 connected to top level port CLK4 has been
+   removed.
+WARNING:MapLib:701 - Signal A<12> connected to top level port A<12> has been
+   removed.
+WARNING:MapLib:701 - Signal A<11> connected to top level port A<11> has been
+   removed.
+WARNING:MapLib:701 - Signal A<10> connected to top level port A<10> has been
+   removed.
+WARNING:MapLib:701 - Signal A<9> connected to top level port A<9> has been
+   removed.
+WARNING:MapLib:701 - Signal A<8> connected to top level port A<8> has been
+   removed.
+WARNING:MapLib:310 - Clock Feedback Frequency cannot be determined for DCM_SP
+   symbol "i_sensorpads/i_sensor_phase/i_dcm_sensor" (output
+   signal=i_sensorpads/i_sensor_phase/dcm_out0). CLK_FEEDBACK is set to 1X by
+   default.
+WARNING:LIT:176 - Clock buffer is designated to drive clock loads. BUFGMUX
+   symbol "i_pclk" (output signal=pclk) has a mix of clock and non-clock loads.
+   The non-clock loads are:
+   Pin I0 of i_sensorpads/Mmux_fifo_clkin11
+WARNING:LIT:176 - Clock buffer is designated to drive clock loads. BUFGMUX
+   symbol "physical_group_sclk0/i_iclockios/i_sclk0" (output signal=sclk0) has a
+   mix of clock and non-clock loads. The non-clock loads are:
+   Pin PSCLK of physical_group_i_dcm333/isdclk180/i_dcm333/i_dcm2
+   Pin PSCLK of
+   physical_group_i_sensorpads/i_sensor_phase/pre_pre_en_idata/i_sensorpads/i_se
+   nsor_phase/i_dcm_sensor
+WARNING:Pack:266 - The function generator
+   i_mcontr/i_chArbit/next_eqZero_OR_231_o failed to merge with F5 multiplexer
+   i_mcontr/i_chArbit/next_GND_84_o_AND_481_o_f5.  There is a conflict for the
+   FXMUX.  The design will exhibit suboptimal timing.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net i_sensorpads/fifo_clkin is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   cb_xt_pol_virt_trig_MUX_728_o is sourced by a combinatorial pin. This is not
+   good design practice. Use the CE pin to control the loading of data into the
+   flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net compressor_eot is sourced
+   by a combinatorial pin. This is not good design practice. Use the CE pin to
+   control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:1063 - Issue with pin connections and/or configuration
+   on block:<i_compressor/i_color_proc/i_y_buff.A>:<RAMB16_RAMB16A>.  The block
+   is configured to use an input parity pins. There is a dangling output parity
+   pin.
+WARNING:PhysDesignRules:1067 - Issue with pin connections and/or configuration
+   on block:<i_sensorpix/i_cstableh.B>:<RAMB16_RAMB16B>.  The block is
+   configured to use an input parity pin. There is a dangling output parity pin.
+WARNING:PhysDesignRules:1067 - Issue with pin connections and/or configuration
+   on block:<i_sensorpix/i_cstablel.B>:<RAMB16_RAMB16B>.  The block is
+   configured to use an input parity pin. There is a dangling output parity pin.
+WARNING:PhysDesignRules:1063 - Issue with pin connections and/or configuration
+   on block:<i_compressor/i_color_proc/i_CrCb_buff.A>:<RAMB16_RAMB16A>.  The
+   block is configured to use an input parity pins. There is a dangling output
+   parity pin.
+
+Section 3 - Informational
+-------------------------
+INFO:LIT:243 - Logical network i_BA0/O has no load.
+INFO:LIT:395 - The above info message is repeated 296 more times for the
+   following (max. 5 shown):
+   i_BA1/O,
+   i_SYS_SDWE/O,
+   i_SYS_SDCAS/O,
+   i_SYS_SDRAS/O,
+   i_SYS_SDCLK/O
+   To see the details of these info messages, please use the -detail switch.
+INFO:MapLib:562 - No environment variables are currently set.
+INFO:LIT:244 - All of the single ended outputs in this design are using slew
+   rate limited output drivers. The delay on speed critical single ended outputs
+   can be dramatically reduced by designating them as fast outputs.
+
+Section 4 - Removed Logic Summary
+---------------------------------
+  62 block(s) removed
+ 312 block(s) optimized away
+  85 signal(s) removed
+
+Section 5 - Removed Logic
+-------------------------
+
+The trimmed logic report below shows the logic removed from your design due to
+sourceless or loadless signals, and VCC or ground connections.  If the removal
+of a signal or symbol results in the subsequent removal of an additional signal
+or symbol, the message explaining that second removal will be indented.  This
+indentation will be repeated as a chain of related logic is removed.
+
+To quickly locate the original cause for the removal of a chain of logic, look
+above the place where that logic is listed in the trimming report, then locate
+the lines that are least indented (begin at the leftmost edge).
+
+Loadless block "i_iclk2" (BUF) removed.
+ The signal "CLK2" is loadless and has been removed.
+  Loadless block "CLK2" (PAD) removed.
+Loadless block "i_iclk4" (BUF) removed.
+ The signal "CLK4" is loadless and has been removed.
+  Loadless block "CLK4" (PAD) removed.
+Loadless block "i_iclockios/i_sclk180" (CKBUF) removed.
+ The signal "i_iclockios/isclk180" is loadless and has been removed.
+Loadless block "i_sysinterface/i_a10/i_q/i_qr" (LATCH) removed.
+ The signal "i_sysinterface/i_a10/q" is loadless and has been removed.
+  Loadless block "i_sysinterface/i_a10/i_q/i_q/IBUF" (BUF) removed.
+   The signal "A<10>" is loadless and has been removed.
+    Loadless block "A<10>" (PAD) removed.
+    Loadless block "i_sysinterface/i_a10/i_q/i_q/OBUFT" (TRI) removed.
+Loadless block "i_sysinterface/i_a11/i_q/i_qr" (LATCH) removed.
+ The signal "i_sysinterface/i_a11/q" is loadless and has been removed.
+  Loadless block "i_sysinterface/i_a11/i_q/i_q/IBUF" (BUF) removed.
+   The signal "A<11>" is loadless and has been removed.
+    Loadless block "A<11>" (PAD) removed.
+    Loadless block "i_sysinterface/i_a11/i_q/i_q/OBUFT" (TRI) removed.
+Loadless block "i_sysinterface/i_a12/i_q/i_qr" (LATCH) removed.
+ The signal "i_sysinterface/i_a12/q" is loadless and has been removed.
+  Loadless block "i_sysinterface/i_a12/i_q/i_q/IBUF" (BUF) removed.
+   The signal "A<12>" is loadless and has been removed.
+    Loadless block "A<12>" (PAD) removed.
+    Loadless block "i_sysinterface/i_a12/i_q/i_q/OBUFT" (TRI) removed.
+Loadless block "i_sysinterface/i_a8/i_q/i_qr" (LATCH) removed.
+ The signal "i_sysinterface/i_a8/q" is loadless and has been removed.
+  Loadless block "i_sysinterface/i_a8/i_q/i_q/IBUF" (BUF) removed.
+   The signal "A<8>" is loadless and has been removed.
+    Loadless block "A<8>" (PAD) removed.
+    Loadless block "i_sysinterface/i_a8/i_q/i_q/OBUFT" (TRI) removed.
+Loadless block "i_sysinterface/i_a9/i_q/i_qr" (LATCH) removed.
+ The signal "i_sysinterface/i_a9/q" is loadless and has been removed.
+  Loadless block "i_sysinterface/i_a9/i_q/i_q/IBUF" (BUF) removed.
+   The signal "A<9>" is loadless and has been removed.
+    Loadless block "A<9>" (PAD) removed.
+    Loadless block "i_sysinterface/i_a9/i_q/i_q/OBUFT" (TRI) removed.
+The signal "i_BA0/O" is sourceless and has been removed.
+The signal "i_BA1/O" is sourceless and has been removed.
+The signal "i_SYS_SDWE/O" is sourceless and has been removed.
+The signal "i_SYS_SDCAS/O" is sourceless and has been removed.
+The signal "i_SYS_SDRAS/O" is sourceless and has been removed.
+The signal "i_SYS_SDCLK/O" is sourceless and has been removed.
+The signal "i_BG/O" is sourceless and has been removed.
+The signal "i_compressor/i_quantizator/i_hfc_en/Q" is sourceless and has been
+removed.
+The signal "i_compressor/i_quantizator/i_hfc_en/CE" is sourceless and has been
+removed.
+The signal "i_compressor/i_xdct/i_dct_stage2/i_disdv/Q" is sourceless and has
+been removed.
+The signal "i_compressor/i_xdct/i_dct_stage2/i_disdv/CE" is sourceless and has
+been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_17_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_13_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_16_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_14_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_10_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_15_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_11_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_12_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_17_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_16_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_15_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_12_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_14_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_13_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_11_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pd_10_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_27_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_26_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_25_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_22_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_24_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_23_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_21_17_0/Q" is
+sourceless and has been removed.
+The signal "i_compressor/i_color_proc/i_csconvert18/Mshreg_pa_20_17_0/Q" is
+sourceless and has been removed.
+
+The trimmed logic reported below is either:
+   1. part of a cycle
+   2. part of disabled logic
+   3. a side-effect of other trimmed logic
+
+The signal "cb_hfc_sel<2>" is unused and has been removed.
+ Unused block "i_control_regs/i_hfc_sel_2" (FF) removed.
+  The signal "i_control_regs/reg_wr[1]_d2[17]_AND_2986_o" is unused and has been
+removed.
+   Unused block "i_control_regs/reg_wr[1]_d2[17]_AND_2986_o1" (ROM) removed.
+The signal "cb_hfc_sel<1>" is unused and has been removed.
+ Unused block "i_control_regs/i_hfc_sel_1" (FF) removed.
+The signal "cb_hfc_sel<0>" is unused and has been removed.
+ Unused block "i_control_regs/i_hfc_sel_0" (FF) removed.
+The signal "i_SDCLKE/i_q/d0" is unused and has been removed.
+The signal "i_sensortrig/sync_wr0" is unused and has been removed.
+ Unused block "i_sensortrig/i_sync_wr0" (FF) removed.
+  The signal "i_sensortrig/sync_wr" is unused and has been removed.
+   Unused block "i_sensortrig/i_sync_wr" (FF) removed.
+    The signal "i_sensortrig/sync_wr1" is unused and has been removed.
+     Unused block "i_sensortrig/i_sync_wr1" (FF) removed.
+The signal "i_mcontr/i_descrproc/enRestart[3]_extRestartRq[3]_OR_152_o" is
+unused and has been removed.
+ Unused block "i_mcontr/i_descrproc/enRestart[3]_extRestartRq[3]_OR_152_o1" (ROM)
+removed.
+  The signal "i_mcontr/i_descrproc/enRestart<3>" is unused and has been removed.
+   Unused block "i_mcontr/i_descrproc/enRestart_3" (SFF) removed.
+The signal
+"i_mcontr/i_descrproc/extRestartRq1[3]_extRestartRq2[3]_and_51_OUT<3>" is unused
+and has been removed.
+The signal "i_mcontr/i_descrproc/extRestartRq0<3>" is unused and has been
+removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<5>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<9>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<10>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<11>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<12>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<13>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<14>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<15>" is
+unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<15>" is unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<14>" is unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<13>" is unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<12>" is unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<11>" is unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<10>" is unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<9>" is unused and has been removed.
+The signal "i_interrupts_vector/irq_insa<5>" is unused and has been removed.
+The signal "i_compressor/i_quantizator/hfc_sel[2]_tba[5]_LessThan_78_o1" is
+unused and has been removed.
+ Unused block "i_compressor/i_quantizator/hfc_sel[2]_tba[5]_LessThan_78_o1" (ROM)
+removed.
+The signal "i_compressor/i_quantizator/ctype_dcc_run_AND_2723_o" is unused and
+has been removed.
+ Unused block "i_compressor/i_quantizator/ctype_dcc_run_AND_2723_o1" (ROM)
+removed.
+  The signal "i_compressor/i_quantizator/dcc_run" is unused and has been removed.
+   Unused block "i_compressor/i_quantizator/dcc_run" (SFF) removed.
+The signal "i_compressor/i_quantizator/ctype_prev<0>" is unused and has been
+removed.
+ Unused block "i_compressor/i_quantizator/ctype_prev_0" (SFF) removed.
+The signal "i_compressor/i_xdct/i_dct_stage2/n0026" is unused and has been
+removed.
+ Unused block "i_compressor/i_xdct/i_dct_stage2/n00261" (ROM) removed.
+The signal "i_compressor/i_quantizator/hfc_sel[2]_ctype_prev[0]_AND_2736_o10" is
+unused and has been removed.
+ Unused block "i_compressor/i_quantizator/hfc_sel[2]_ctype_prev[0]_AND_2736_o10"
+(ROM) removed.
+The signal "i_compressor/i_quantizator/hfc_sel[2]_ctype_prev[0]_AND_2736_o28" is
+unused and has been removed.
+ Unused block "i_compressor/i_quantizator/hfc_sel[2]_ctype_prev[0]_AND_2736_o28"
+(ROM) removed.
+  The signal "N1684" is unused and has been removed.
+   Unused block
+"i_compressor/i_quantizator/hfc_sel[2]_ctype_prev[0]_AND_2736_o28_SW0" (ROM)
+removed.
+The signal "i_compressor/i_quantizator/hfc_sel[2]_ctype_prev[0]_AND_2736_o56" is
+unused and has been removed.
+ Unused block "i_compressor/i_quantizator/hfc_sel[2]_ctype_prev[0]_AND_2736_o56"
+(ROM) removed.
+Unused block "i_BA0/IBUF" (BUF) removed.
+Unused block "i_BA1/IBUF" (BUF) removed.
+Unused block "i_BG/IBUF" (BUF) removed.
+Unused block "i_SYS_SDCAS/IBUF" (BUF) removed.
+Unused block "i_SYS_SDCLK/IBUF" (BUF) removed.
+Unused block "i_SYS_SDRAS/IBUF" (BUF) removed.
+Unused block "i_SYS_SDWE/IBUF" (BUF) removed.
+Unused block "i_compressor/i_quantizator/i_hfc_en/SRL16E" (SRLC16E) removed.
+Unused block "i_compressor/i_quantizator/i_hfc_en/VCC" (ONE) removed.
+Unused block "i_compressor/i_xdct/i_dct_stage2/i_disdv/SRL16E" (SRLC16E)
+removed.
+Unused block "i_compressor/i_xdct/i_dct_stage2/i_disdv/VCC" (ONE) removed.
+Unused block "i_sysinterface/i_a0/i_q/i_q/OBUFT" (TRI) removed.
+Unused block "i_sysinterface/i_a1/i_q/i_q/OBUFT" (TRI) removed.
+Unused block "i_sysinterface/i_a2/i_q/i_q/OBUFT" (TRI) removed.
+Unused block "i_sysinterface/i_a3/i_q/i_q/OBUFT" (TRI) removed.
+Unused block "i_sysinterface/i_a4/i_q/i_q/OBUFT" (TRI) removed.
+Unused block "i_sysinterface/i_a5/i_q/i_q/OBUFT" (TRI) removed.
+Unused block "i_sysinterface/i_a6/i_q/i_q/OBUFT" (TRI) removed.
+Unused block "i_sysinterface/i_a7/i_q/i_q/OBUFT" (TRI) removed.
+
+Optimized Block(s):
+TYPE 		BLOCK
+GND 		XST_GND
+VCC 		XST_VCC
+FD 		i_SDCLKE/i_q/i_d0
+   optimized to 1
+FD_1 		i_SDCLKE/i_q/i_dr
+   optimized to 1
+FDC 		i_interrupts_vector/i_insa_10
+   optimized to 0
+FDC 		i_interrupts_vector/i_insa_11
+   optimized to 0
+FDC 		i_interrupts_vector/i_insa_12
+   optimized to 0
+FDC 		i_interrupts_vector/i_insa_13
+   optimized to 0
+FDC 		i_interrupts_vector/i_insa_14
+   optimized to 0
+FDC 		i_interrupts_vector/i_insa_15
+   optimized to 0
+FDC 		i_interrupts_vector/i_insa_5
+   optimized to 0
+FDC 		i_interrupts_vector/i_insa_9
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<10>1
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<11>1
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<12>1
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<13>1
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<14>1
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<15>1
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<5>1
+   optimized to 0
+LUT2 		i_interrupts_vector/irq_insb[15]_irq_insc[15]_and_34_OUT<9>1
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_10
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_11
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_12
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_13
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_14
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_15
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_5
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insb_9
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_10
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_11
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_12
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_13
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_14
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_15
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_5
+   optimized to 0
+FDR_1 		i_interrupts_vector/irq_insc_9
+   optimized to 0
+LUT2 		i_mcontr/i_descrproc/extRestartRq1[3]_extRestartRq2[3]_and_51_OUT<3>1
+   optimized to 0
+FD_1 		i_mcontr/i_descrproc/extRestartRq1_3
+   optimized to 0
+FD_1 		i_mcontr/i_descrproc/extRestartRq2_3
+   optimized to 0
+FD_1 		i_mcontr/i_descrproc/extRestartRq_3
+   optimized to 0
+FDCE 		i_mcontr/i_descrproc/i_extRestartRq0_3
+   optimized to 0
+
+To enable printing of redundant blocks removed and signals merged, set the
+detailed map report option and rerun map.
+
+Section 6 - IOB Properties
+--------------------------
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type             | Direction | IO Standard          | Diff  | Drive    | Slew | Reg (s)      | Resistor | IOB      |
+|                                    |                  |           |                      | Term  | Strength | Rate |              |          | Delay    |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| A<0>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| A<1>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| A<2>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| A<3>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| A<4>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| A<5>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| A<6>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| A<7>                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
+| ALWAYS0                            | IBUF             | INPUT     | LVCMOS25             |       |          |      |              | PULLDOWN | 0 / 0    |
+| ARO                                | IOB              | OUTPUT    | LVCMOS25             |       | 4        | SLOW |              |          | 0 / 0    |
+| ARST                               | IOB              | OUTPUT    | LVCMOS25             |       | 4        | SLOW |              |          | 0 / 0    |
+| BA<0>                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| BA<1>                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| BG                                 | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| BPF                                | IBUF             | INPUT     | LVCMOS25             |       |          |      |              |          | 0 / 0    |
+| BRIN                               | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| BROUT                              | IOB              | OUTPUT    | LVCMOS33             |       | 4        | SLOW |              |          | 0 / 0    |
+| CE                                 | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| CE1                                | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| CLK0                               | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| CLK1                               | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| CLK3                               | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 3    |
+| CNVCLK                             | IOB              | BIDIR     | LVCMOS25             |       | 4        | SLOW | IFF1         |          | 0 / 3    |
+| CNVSYNC                            | IOB              | BIDIR     | LVCMOS25             |       | 4        | SLOW | IFF1         |          | 0 / 3    |
+| D<0>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<1>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<2>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<3>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<4>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<5>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<6>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<7>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<8>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<9>                               | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<10>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<11>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<12>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<13>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<14>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<15>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<16>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<17>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<18>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<19>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<20>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<21>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<22>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<23>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<24>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<25>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<26>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<27>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<28>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<29>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<30>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| D<31>                              | IOB              | BIDIR     | LVCMOS33             |       | 8        | SLOW | IFF1         |          | 0 / 0    |
+| DACK0                              | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| DACK1                              | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| DCLK                               | IOB              | BIDIR     | LVCMOS25             |       | 4        | SLOW | IFF1         |          | 0 / 3    |
+| DREQ0                              | IOB              | OUTPUT    | LVCMOS33             |       | 4        | SLOW | OFF1         |          | 0 / 0    |
+| DREQ1                              | IOB              | OUTPUT    | LVCMOS33             |       | 4        | SLOW | OFF1         |          | 0 / 0    |
+| DUMMYVFEF                          | IOB              | BIDIR     | SSTL2_I              |       |          |      |              |          | 0 / 0    |
+| EXT<0>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<1>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<2>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<3>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<4>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<5>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<6>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<7>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<8>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<9>                             | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<10>                            | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| EXT<11>                            | IOB              | BIDIR     | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| HACT                               | IBUF             | INPUT     | LVCMOS25             |       |          |      | IDDR2        |          | 0 / 3    |
+| IRQ                                | IOB              | OUTPUT    | LVCMOS33             |       | 8        | SLOW |              |          | 0 / 0    |
+| LDQS                               | IOB              | BIDIR     | SSTL2_I              |       |          |      | IFF1         |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+| MRST                               | IOB              | BIDIR     | LVCMOS25             |       | 4        | SLOW |              | PULLUP   | 0 / 0    |
+| OE                                 | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| PXD<0>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<1>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<2>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<3>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<4>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<5>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<6>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<7>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<8>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| PXD<9>                             | IBUF             | INPUT     | LVCMOS25             |       |          |      | IFF1         |          | 0 / 3    |
+| SCL0                               | IOB              | BIDIR     | LVCMOS25             |       | 12       | SLOW |              | PULLUP   | 0 / 0    |
+| SDA0                               | IOB              | BIDIR     | LVCMOS25             |       | 12       | SLOW |              |          | 0 / 0    |
+| SDA<0>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<1>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<2>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<3>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<4>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<5>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<6>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<7>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<8>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<9>                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<10>                            | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<11>                            | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<12>                            | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<13>                            | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDA<14>                            | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDCAS                              | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDCLK                              | DIFFM            | OUTPUT    | DIFF_SSTL2_I         |       |          |      |              |          | 0 / 0    |
+| SDCLKE                             | IOB              | OUTPUT    | SSTL2_I              |       |          |      |              |          | 0 / 0    |
+| SDCLK_FB                           | DIFFSI           | INPUT     | DIFF_SSTL2_I         |       |          |      |              |          | 0 / 0    |
+| SDD<0>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<1>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<2>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<3>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<4>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<5>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<6>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<7>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<8>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<9>                             | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<10>                            | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<11>                            | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<12>                            | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<13>                            | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<14>                            | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDD<15>                            | IOB              | BIDIR     | SSTL2_I              |       |          |      | IDDR2        |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+|                                    |                  |           |                      |       |          |      | TFF1         |          |          |
+| SDLDM                              | IOB              | OUTPUT    | SSTL2_I              |       |          |      | ODDR2        |          | 0 / 0    |
+| SDNCLK                             | DIFFS            | OUTPUT    | DIFF_SSTL2_I         |       |          |      |              |          | 0 / 0    |
+| SDNCLK_FB                          | DIFFMI           | INPUT     | DIFF_SSTL2_I         |       |          |      |              |          | 0 / 0    |
+| SDRAS                              | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SDUDM                              | IOB              | OUTPUT    | SSTL2_I              |       |          |      | ODDR2        |          | 0 / 0    |
+| SDWE                               | IOB              | OUTPUT    | SSTL2_I              |       |          |      | OFF1         |          | 0 / 0    |
+| SENSPGM                            | IOB              | BIDIR     | LVCMOS25             |       | 12       | SLOW |              | PULLUP   | 0 / 0    |
+| SYS_BUSEN                          | IOB              | OUTPUT    | LVCMOS33             |       | 4        | SLOW |              |          | 0 / 0    |
+| SYS_SDCAS                          | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| SYS_SDCLK                          | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| SYS_SDCLKI                         | IBUF             | INPUT     | LVCMOS33             |       |          |      |              |          | 0 / 0    |
+| SYS_SDRAS                          | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| SYS_SDWE                           | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          | 0 / 0    |
+| UDQS                               | IOB              | BIDIR     | SSTL2_I              |       |          |      | IFF1         |          | 0 / 0    |
+|                                    |                  |           |                      |       |          |      | ODDR2        |          |          |
+| VACT                               | IBUF             | INPUT     | LVCMOS25             |       |          |      | IDDR2        |          | 0 / 3    |
+| WE                                 | IBUF             | INPUT     | LVCMOS33             |       |          |      | IFF1         |          | 0 / 0    |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group and Partition Summary
+--------------------------------------------
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Area Group Information
+----------------------
+
+  No area groups were found in this design.
+
+----------------------
+
+Section 10 - Timing Report
+--------------------------
+This design was not run using timing mode.
+
+Section 11 - Configuration String Details
+-----------------------------------------
+Use the "-detail" map option to print out Configuration Strings
+
+Section 12 - Control Set Information
+------------------------------------
+No control set information for this architecture.
+
+Section 13 - Utilization by Hierarchy
+-------------------------------------
+Use the "-detail" map option to print out the Utilization by Hierarchy section.

@@ -1,0 +1,133 @@
+Release 14.7 ngdbuild P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Command Line: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/ngdbuild -p
+xc3s1200eft256-4 x353.ngc x353.ngd
+
+Reading NGO file "/home/xilinx/vdt_ise/x353/x353.ngc" ...
+Gathering constraint information from source properties...
+Done.
+
+Resolving constraint associations...
+Checking Constraint Associations...
+WARNING:ConstraintSystem - For the pattern match
+   'LATCHES('i_compressor/i_huffman/i_stuffer_was_rdy_early')', no signals were
+   found to match the pattern 'i_compressor/i_huffman/i_stuffer_was_rdy_early'.
+   This patern match is used in the following groups and/or specifications:
+   <TIMEGRP TG_STUFFER_WAS_READY_EARLY =
+   LATCHES("i_compressor/i_huffman/i_stuffer_was_rdy_early");>
+   Since no appropriate elements were found for the group
+   'LATCHES('i_compressor/i_huffman/i_stuffer_was_rdy_early')', this group has
+   been removed from the design. Note that patterns for TIMEGRP will match only
+   signals driven by the given type of element, not instance names. To create a
+   group using an instance name pattern, use the INST keyword to attach a TNM.
+
+WARNING:ConstraintSystem - TNM : TNM_PCLK was distributed to a DCM but new TNM
+   constraints were not derived. This TNM is used in the following user groups
+   or specifications:
+   <TIMESPEC TS_PCLK_GCLK_IDATA = FROM "TNM_PCLK" TO "TNM_GCLK_IDATA" TIG;>
+   <TIMESPEC TS_GCLK_IDATA_PCLK = FROM "TNM_GCLK_IDATA" TO "TNM_PCLK" TIG;>
+   <TIMESPEC TS_PCLK_PCLK2X = FROM "TNM_PCLK" TO "TNM_PCLK2X" TIG;>
+
+WARNING:ConstraintSystem:56 - Constraint <TIMESPEC
+   TS_i_sensorpads_i_sensor_phase_dcm_out0 = PERIOD
+   "i_sensorpads_i_sensor_phase_dcm_out0" TS_CLK1 HIGH 50%>: Unable to find an
+   active 'TNM' constraint named 'i_sensorpads_i_sensor_phase_dcm_out0'.
+
+INFO:ConstraintSystem:178 - TNM 'CLK0', used in period specification 'TS_CLK0',
+   was traced into DCM_SP instance i_iclockios/i_dcm1. The following new TNM
+   groups and period specifications were generated at the DCM_SP output(s): 
+   CLK0: <TIMESPEC TS_i_iclockios_isclk0 = PERIOD "i_iclockios_isclk0" TS_CLK0
+   HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'CLK0', used in period specification 'TS_CLK0',
+   was traced into DCM_SP instance i_iclockios/i_dcm1. The following new TNM
+   groups and period specifications were generated at the DCM_SP output(s): 
+   CLK270: <TIMESPEC TS_i_iclockios_isclk270 = PERIOD "i_iclockios_isclk270"
+   TS_CLK0 PHASE 5325 ps HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'CLK1', used in period specification 'TS_CLK1',
+   was traced into DCM_SP instance i_sensorpads/i_dcm4. The following new TNM
+   groups and period specifications were generated at the DCM_SP output(s): 
+   CLK2X: <TIMESPEC TS_i_sensorpads_pclk2xi = PERIOD "i_sensorpads_pclk2xi"
+   TS_CLK1 / 2 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'CLK1', used in period specification 'TS_CLK1',
+   was traced into DCM_SP instance i_sensorpads/i_sensor_phase/i_dcm_sensor. The
+   following new TNM groups and period specifications were generated at the
+   DCM_SP output(s): 
+   CLK90: <TIMESPEC TS_i_sensorpads_i_sensor_phase_pre_pre_en_idata = PERIOD
+   "i_sensorpads_i_sensor_phase_pre_pre_en_idata" TS_CLK1 PHASE 2600 ps HIGH
+   50%>
+
+INFO:ConstraintSystem:178 - TNM 'CLK1', used in period specification 'TS_CLK1',
+   was traced into DCM_SP instance i_sensorpads/i_sensor_phase/i_dcm_sensor. The
+   following new TNM groups and period specifications were generated at the
+   DCM_SP output(s): 
+   CLK180: <TIMESPEC TS_i_sensorpads_i_sensor_phase_pre_pre_en_idata90 = PERIOD
+   "i_sensorpads_i_sensor_phase_pre_pre_en_idata90" TS_CLK1 PHASE 5200 ps HIGH
+   50%>
+
+INFO:ConstraintSystem:178 - TNM 'CLK1', used in period specification 'TS_CLK1',
+   was traced into DCM_SP instance i_sensorpads/i_sensor_phase/i_dcm_sensor. The
+   following new TNM groups and period specifications were generated at the
+   DCM_SP output(s): 
+   CLK2X: <TIMESPEC TS_i_sensorpads_i_sensor_phase_dcm2x = PERIOD
+   "i_sensorpads_i_sensor_phase_dcm2x" TS_CLK1 / 2 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM 'CLK1', used in period specification 'TS_CLK1',
+   was traced into DCM_SP instance i_sensorpads/i_sensor_phase/i_dcm_sensor. The
+   following new TNM groups and period specifications were generated at the
+   DCM_SP output(s): 
+   CLK2X180: <TIMESPEC TS_i_sensorpads_i_sensor_phase_dcm2x180 = PERIOD
+   "i_sensorpads_i_sensor_phase_dcm2x180" TS_CLK1 / 2 PHASE 2600 ps HIGH 50%>
+
+Done...
+
+WARNING:NgdBuild:1212 - User specified non-default attribute value (8.333330)
+   was detected for the CLKIN_PERIOD attribute on DCM "i_iclockios/i_dcm1". 
+   This does not match the PERIOD constraint value (7100 ps.).  The uncertainty
+   calculation will use the non-default attribute value.  This could result in
+   incorrect uncertainty calculated for DCM output clocks.
+INFO:NgdBuild:1222 - Setting CLKIN_PERIOD attribute associated with DCM instance
+   i_sensorpads/i_dcm4 to 10.400000 ns based on the period specification
+   (<TIMESPEC TS_CLK1 = PERIOD "CLK1" 10400.000000 pS HIGH 50.000000 %;>).
+INFO:NgdBuild:1222 - Setting CLKIN_PERIOD attribute associated with DCM instance
+   i_sensorpads/i_sensor_phase/i_dcm_sensor to 10.400000 ns based on the period
+   specification (<TIMESPEC TS_CLK1 = PERIOD "CLK1" 10400.000000 pS HIGH
+   50.000000 %;>).
+WARNING:NgdBuild:1212 - User specified non-default attribute value (8.333330)
+   was detected for the CLKIN_PERIOD attribute on DCM "i_dcm333/i_dcm2".  This
+   does not match the PERIOD constraint value (7100 ps.).  The uncertainty
+   calculation will use the non-default attribute value.  This could result in
+   incorrect uncertainty calculated for DCM output clocks.
+Checking expanded design ...
+WARNING:NgdBuild:446 - LATCH primitive 'i_sysinterface/i_a12/i_q/i_qr' has
+   unconnected output pin
+WARNING:NgdBuild:446 - LATCH primitive 'i_sysinterface/i_a11/i_q/i_qr' has
+   unconnected output pin
+WARNING:NgdBuild:446 - LATCH primitive 'i_sysinterface/i_a10/i_q/i_qr' has
+   unconnected output pin
+WARNING:NgdBuild:446 - LATCH primitive 'i_sysinterface/i_a9/i_q/i_qr' has
+   unconnected output pin
+WARNING:NgdBuild:446 - LATCH primitive 'i_sysinterface/i_a8/i_q/i_qr' has
+   unconnected output pin
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:  10
+
+Total memory usage is 465840 kilobytes
+
+Writing NGD file "x353.ngd" ...
+Total REAL time to NGDBUILD completion:  8 sec
+Total CPU time to NGDBUILD completion:   8 sec
+
+Writing NGDBUILD log file "x353.bld"...

@@ -84,6 +84,10 @@ module dma_fifo_sync (	clk,		// system clock, 120MHz? (currentle negedge used)
     reg    firstclk; // generated 1-clk_long pulse as a source for swclk
     reg    written_burst; // 16 of 16-bit words are just written to FIFO
     wire   mem_re;        // memory RE signal (alo increments counters)
+//AF2015: Could not find any iob=true for this register, but it is still duplicated
+// OK, it has only sync inputs, so no risk to have different values here and in the IOB
+//FlipFlop i_dma_fifo0/dreq has been replicated 1 time(s) to handle iob=true attribute.
+//FlipFlop i_dma_fifo1/dreq has been replicated 1 time(s) to handle iob=true attribute.
     reg    dreq;
     reg    [1:0] burst_start_sync;  // 1 clk long pulse (clk-sync) after start of the DMA burst
     reg    [1:0] dack_r; // synchronize to clk, dual to prevent metastability

@@ -12,22 +12,22 @@
 		<link>
 			<name>ise_logs/ISEBitgen.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISEBitgen-20150727202331879.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISEBitgen-20150728154046694.log</location>
 		</link>
 		<link>
 			<name>ise_logs/ISEMap.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISEMap-20150727201724222.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISEMap-20150728154015412.log</location>
 		</link>
 		<link>
 			<name>ise_logs/ISENGDBuild.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISENGDBuild-20150727201724222.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISENGDBuild-20150728152925685.log</location>
 		</link>
 		<link>
 			<name>ise_logs/ISEPAR.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISEPAR-20150727202331879.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISEPAR-20150728154046694.log</location>
 		</link>
 		<link>
 			<name>ise_logs/ISEPartgen.log</name>
@@ -35,39 +35,44 @@
 			<location>/home/andrey/git/x353/ise_logs/ISEPartgen-20150726172041010.log</location>
 		</link>
 		<link>
+			<name>ise_logs/ISEReportGen.log</name>
+			<type>1</type>
+			<location>/home/andrey/git/x353/ise_logs/ISEReportGen-20150728154526166.log</location>
+		</link>
+		<link>
 			<name>ise_logs/ISETraceMap.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISETraceMap-20150727201724222.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISETraceMap-20150728154015412.log</location>
 		</link>
 		<link>
 			<name>ise_logs/ISETracePAR.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISETracePAR-20150727202331879.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISETracePAR-20150728154046694.log</location>
 		</link>
 		<link>
 			<name>ise_logs/ISExst.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISExst-20150727201317048.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISExst-20150728152838290.log</location>
 		</link>
 		<link>
 			<name>ise_state/x353-map.tgz</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_state/x353-map-20150727201724222.tgz</location>
+			<location>/home/andrey/git/x353/ise_state/x353-map-20150728154015412.tgz</location>
 		</link>
 		<link>
 			<name>ise_state/x353-ngdbuild.tgz</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_state/x353-ngdbuild-20150727201724222.tgz</location>
+			<location>/home/andrey/git/x353/ise_state/x353-ngdbuild-20150728152925685.tgz</location>
 		</link>
 		<link>
 			<name>ise_state/x353-par.tgz</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_state/x353-par-20150727202331879.tgz</location>
+			<location>/home/andrey/git/x353/ise_state/x353-par-20150728154046694.tgz</location>
 		</link>
 		<link>
 			<name>ise_state/x353-synth.tgz</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_state/x353-synth-20150727201317048.tgz</location>
+			<location>/home/andrey/git/x353/ise_state/x353-synth-20150728152838290.tgz</location>
 		</link>
 	</linkedResources>
 </projectDescription>
