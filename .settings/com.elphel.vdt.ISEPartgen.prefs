@@ -1,0 +1,7 @@
+ISEPartgen_123_p_option=false
+ISEPartgen_124_v_option=true
+ISEPartgen_127_info=false
+ISEPartgen_129_useRedirect=false
+ISEPartgen_96_speed_grade=4
+com.elphel.store.context.ISEPartgen=ISEPartgen_123_p_option<-@\#\#@->ISEPartgen_124_v_option<-@\#\#@->ISEPartgen_127_info<-@\#\#@->ISEPartgen_129_useRedirect<-@\#\#@->ISEPartgen_96_speed_grade<-@\#\#@->
+eclipse.preferences.version=1

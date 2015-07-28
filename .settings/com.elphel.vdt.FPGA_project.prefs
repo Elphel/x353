@@ -1,0 +1,6 @@
+FPGA_project_0_SimulationTopFile=x353_1.tf
+FPGA_project_1_SimulationTopModule=testbench353
+FPGA_project_2_ImplementationTopFile=x353.v
+FPGA_project_4_part=xc3s1200eft256-4
+com.elphel.store.context.FPGA_project=FPGA_project_2_ImplementationTopFile<-@\#\#@->FPGA_project_0_SimulationTopFile<-@\#\#@->FPGA_project_1_SimulationTopModule<-@\#\#@->FPGA_project_4_part<-@\#\#@->
+eclipse.preferences.version=1

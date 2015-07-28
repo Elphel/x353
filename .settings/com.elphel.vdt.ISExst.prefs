@@ -1,0 +1,6 @@
+ISExst_123_use_new_parser=no
+ISExst_149_keep_hierarchy=soft
+ISExst_189_constraints=x353.xcf
+ISExst_190_constraints=x353.xcf
+com.elphel.store.context.ISExst=ISExst_149_keep_hierarchy<-@\#\#@->ISExst_189_constraints<-@\#\#@->ISExst_123_use_new_parser<-@\#\#@->ISExst_190_constraints<-@\#\#@->
+eclipse.preferences.version=1

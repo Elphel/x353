@@ -1,0 +1,5 @@
+ISEMap_131_cover_mode=speed
+ISEMap_141_overall_effor_level=high
+ISEMap_96_speed_grade=4
+com.elphel.store.context.ISEMap=ISEMap_96_speed_grade<-@\#\#@->ISEMap_131_cover_mode<-@\#\#@->ISEMap_141_overall_effor_level<-@\#\#@->
+eclipse.preferences.version=1
