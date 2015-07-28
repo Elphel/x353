@@ -28,7 +28,21 @@
 
 
 
-module	sensorpads (/// interface to DCM
+module	sensorpads #(
+    parameter IOSTANDARD_SENSOR =       "LVCMOS33",
+    parameter SLEW_SENSOR =             "SLOW",
+    parameter DRIVE_SENSOR =            4,
+    
+    parameter IOSTANDARD_SENSOR_CLK =   "LVCMOS33",
+    parameter SLEW_SENSOR_CLK =         "SLOW",
+    parameter DRIVE_SENSOR_CLK =        4,
+    
+    parameter IFD_DELAY_SENSOR_PXD =    "0",
+    parameter IFD_DELAY_SENSOR_VHACT =  "0",
+    parameter IBUF_DELAY_SENSOR_PXD =   "0",
+    parameter IBUF_DELAY_SENSOR_VHACT = "0"
+    
+) (
                      sclk,       // system clock, @negedge
                      cmd,        // [6:0] command for phase adjustment @ negedge (sclk) MSB - reset pclk2x DCM
 					 wcmd,       // write command@ negedge (slck)
@@ -137,8 +151,11 @@ module	sensorpads (/// interface to DCM
   wire  [11:0]  pxdi;
 //Automatic clock placement failed. Please attempt to analyze  the global clocking required for this design and either lock the clock...
    assign fifo_clkin=(clk_sel && !dclkmode)?sens_clk:clk;
-sensor_phase353
-     i_sensor_phase (.cclk(!sclk),       // command clock (posedge, invert on input if needed)
+sensor_phase353 #(
+        .IOSTANDARD_SENSOR        (IOSTANDARD_SENSOR),
+        .IFD_DELAY_SENSOR_VHACT   (IFD_DELAY_SENSOR_VHACT),
+        .IBUF_DELAY_SENSOR_VHACT  (IBUF_DELAY_SENSOR_VHACT)
+ )i_sensor_phase (.cclk(!sclk),       // command clock (posedge, invert on input if needed)
                      .wcmd(wcmd),   // write command
                      .cmd(cmd[5:0]),// CPU write data [5:0]
                                     //       0 - nop, just reset status data
@@ -176,26 +193,102 @@ sensor_phase353
 
 
 
-   IOBUF	 i_mrst	(.I(imrst), .IO(mrst), .T(xpgmen), .O(xfpgadone));
-   OBUF	 i_arst	(.I(xpgmen? xfpgatms : iarst), .O(arst));
-   OBUF	 i_aro	(.I(xpgmen? xfpgatck : iaro),  .O(aro ));
+   IOBUF  #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .SLEW                (SLEW_SENSOR),
+        .DRIVE               (DRIVE_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   ) i_mrst	(.I(imrst), .IO(mrst), .T(xpgmen), .O(xfpgadone));
+   OBUF	#(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .SLEW                (SLEW_SENSOR),
+        .DRIVE               (DRIVE_SENSOR)
+   ) i_arst	(.I(xpgmen? xfpgatms : iarst), .O(arst));
+   OBUF #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .SLEW                (SLEW_SENSOR),
+        .DRIVE               (DRIVE_SENSOR)
+   )  i_aro	(.I(xpgmen? xfpgatck : iaro),  .O(aro ));
 	
-   IOBUF	 i_dclk  (.I(clk), .IO(dclk), .T(dclkmode), .O(idclk));
+   IOBUF  #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR_CLK),
+        .SLEW                (SLEW_SENSOR_CLK),
+        .DRIVE               (DRIVE_SENSOR_CLK),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_dclk  (.I(clk), .IO(dclk), .T(dclkmode), .O(idclk));
    
-   IBUF	 i_bpf	(.I(bpf), .O(sens_clk));
+   IBUF #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   ) i_bpf	(.I(bpf), .O(sens_clk));
 
-   IOBUF	 i_pxd0  (.IO(pxd[ 0]), .I(xpgmen?xfpgatdi:cnvctl[0]),  .T(~(cnven | xpgmen)), .O(pxdi[0]));
-   IOBUF	 i_pxd1  (.IO(pxd[ 1]), .I(                cnvctl[1]),  .T(~ cnven | xpgmen ), .O(pxdi[1]));
-   IBUF	 i_pxd2	(.I (pxd[ 2]), .O(pxdi[ 2]));
-   IBUF	 i_pxd3	(.I (pxd[ 3]), .O(pxdi[ 3]));
-   IBUF	 i_pxd4	(.I (pxd[ 4]), .O(pxdi[ 4]));
-   IBUF	 i_pxd5	(.I (pxd[ 5]), .O(pxdi[ 5]));
-   IBUF	 i_pxd6	(.I (pxd[ 6]), .O(pxdi[ 6]));
-   IBUF	 i_pxd7	(.I (pxd[ 7]), .O(pxdi[ 7]));
-   IBUF	 i_pxd8	(.I (pxd[ 8]), .O(pxdi[ 8]));
-   IBUF	 i_pxd9	(.I (pxd[ 9]), .O(pxdi[ 9]));
-   IBUF	 i_pxd10 (.I (pxd[10]), .O(pxdi[10]));
-   IBUF	 i_pxd11 (.I (pxd[11]), .O(pxdi[11]));
+   IOBUF #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .SLEW                (SLEW_SENSOR),
+        .DRIVE               (DRIVE_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   ) i_pxd0  (.IO(pxd[ 0]), .I(xpgmen?xfpgatdi:cnvctl[0]),  .T(~(cnven | xpgmen)), .O(pxdi[0]));
+   IOBUF #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .SLEW                (SLEW_SENSOR),
+        .DRIVE               (DRIVE_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   ) i_pxd1  (.IO(pxd[ 1]), .I(                cnvctl[1]),  .T(~ cnven | xpgmen ), .O(pxdi[1]));
+   IBUF	 #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_pxd2	(.I (pxd[ 2]), .O(pxdi[ 2]));
+   IBUF  #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   ) i_pxd3	(.I (pxd[ 3]), .O(pxdi[ 3]));
+   IBUF	 #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_pxd4	(.I (pxd[ 4]), .O(pxdi[ 4]));
+   IBUF	 #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_pxd5	(.I (pxd[ 5]), .O(pxdi[ 5]));
+   IBUF	#(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )   i_pxd6	(.I (pxd[ 6]), .O(pxdi[ 6]));
+   IBUF	#(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )   i_pxd7	(.I (pxd[ 7]), .O(pxdi[ 7]));
+   IBUF	 #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_pxd8	(.I (pxd[ 8]), .O(pxdi[ 8]));
+   IBUF	 #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_pxd9	(.I (pxd[ 9]), .O(pxdi[ 9]));
+   IBUF	 #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_pxd10 (.I (pxd[10]), .O(pxdi[10]));
+   IBUF	 #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_PXD),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_PXD)
+   )  i_pxd11 (.I (pxd[11]), .O(pxdi[11]));
 
    assign xfpgatdo=pxdi[1];
  //pxdi[11:0]

@@ -32,17 +32,49 @@
  `define debug_mcontr_reset
 // `define DEBUG_IMU
 module x353 #(
+    parameter IOSTANDARD_CLK =        "LVCMOS33",
+
+    parameter IOSTANDARD_SYS =        "LVCMOS33",
+    parameter SLEW_SYS =              "SLOW",
+    parameter DRIVE_SYS =             8,
+
+    parameter IBUF_DELAY_SYS_A =      "0",
+    parameter IFD_DELAY_SYS_A =       "0",
+
+    parameter IBUF_DELAY_SYS_D =      "0",
+    parameter IFD_DELAY_SYS_D =       "0",
+
+    parameter IBUF_DELAY_SYS_WOE =    "0",
+    parameter IFD_DELAY_SYS_WOE =     "0",
+
+    parameter IBUF_DELAY_SYS_CE =     "0",
+    parameter IFD_DELAY_SYS_CE =      "0",
+
+    parameter IBUF_DELAY_SYS_DACK =   "0",
+    parameter IFD_DELAY_SYS_DACK =    "0",
+
+    parameter IBUF_DELAY_SYS_SDCLK =  "0",
+    parameter IFD_DELAY_SYS_SDCLK =   "0",
+
+    parameter SLEW_SYS_DREQ =         "SLOW",
+    parameter DRIVE_SYS_DREQ =         4,
+
     parameter IOSTANDARD_EXT =        "LVCMOS33",
     parameter SLEW_EXT =              "SLOW",
     parameter DRIVE_EXT =             12,
     
-    parameter IOSTANDARD_SENSOR =     "LVCMOS33",
+    parameter IOSTANDARD_SENSOR =     "LVCMOS25",
     parameter SLEW_SENSOR =           "SLOW",
     parameter DRIVE_SENSOR =          4,
     
-    parameter IOSTANDARD_SENSOR_CLK = "LVCMOS33",
+    parameter IOSTANDARD_SENSOR_CLK = "LVCMOS25",
     parameter SLEW_SENSOR_CLK =       "SLOW",
     parameter DRIVE_SENSOR_CLK =      4,
+
+    parameter IFD_DELAY_SENSOR_PXD =  "0",
+    parameter IFD_DELAY_SENSOR_VHACT ="0",
+    parameter IBUF_DELAY_SENSOR_PXD =  "0",
+    parameter IBUF_DELAY_SENSOR_VHACT ="0",
     
     parameter IOSTANDARD_SDRAM =      "SSTL2_I",
     parameter DRIVE_SDRAM_DATA =      12,
@@ -770,28 +802,52 @@ wire    [3:0] restart; // reinitialize mcontr channels (normally after frame syn
 wire drv_bus=1'b0;// drive system bus (to write to system memory)
 wire nevr; // never true;
 wire isys_sdclki, ibrin;
-    assign BROUT=1'b0;
-    assign SYS_BUSEN=1'b1;
+//    assign BROUT=1'b0;
+    OBUF  #(
+        .IOSTANDARD   (IOSTANDARD_SYS),
+        .DRIVE        (DRIVE_SYS_DREQ),
+        .SLEW         (SLEW_SYS_DREQ))
+           i_BROUT (
+             .I(1'b0),
+             .O(BROUT));
+//    assign SYS_BUSEN=1'b1;
+    OBUF  #(
+        .IOSTANDARD  (IOSTANDARD_SYS),
+        .DRIVE       (DRIVE_SYS_DREQ),
+        .SLEW        (SLEW_SYS_DREQ))
+           i_SYS_BUSEN (
+             .I(1'b1),
+             .O(SYS_BUSEN));
 
-   IBUF      i_SYS_SDCLKI(.I(SYS_SDCLKI),  .O(isys_sdclki));
-   IBUF      i_BRIN      (.I(BRIN),        .O(ibrin));
+   IBUF #(
+        .IOSTANDARD       (IOSTANDARD_SYS),
+        .IBUF_DELAY_VALUE (IBUF_DELAY_SYS_SDCLK),
+        .IFD_DELAY_VALUE  (IFD_DELAY_SYS_SDCLK))
+        i_SYS_SDCLKI(
+            .I  (SYS_SDCLKI),
+            .O  (isys_sdclki));
+   IBUF #(
+        .IOSTANDARD       (IOSTANDARD_SYS),
+        .IBUF_DELAY_VALUE (IBUF_DELAY_SYS_DACK),
+        .IFD_DELAY_VALUE  (IFD_DELAY_SYS_DACK))
+             i_BRIN      (.I(BRIN),        .O(ibrin));
 
 wire idummyvref;    
-  IOBUF i_dummyvref (.I(1'b0), .T(nevr), .O(idummyvref), .IO(DUMMYVFEF));
-  IBUF  i_always0   (.I(ALWAYS0),.O(nevr));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SDRAM)) i_dummyvref (.I(1'b0), .T(nevr), .O(idummyvref), .IO(DUMMYVFEF));
+  IBUF  #(.IOSTANDARD(IOSTANDARD_SENSOR)) i_always0   (.I(ALWAYS0),.O(nevr)); // same bank as sesnor, 2.5V
 
 // That will keep isys_sdclki && ibrin && isenspgm && idummyvref && sdcl_fb from being optimized into oblivion
 wire sdcl_fb;
 
 wire never=nevr && isys_sdclki && ibrin && idummyvref && sdcl_fb;
-  IOBUF i_BA0      (.I(1'b0), .T(!never),.O(), .IO(BA[0]));
-  IOBUF i_BA1      (.I(1'b0), .T(!never),.O(), .IO(BA[1]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SYS)) i_BA0      (.I(1'b0), .T(!never),.O(), .IO(BA[0]));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SYS)) i_BA1      (.I(1'b0), .T(!never),.O(), .IO(BA[1]));
 
-  IOBUF i_SYS_SDWE  (.I(1'b1), .T(!never),.O(), .IO(SYS_SDWE));
-  IOBUF i_SYS_SDCAS (.I(1'b1), .T(!never),.O(), .IO(SYS_SDCAS));
-  IOBUF i_SYS_SDRAS (.I(1'b1), .T(!never),.O(), .IO(SYS_SDRAS));
-  IOBUF i_SYS_SDCLK (.I(1'b0), .T(!never),.O(), .IO(SYS_SDCLK));
-  IOBUF i_BG        (.I(1'b1), .T(!never),.O(), .IO(BG));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SYS)) i_SYS_SDWE  (.I(1'b1), .T(!never),.O(), .IO(SYS_SDWE));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SYS)) i_SYS_SDCAS (.I(1'b1), .T(!never),.O(), .IO(SYS_SDCAS));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SYS)) i_SYS_SDRAS (.I(1'b1), .T(!never),.O(), .IO(SYS_SDRAS));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SYS)) i_SYS_SDCLK (.I(1'b0), .T(!never),.O(), .IO(SYS_SDCLK));
+  IOBUF #(.IOSTANDARD(IOSTANDARD_SYS)) i_BG        (.I(1'b1), .T(!never),.O(), .IO(BG));
 
 // synchronize vacts to negedge of the system clock (sclk) -> vacts_sclk
 FDCE i_vacts_sclki(.C(pclk),.CE(vacts),.CLR(vacts_sclko[1]),.D(1'b1), .Q(vacts_sclki));
@@ -799,7 +855,19 @@ FDCE i_vacts_sclki(.C(pclk),.CE(vacts),.CLR(vacts_sclko[1]),.D(1'b1), .Q(vacts_s
 always @ (negedge sclk0) vacts_sclko[1:0] <= {vacts_sclko[0] & ~blockvsync, vacts_sclki && ! vacts_sclko[0] && !vacts_sclko[1]};
 
 
-sysinterface i_sysinterface(.clk(sclk0),
+sysinterface#(
+        .IOSTANDARD_SYS     (IOSTANDARD_SYS),
+        .SLEW_SYS           (SLEW_SYS),
+        .DRIVE_SYS          (DRIVE_SYS),
+        .IBUF_DELAY_SYS_A   (IBUF_DELAY_SYS_A),
+        .IFD_DELAY_SYS_A    (IFD_DELAY_SYS_A),
+        .IBUF_DELAY_SYS_D   (IBUF_DELAY_SYS_D),
+        .IFD_DELAY_SYS_D    (IFD_DELAY_SYS_D),
+        .IBUF_DELAY_SYS_WOE (IBUF_DELAY_SYS_WOE),
+        .IFD_DELAY_SYS_WOE  (IFD_DELAY_SYS_WOE),
+        .IBUF_DELAY_SYS_CE  (IBUF_DELAY_SYS_CE),
+        .IFD_DELAY_SYS_CE   (IFD_DELAY_SYS_CE)
+    ) i_sysinterface(.clk(sclk0),
                             .drv_bus(drv_bus),                        // drive system bus (to write to system memory)
                             .d(D[31:0]),                              // 32 bit D[31:0] data pads
                             .oe(OE),                                  // OE pad
@@ -965,7 +1033,8 @@ timestamp353 i_timestamp353(.mclk(sclk0),    // system clock (negedge)
 //wire       dcm_locked;
 //wire [7:0] dcm_status;
 
- clockios353 i_iclockios(.CLK0(CLK0),  // input clock pad - 120MHz
+ clockios353 #(.IOSTANDARD(IOSTANDARD_CLK)) i_iclockios(
+                         .CLK0(CLK0),  // input clock pad - 120MHz
                          .sclk0(sclk0),   // global clock, 120MHz, phase=0  (addresses, commands should be strobed at neg edge)
                          .sclk180(sclk180), // global clock, 120MHz, phase=180 (maybe will not be needed)
                          .sclk270(sclk270),  // global clock, 120MHz, phase=270 (strobe data write to sdram)
@@ -979,7 +1048,7 @@ timestamp353 i_timestamp353(.mclk(sclk0),    // system clock (negedge)
 //wire pclkig;   // global buffered pclki (maybe not needed at all - just to drive sensor_phase)?
 //wire sens_clk; // clock from sensor
 
-IBUF    i_pclki  (.I(CLK1), .O(pclki));
+IBUF #(.IOSTANDARD(IOSTANDARD_CLK)) i_pclki  (.I(CLK1), .O(pclki));
 
 //assign pclkig= pclki;
 //assign pclkig= pclk;
@@ -1010,14 +1079,21 @@ BUFGMUX i_pclk  (.O(pclk),  .I0(pclki), .I1(sens_clk), .S(|cb_pclksrc[1:0]));
 );
 
 
-  dmapads   i_dmapads   ( .dreq0(DREQ0),
-              .dack0(DACK0),
-              .idreq0(idreq0),
-              .idack0(idack0),
-              .dreq1(DREQ1),
-              .dack1(DACK1),
-              .idreq1(idreq1),
-              .idack1(idack1)
+  dmapads#(
+        .IOSTANDARD_SYS       (IOSTANDARD_SYS),
+        .SLEW_SYS_DREQ        (SLEW_SYS_DREQ),
+        .DRIVE_SYS_DREQ       (DRIVE_SYS_DREQ),
+        .IBUF_DELAY_SYS_DACK  (IBUF_DELAY_SYS_DACK),
+        .IFD_DELAY_SYS_DACK   (IFD_DELAY_SYS_DACK)
+    ) i_dmapads   (
+              .dreq0  (DREQ0),
+              .dack0  (DACK0),
+              .idreq0 (idreq0),
+              .idack0 (idack0),
+              .dreq1  (DREQ1),
+              .dack1  (DACK1),
+              .idreq1 (idreq1),
+              .idack1 (idack1)
               );
 //cb_pxd14
 assign ihact=iihact;
@@ -1039,12 +1115,17 @@ end
 
 
   sensorpads   #(
-        .IOSTANDARD_SENSOR      (IOSTANDARD_SENSOR),
-        .SLEW_SENSOR            (SLEW_SENSOR),
-        .DRIVE_SENSOR           (DRIVE_SENSOR),
-        .IOSTANDARD_SENSOR_CLK  (IOSTANDARD_SENSOR_CLK),
-        .SLEW_SENSOR_CLK        (SLEW_SENSOR_CLK),
-        .DRIVE_SENSOR_CLK       (DRIVE_SENSOR_CLK)
+        .IOSTANDARD_SENSOR       (IOSTANDARD_SENSOR),
+        .SLEW_SENSOR             (SLEW_SENSOR),
+        .DRIVE_SENSOR            (DRIVE_SENSOR),
+        .IOSTANDARD_SENSOR_CLK   (IOSTANDARD_SENSOR_CLK),
+        .SLEW_SENSOR_CLK         (SLEW_SENSOR_CLK),
+        .DRIVE_SENSOR_CLK        (DRIVE_SENSOR_CLK),
+        .IFD_DELAY_SENSOR_PXD    (IFD_DELAY_SENSOR_PXD),
+        .IFD_DELAY_SENSOR_VHACT  (IFD_DELAY_SENSOR_VHACT),
+        .IBUF_DELAY_SENSOR_PXD   (IBUF_DELAY_SENSOR_PXD),
+        .IBUF_DELAY_SENSOR_VHACT (IBUF_DELAY_SENSOR_VHACT)
+        
   )  i_sensorpads(
                      .sclk(sclk0),       // system clock, @negedge
                      .cmd(idi[10:4]),    // [6:0] command for phase adjustment @ negedge (slck) (MSB - reset x2 DCM)
@@ -1743,18 +1824,22 @@ end
                       );   // [2:0] current frame modulo 8
 
 
-     OBUF  i_irq  (.I(!iirq),  .O(IRQ) );
+     OBUF  #(
+        .IOSTANDARD(IOSTANDARD_SYS),
+        .DRIVE(DRIVE_SYS),
+        .SLEW(SLEW_SYS))
+      i_irq  (.I(!iirq),  .O(IRQ) );
 
 
 
 // dummy module instances
 (* keep *)
 wire   iclk2; // SuppressThisWarning Veditor UNUSED
-  IBUF i_iclk2 (.I(CLK2), .O(iclk2));
+  IBUF #(.IOSTANDARD(IOSTANDARD_CLK)) i_iclk2 (.I(CLK2), .O(iclk2));
 (* keep *)
 wire   iclk4; // SuppressThisWarning Veditor UNUSED
-  IBUF i_iclk4 (.I(CLK4), .O(iclk4));
-  IBUF i_iclk3 (.I(CLK3), .O(iclk3));
+  IBUF #(.IOSTANDARD(IOSTANDARD_CLK)) i_iclk4 (.I(CLK4), .O(iclk4));
+  IBUF #(.IOSTANDARD(IOSTANDARD_CLK)) i_iclk3 (.I(CLK3), .O(iclk3));
 
 // temporary assignments for outputs - connect later where it belongs
 

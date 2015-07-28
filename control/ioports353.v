@@ -27,15 +27,37 @@
 */
 
 
-module dmapads (dreq0,dack0,idreq0,idack0,dreq1,dack1,idreq1,idack1);
+module dmapads#(
+    parameter IOSTANDARD_SYS =        "LVCMOS33",
+    parameter SLEW_SYS_DREQ =         "SLOW",
+    parameter DRIVE_SYS_DREQ =         4,
+    parameter IBUF_DELAY_SYS_DACK =   "0",
+    parameter IFD_DELAY_SYS_DACK =    "0"
+) (dreq0,dack0,idreq0,idack0,dreq1,dack1,idreq1,idack1);
 	output	dreq0,dreq1;
 	input	dack0,dack1;
 	input	idreq0,idreq1;
 	output	idack0,idack1;
-	OBUF i_dreq0 (.I(idreq0), .O(dreq0));
-   IBUF  i_dack0 (.I(dack0),  .O(idack0));
-	OBUF i_dreq1 (.I(idreq1), .O(dreq1));
-   IBUF      i_dack1 (.I(dack1),  .O(idack1));
+    OBUF  #(
+	    .IOSTANDARD(IOSTANDARD_SYS),
+	    .DRIVE(DRIVE_SYS_DREQ),
+	    .SLEW(SLEW_SYS_DREQ))
+	       i_dreq0 (.I(idreq0), .O(dreq0));
+    IBUF #(
+        .IOSTANDARD        (IOSTANDARD_SYS),
+        .IBUF_DELAY_VALUE  (IBUF_DELAY_SYS_DACK),
+        .IFD_DELAY_VALUE   (IFD_DELAY_SYS_DACK))
+           i_dack0 (.I(dack0),  .O(idack0));
+    OBUF  #(
+        .IOSTANDARD(IOSTANDARD_SYS),
+        .DRIVE(DRIVE_SYS_DREQ),
+        .SLEW(SLEW_SYS_DREQ))
+           i_dreq1 (.I(idreq1), .O(dreq1));
+    IBUF #(
+        .IOSTANDARD        (IOSTANDARD_SYS),
+        .IBUF_DELAY_VALUE  (IBUF_DELAY_SYS_DACK),
+        .IFD_DELAY_VALUE   (IFD_DELAY_SYS_DACK))
+           i_dack1 (.I(dack1),  .O(idack1));
 endmodule
 
 
@@ -54,7 +76,23 @@ module i2cpads (sda,scl,sda_o,sda_i,sda_en,scl_o,scl_i,scl_en);
  IOBUF i_scl0 (.I(scl_o), .T(!scl_en), .O(scl_i), .IO(scl));
 endmodule
 
-module sysinterface(clk,
+module sysinterface #(
+    parameter IOSTANDARD_SYS =        "LVCMOS33",
+    parameter SLEW_SYS =              "SLOW",
+    parameter DRIVE_SYS =             8,
+
+    parameter IBUF_DELAY_SYS_A =      "0",
+    parameter IFD_DELAY_SYS_A =       "0",
+
+    parameter IBUF_DELAY_SYS_D =      "0",
+    parameter IFD_DELAY_SYS_D =       "0",
+
+    parameter IBUF_DELAY_SYS_WOE =    "0",
+    parameter IFD_DELAY_SYS_WOE =     "0",
+
+    parameter IBUF_DELAY_SYS_CE =     "0",
+    parameter IFD_DELAY_SYS_CE =      "0") (
+                    clk,
                     drv_bus,            // drive system bus (to write to system memory)
                     d,                  // 32 bit D[31:0] data pads
                     oe,                 // OE pad
@@ -280,10 +318,26 @@ module sysinterface(clk,
                                    // [2] - output high 16 (8)
 
    assign   am[7:0]=    wra? as[7:0] : ia[7:0];
-     IBUF  i_oe   (.I(oe),   .O(ioe ));
-     IBUF  i_ce   (.I(ce),   .O(ice ));
-     IBUF  i_ce1  (.I(ce1),  .O(ice1));
- 	ipadql	i_we (.g(cwr),.q(iwe),.qr(irnw),.d(we));
+     IBUF #(
+        .IOSTANDARD (IOSTANDARD_SYS),
+        .IBUF_DELAY_VALUE(IBUF_DELAY_SYS_WOE),
+        .IFD_DELAY_VALUE(IFD_DELAY_SYS_WOE))
+         i_oe   (.I(oe),   .O(ioe ));
+     IBUF #(
+        .IOSTANDARD (IOSTANDARD_SYS),
+        .IBUF_DELAY_VALUE(IBUF_DELAY_SYS_CE),
+        .IFD_DELAY_VALUE(IFD_DELAY_SYS_CE))
+          i_ce   (.I(ce),   .O(ice ));
+     IBUF #(
+        .IOSTANDARD (IOSTANDARD_SYS),
+        .IBUF_DELAY_VALUE(IBUF_DELAY_SYS_WOE),
+        .IFD_DELAY_VALUE(IFD_DELAY_SYS_WOE))
+          i_ce1  (.I(ce1),  .O(ice1));
+ 	ipadql #(
+     	.IOSTANDARD (IOSTANDARD_SYS),
+     	.IBUF_DELAY(IBUF_DELAY_SYS_WOE),
+     	.IFD_DELAY(IFD_DELAY_SYS_WOE))
+ 		i_we (.g(cwr),.q(iwe),.qr(irnw),.d(we));
 
 // negative pulse - with CE (zero w.s.) - only with WE, with CE1 (EW=1) - both WE and OE  
    BUFG  i_cwr	(.I((ice | iwe)  & (ice1 | (iwe & ioe))), .O(cwr));
@@ -377,19 +431,32 @@ module sysinterface(clk,
      da_imu             <= wr_state[0]  && wnr_seq_mux && (a_pio_seq_mux[7:1]==7'h3f);    // IMU control (0x7e-0x7f)
    end
 
- 	bpadql	i_a0 (.g(cwr),.q(ia[ 0]),.qr(ial[ 0]),.io(a[ 0]),.t(!drv_bus),.d(ao[ 0]));
- 	bpadql	i_a1 (.g(cwr),.q(ia[ 1]),.qr(ial[ 1]),.io(a[ 1]),.t(!drv_bus),.d(ao[ 1]));
- 	bpadql	i_a2 (.g(cwr),.q(ia[ 2]),.qr(ial[ 2]),.io(a[ 2]),.t(!drv_bus),.d(ao[ 2]));
- 	bpadql	i_a3 (.g(cwr),.q(ia[ 3]),.qr(ial[ 3]),.io(a[ 3]),.t(!drv_bus),.d(ao[ 3]));
- 	bpadql	i_a4 (.g(cwr),.q(ia[ 4]),.qr(ial[ 4]),.io(a[ 4]),.t(!drv_bus),.d(ao[ 4]));
- 	bpadql	i_a5 (.g(cwr),.q(ia[ 5]),.qr(ial[ 5]),.io(a[ 5]),.t(!drv_bus),.d(ao[ 5]));
- 	bpadql	i_a6 (.g(cwr),.q(ia[ 6]),.qr(ial[ 6]),.io(a[ 6]),.t(!drv_bus),.d(ao[ 6]));
- 	bpadql	i_a7 (.g(cwr),.q(ia[ 7]),.qr(ial[ 7]),.io(a[ 7]),.t(!drv_bus),.d(ao[ 7]));
- 	bpadql	i_a8 (.g(cwr),.q(),      .qr(),       .io(a[ 8]),.t(!drv_bus),.d(ao[ 8]));
- 	bpadql	i_a9 (.g(cwr),.q(),      .qr(),       .io(a[ 9]),.t(!drv_bus),.d(ao[ 9]));
- 	bpadql	i_a10(.g(cwr),.q(),      .qr(),       .io(a[10]),.t(!drv_bus),.d(ao[10]));
- 	bpadql	i_a11(.g(cwr),.q(),      .qr(),       .io(a[11]),.t(!drv_bus),.d(ao[11]));
- 	bpadql	i_a12(.g(cwr),.q(),      .qr(),       .io(a[12]),.t(!drv_bus),.d(ao[12]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+ 		    i_a0 (.g(cwr),.q(ia[ 0]),.qr(ial[ 0]),.io(a[ 0]),.t(!drv_bus),.d(ao[ 0]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a1 (.g(cwr),.q(ia[ 1]),.qr(ial[ 1]),.io(a[ 1]),.t(!drv_bus),.d(ao[ 1]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a2 (.g(cwr),.q(ia[ 2]),.qr(ial[ 2]),.io(a[ 2]),.t(!drv_bus),.d(ao[ 2]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a3 (.g(cwr),.q(ia[ 3]),.qr(ial[ 3]),.io(a[ 3]),.t(!drv_bus),.d(ao[ 3]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a4 (.g(cwr),.q(ia[ 4]),.qr(ial[ 4]),.io(a[ 4]),.t(!drv_bus),.d(ao[ 4]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a5 (.g(cwr),.q(ia[ 5]),.qr(ial[ 5]),.io(a[ 5]),.t(!drv_bus),.d(ao[ 5]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a6 (.g(cwr),.q(ia[ 6]),.qr(ial[ 6]),.io(a[ 6]),.t(!drv_bus),.d(ao[ 6]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a7 (.g(cwr),.q(ia[ 7]),.qr(ial[ 7]),.io(a[ 7]),.t(!drv_bus),.d(ao[ 7]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a8 (.g(cwr),.q(),      .qr(),       .io(a[ 8]),.t(!drv_bus),.d(ao[ 8]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a9 (.g(cwr),.q(),      .qr(),       .io(a[ 9]),.t(!drv_bus),.d(ao[ 9]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a10(.g(cwr),.q(),      .qr(),       .io(a[10]),.t(!drv_bus),.d(ao[10]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a11(.g(cwr),.q(),      .qr(),       .io(a[11]),.t(!drv_bus),.d(ao[11]));
+ 	bpadql #(.IOSTANDARD (IOSTANDARD_SYS),.SLEW(SLEW_SYS),.DRIVE(DRIVE_SYS),.IBUF_DELAY(IBUF_DELAY_SYS_A),.IFD_DELAY(IFD_DELAY_SYS_A))
+            i_a12(.g(cwr),.q(),      .qr(),       .io(a[12]),.t(!drv_bus),.d(ao[12]));
 
 // inter-clock synchronization
    FDCE i_sync0             (.Q(sync0),          .C(cwr),.CE(1'b1),.CLR(sync2),.D(1'b1));
@@ -401,12 +468,24 @@ module sysinterface(clk,
    FD   i_sync_cwr_on       (.Q(sync_cwr_on),    .C(clk),.D(sync_cwr_start1 || (sync_cwr_on && !sync1)));
 
    LUT4 #(.INIT(16'hAA80)) i_dataouten ( .I0(1'b1), .I1(ice1), .I2(ice), .I3(ioe), .O(t));
- dpads32 i_dmapads32(.c(cwr),.t(t),.d(iod[31:0]),.q(id0[31:0]),.dq(d[31:0]));
+ dpads32  #(
+        .IOSTANDARD (IOSTANDARD_SYS),
+        .SLEW       (SLEW_SYS),
+        .DRIVE      (DRIVE_SYS),
+        .IBUF_DELAY (IBUF_DELAY_SYS_D),
+        .IFD_DELAY  (IFD_DELAY_SYS_D))
+            i_dmapads32(.c(cwr),.t(t),.d(iod[31:0]),.q(id0[31:0]),.dq(d[31:0]));
 endmodule
 
 
 
-module dpads32(c,t,d,q,dq);
+module dpads32 #(
+    parameter IOSTANDARD =        "LVCMOS33",
+    parameter SLEW =              "SLOW",
+    parameter DRIVE =             8,
+    parameter IBUF_DELAY =        "0",
+    parameter IFD_DELAY =         "0"
+) (c,t,d,q,dq);
    input c,t;
    input  [31:0] d;
    output [31:0] q;
@@ -416,38 +495,70 @@ module dpads32(c,t,d,q,dq);
 // s---ynthesis attribute KEEP_HIERARCHY of i_t1 is true
  BUF i_t0   (.I(t), .O(t0));
  BUF i_t1   (.I(t), .O(t1));
- 	dio1	i_d0  (.c(c),.t(t0),.d(d[ 0]),.q(q[ 0]),.dq(dq[ 0]));
-	dio1	i_d1  (.c(c),.t(t0),.d(d[ 1]),.q(q[ 1]),.dq(dq[ 1]));
-	dio1	i_d2  (.c(c),.t(t0),.d(d[ 2]),.q(q[ 2]),.dq(dq[ 2]));
-	dio1	i_d3  (.c(c),.t(t0),.d(d[ 3]),.q(q[ 3]),.dq(dq[ 3]));
-	dio1	i_d4  (.c(c),.t(t0),.d(d[ 4]),.q(q[ 4]),.dq(dq[ 4]));
-	dio1	i_d5  (.c(c),.t(t0),.d(d[ 5]),.q(q[ 5]),.dq(dq[ 5]));
-	dio1	i_d6  (.c(c),.t(t0),.d(d[ 6]),.q(q[ 6]),.dq(dq[ 6]));
-	dio1	i_d7  (.c(c),.t(t0),.d(d[ 7]),.q(q[ 7]),.dq(dq[ 7]));
-	dio1	i_d8  (.c(c),.t(t0),.d(d[ 8]),.q(q[ 8]),.dq(dq[ 8]));
-	dio1	i_d9  (.c(c),.t(t0),.d(d[ 9]),.q(q[ 9]),.dq(dq[ 9]));
-	dio1	i_d10 (.c(c),.t(t1),.d(d[10]),.q(q[10]),.dq(dq[10]));
-	dio1	i_d11 (.c(c),.t(t1),.d(d[11]),.q(q[11]),.dq(dq[11]));
-	dio1	i_d12 (.c(c),.t(t1),.d(d[12]),.q(q[12]),.dq(dq[12]));
-	dio1	i_d13 (.c(c),.t(t1),.d(d[13]),.q(q[13]),.dq(dq[13]));
-	dio1	i_d14 (.c(c),.t(t1),.d(d[14]),.q(q[14]),.dq(dq[14]));
-	dio1	i_d15 (.c(c),.t(t1),.d(d[15]),.q(q[15]),.dq(dq[15]));
-	dio1	i_d16 (.c(c),.t(t1),.d(d[16]),.q(q[16]),.dq(dq[16]));
-	dio1	i_d17 (.c(c),.t(t0),.d(d[17]),.q(q[17]),.dq(dq[17]));
-	dio1	i_d18 (.c(c),.t(t1),.d(d[18]),.q(q[18]),.dq(dq[18]));
-	dio1	i_d19 (.c(c),.t(t1),.d(d[19]),.q(q[19]),.dq(dq[19]));
-	dio1	i_d20 (.c(c),.t(t1),.d(d[20]),.q(q[20]),.dq(dq[20]));
-	dio1	i_d21 (.c(c),.t(t1),.d(d[21]),.q(q[21]),.dq(dq[21]));
-	dio1	i_d22 (.c(c),.t(t0),.d(d[22]),.q(q[22]),.dq(dq[22]));
-	dio1	i_d23 (.c(c),.t(t1),.d(d[23]),.q(q[23]),.dq(dq[23]));
-	dio1	i_d24 (.c(c),.t(t0),.d(d[24]),.q(q[24]),.dq(dq[24]));
-	dio1	i_d25 (.c(c),.t(t1),.d(d[25]),.q(q[25]),.dq(dq[25]));
-	dio1	i_d26 (.c(c),.t(t0),.d(d[26]),.q(q[26]),.dq(dq[26]));
-	dio1	i_d27 (.c(c),.t(t0),.d(d[27]),.q(q[27]),.dq(dq[27]));
-	dio1	i_d28 (.c(c),.t(t0),.d(d[28]),.q(q[28]),.dq(dq[28]));
-	dio1	i_d29 (.c(c),.t(t0),.d(d[29]),.q(q[29]),.dq(dq[29]));
-	dio1	i_d30 (.c(c),.t(t1),.d(d[30]),.q(q[30]),.dq(dq[30]));
-	dio1	i_d31 (.c(c),.t(t1),.d(d[31]),.q(q[31]),.dq(dq[31]));
+ 	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+ 	        i_d0  (.c(c),.t(t0),.d(d[ 0]),.q(q[ 0]),.dq(dq[ 0]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d1  (.c(c),.t(t0),.d(d[ 1]),.q(q[ 1]),.dq(dq[ 1]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d2  (.c(c),.t(t0),.d(d[ 2]),.q(q[ 2]),.dq(dq[ 2]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d3  (.c(c),.t(t0),.d(d[ 3]),.q(q[ 3]),.dq(dq[ 3]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d4  (.c(c),.t(t0),.d(d[ 4]),.q(q[ 4]),.dq(dq[ 4]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d5  (.c(c),.t(t0),.d(d[ 5]),.q(q[ 5]),.dq(dq[ 5]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d6  (.c(c),.t(t0),.d(d[ 6]),.q(q[ 6]),.dq(dq[ 6]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d7  (.c(c),.t(t0),.d(d[ 7]),.q(q[ 7]),.dq(dq[ 7]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d8  (.c(c),.t(t0),.d(d[ 8]),.q(q[ 8]),.dq(dq[ 8]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d9  (.c(c),.t(t0),.d(d[ 9]),.q(q[ 9]),.dq(dq[ 9]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d10 (.c(c),.t(t1),.d(d[10]),.q(q[10]),.dq(dq[10]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d11 (.c(c),.t(t1),.d(d[11]),.q(q[11]),.dq(dq[11]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d12 (.c(c),.t(t1),.d(d[12]),.q(q[12]),.dq(dq[12]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d13 (.c(c),.t(t1),.d(d[13]),.q(q[13]),.dq(dq[13]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d14 (.c(c),.t(t1),.d(d[14]),.q(q[14]),.dq(dq[14]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d15 (.c(c),.t(t1),.d(d[15]),.q(q[15]),.dq(dq[15]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d16 (.c(c),.t(t1),.d(d[16]),.q(q[16]),.dq(dq[16]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d17 (.c(c),.t(t0),.d(d[17]),.q(q[17]),.dq(dq[17]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d18 (.c(c),.t(t1),.d(d[18]),.q(q[18]),.dq(dq[18]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d19 (.c(c),.t(t1),.d(d[19]),.q(q[19]),.dq(dq[19]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d20 (.c(c),.t(t1),.d(d[20]),.q(q[20]),.dq(dq[20]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d21 (.c(c),.t(t1),.d(d[21]),.q(q[21]),.dq(dq[21]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d22 (.c(c),.t(t0),.d(d[22]),.q(q[22]),.dq(dq[22]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d23 (.c(c),.t(t1),.d(d[23]),.q(q[23]),.dq(dq[23]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d24 (.c(c),.t(t0),.d(d[24]),.q(q[24]),.dq(dq[24]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d25 (.c(c),.t(t1),.d(d[25]),.q(q[25]),.dq(dq[25]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d26 (.c(c),.t(t0),.d(d[26]),.q(q[26]),.dq(dq[26]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d27 (.c(c),.t(t0),.d(d[27]),.q(q[27]),.dq(dq[27]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d28 (.c(c),.t(t0),.d(d[28]),.q(q[28]),.dq(dq[28]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d29 (.c(c),.t(t0),.d(d[29]),.q(q[29]),.dq(dq[29]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d30 (.c(c),.t(t1),.d(d[30]),.q(q[30]),.dq(dq[30]));
+	dio1 #(.IOSTANDARD (IOSTANDARD),.SLEW(SLEW),.DRIVE(DRIVE),.IBUF_DELAY(IBUF_DELAY),.IFD_DELAY(IFD_DELAY))
+            i_d31 (.c(c),.t(t1),.d(d[31]),.q(q[31]),.dq(dq[31]));
 
 endmodule
 
@@ -692,68 +803,124 @@ FD_1 #(.INIT(1'b1)) i_dr (.C(c), .D(d0), .Q(dr));
 endmodule
 
 
-module ipadql(g,q,qr,d);  //
+module ipadql#(
+    parameter IOSTANDARD =        "LVCMOS33",
+    parameter IBUF_DELAY =        "0",
+    parameter IFD_DELAY =         "0"
+)(g,q,qr,d);  //
     input g;
     output q;
     output qr;
     input d;
-	ipadql0 i_q (.g(g),.q(q),.qr(qr),.d(d));
+	ipadql0 #(
+        .IOSTANDARD (IOSTANDARD),
+        .IBUF_DELAY (IBUF_DELAY),
+        .IFD_DELAY  (IFD_DELAY))
+         i_q (.g(g),.q(q),.qr(qr),.d(d));
 // s--ynthesis attribute KEEP_HIERARCHY of i_q is "TRUE"
 endmodule
 
 
-module ipadql0(g,q,qr,d);
+module ipadql0#(
+    parameter IOSTANDARD =        "LVCMOS33",
+    parameter IBUF_DELAY =        "0",
+    parameter IFD_DELAY =         "0"
+)(g,q,qr,d);
     input g;
     output q;
     output qr;
     input d;
-  IBUF  i_q (.I(d), .O(q));
+  IBUF #(
+        .IOSTANDARD       (IOSTANDARD),
+        .IBUF_DELAY_VALUE (IBUF_DELAY),
+        .IFD_DELAY_VALUE  (IFD_DELAY))
+    i_q (.I(d), .O(q));
   LD	  i_qr (.G(g), .D(q), .Q(qr));
 // synthesis attribute IOB of i_qr is "TRUE"
 // synthesis attribute NODELAY of i_q is "TRUE"
 
 endmodule
 
-module bpadql(g,q,qr,io,t,d);  //
+module bpadql#(
+    parameter IOSTANDARD =        "LVCMOS33",
+    parameter SLEW =              "SLOW",
+    parameter DRIVE =             8,
+    parameter IBUF_DELAY =        "0",
+    parameter IFD_DELAY =         "0"
+)(g,q,qr,io,t,d);  //
     input g;
     output q;
     output qr;
     inout io;
     input t;
     input d;
-	bpadql0 i_q (.g(g),.q(q),.qr(qr),.io(io),.t(t),.d(d));
-// s--ynthesis attribute KEEP_HIERARCHY of i_q is "TRUE"
+	bpadql0 #(
+        .IOSTANDARD (IOSTANDARD),
+        .SLEW       (SLEW),
+        .DRIVE      (DRIVE),
+        .IBUF_DELAY (IBUF_DELAY),
+        .IFD_DELAY  (IFD_DELAY)
+  )i_q (.g(g),.q(q),.qr(qr),.io(io),.t(t),.d(d));
 endmodule
 
 
-module bpadql0(g,q,qr,io,t,d);
+module bpadql0#(
+    parameter IOSTANDARD =        "LVCMOS33",
+    parameter SLEW =              "SLOW",
+    parameter DRIVE =             8,
+    parameter IBUF_DELAY =        "0",
+    parameter IFD_DELAY =         "0"
+)(g,q,qr,io,t,d);
     input g;
     output q;
     output qr;
     inout io;
     input t;
     input d;
-  IOBUF i_q (.I(d), .T(t),.O(q), .IO(io));
+  IOBUF #(
+        .IOSTANDARD       (IOSTANDARD),
+        .SLEW             (SLEW),
+        .DRIVE            (DRIVE),
+        .IBUF_DELAY_VALUE (IBUF_DELAY),
+        .IFD_DELAY_VALUE  (IFD_DELAY)
+  ) i_q (.I(d), .T(t),.O(q), .IO(io));
   LD	  i_qr (.G(g), .D(q), .Q(qr));
 // synthesis attribute IOB of i_qr is "TRUE"
-// synthesis attribute NODELAY of i_q is "TRUE"
 
 endmodule
 
 
 
-module dio1(c,t,d,q,dq);
+module dio1 #(
+    parameter IOSTANDARD =        "LVCMOS33",
+    parameter SLEW =              "SLOW",
+    parameter DRIVE =             8,
+    parameter IBUF_DELAY =        "0",
+    parameter IFD_DELAY =         "0"
+)(c,t,d,q,dq);
     input c;
     input t;
     input d;
     output q;
     inout dq;
-	dio0 i_dq (.c(c),.t(t),.d(d),.q(q),.dq(dq));
+	dio0  #(
+        .IOSTANDARD (IOSTANDARD),
+        .SLEW       (SLEW),
+        .DRIVE      (DRIVE),
+        .IBUF_DELAY (IBUF_DELAY),
+        .IFD_DELAY  (IFD_DELAY)
+  ) i_dq (.c(c),.t(t),.d(d),.q(q),.dq(dq));
 // s--ynthesis attribute KEEP_HIERARCHY of i_dq is "TRUE"
 endmodule
 
 
-module dio0(c,t,d,q,dq);
+module dio0 #(
+    parameter IOSTANDARD =        "LVCMOS33",
+    parameter SLEW =              "SLOW",
+    parameter DRIVE =             8,
+    parameter IBUF_DELAY =        "0",
+    parameter IFD_DELAY =         "0"
+)(c,t,d,q,dq);
     input c;
     input t;
     input d;
@@ -762,10 +929,15 @@ module dio0(c,t,d,q,dq);
 
 	 wire q0;
 
-  IOBUF i_dq (.I(d), .T(t),.O(q0), .IO(dq));
+  IOBUF #(
+        .IOSTANDARD       (IOSTANDARD),
+        .SLEW             (SLEW),
+        .DRIVE            (DRIVE),
+        .IBUF_DELAY_VALUE (IBUF_DELAY),
+        .IFD_DELAY_VALUE  (IFD_DELAY)
+  ) i_dq (.I(d), .T(t),.O(q0), .IO(dq));
   FD    i_q  (.C(c), .D(q0), .Q(q));
 // synthesis attribute IOB of i_q is "TRUE"
-// synthesis attribute NODELAY of i_dq is "TRUE"
 
 endmodule
 

@@ -121,7 +121,9 @@ endmodule
 
 
 
-module clockios353(
+module clockios353#(
+    parameter IOSTANDARD = "LVCMOS33"
+)(
       CLK0,    // input clock pad - 120MHz
       sclk0,   // global clock, 120MHz, phase=0  (addresses, commands should be strobed at neg edge)
       /*sclk90,*/  // global clock, 120MHz, phase=90 (strobe data write to sdram)
@@ -143,7 +145,7 @@ module clockios353(
   wire  iclk0;
   wire  isclk0, /*isclk90,*/ isclk270, isclk180;
 
-  IBUFG i_iclk0 (.I(CLK0), .O(iclk0));
+  IBUFG #(.IOSTANDARD(IOSTANDARD)) i_iclk0 (.I(CLK0), .O(iclk0));
 // DCM - just 4 phases out
 DCM #(
      .CLKIN_DIVIDE_BY_2("FALSE"),

@@ -26,7 +26,12 @@
 **
 */
 
-module sensor_phase353 (cclk,       // command clock (posedge, invert on input if needed)
+module sensor_phase353 #(
+    parameter IOSTANDARD_SENSOR =     "LVCMOS33",
+    parameter IFD_DELAY_SENSOR_VHACT =  "0",
+    parameter IBUF_DELAY_SENSOR_VHACT = "0"
+)(
+                        cclk,       // command clock (posedge, invert on input if needed)
                         wcmd,       // write command
                         cmd,        // CPU write data [5:0]
                                     //       0 - nop, just reset status data
@@ -72,7 +77,7 @@ NET "hact_length*" TIG;
 */
 
   parameter MIN_VACT_PERIOD=130; // 3-130, to increase maximal value (130) - chnge counter width
-`ifdef IVERILOG
+`ifdef SIMULATION
   parameter IS_SIMUL=1;
 `else
   parameter IS_SIMUL=0;
@@ -278,8 +283,16 @@ BUFGMUX i_pclk  (.O(gclk_idata),  .I0(dcm2x), .I1(dcm2x180), .S(inv_gclk_idata))
 
  wire ihact00,ivact00;
 ///  some are double cycle
-  IBUF	 i_hact	(.I(HACT), .O(ihact));
-  IBUF	 i_vact	(.I(VACT), .O(ivact));
+  IBUF   #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_VHACT),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_VHACT)
+   ) i_hact	(.I(HACT), .O(ihact));
+  IBUF   #(
+        .IOSTANDARD          (IOSTANDARD_SENSOR),
+        .IBUF_DELAY_VALUE    (IBUF_DELAY_SENSOR_VHACT),
+        .IFD_DELAY_VALUE     (IFD_DELAY_SENSOR_VHACT)
+   ) i_vact	(.I(VACT), .O(ivact));
   always @ (posedge gclk_idata)  begin
     hact_q1 <= ihact00;
     vact_q1 <= ivact00;
@@ -307,6 +320,7 @@ BUFGMUX i_pclk  (.O(gclk_idata),  .I0(dcm2x), .I1(dcm2x180), .S(inv_gclk_idata))
 //    FD    i_vact_q1 (.C(gclk_idata), .D(ivact00), .Q(vact_q1));
 
     FDCE i_sync_alt_d0 (.Q(sync_alt_d0),  .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(sync_alt));
+    
     FDCE i_idi_0       (.Q(idi[ 0]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[ 0]));
     FDCE i_idi_1       (.Q(idi[ 1]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[ 1]));
     FDCE i_idi_2       (.Q(idi[ 2]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[ 2]));
@@ -319,34 +333,7 @@ BUFGMUX i_pclk  (.O(gclk_idata),  .I0(dcm2x), .I1(dcm2x180), .S(inv_gclk_idata))
     FDCE i_idi_9       (.Q(idi[ 9]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[ 9]));
     FDCE i_idi_10      (.Q(idi[10]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[10]));
     FDCE i_idi_11      (.Q(idi[11]),      .C(gclk_idata),.CE(en_idata),.CLR(1'b0),.D(DI[11]));
-// synthesis attribute IOB     of i_sync_alt_d0 is "TRUE"
-// synthesis attribute IOB     of i_idi_0       is "TRUE"
-// synthesis attribute IOB     of i_idi_1       is "TRUE"
-// synthesis attribute IOB     of i_idi_2       is "TRUE"
-// synthesis attribute IOB     of i_idi_3       is "TRUE"
-// synthesis attribute IOB     of i_idi_4       is "TRUE"
-// synthesis attribute IOB     of i_idi_5       is "TRUE"
-// synthesis attribute IOB     of i_idi_6       is "TRUE"
-// synthesis attribute IOB     of i_idi_7       is "TRUE"
-// synthesis attribute IOB     of i_idi_8       is "TRUE"
-// synthesis attribute IOB     of i_idi_9       is "TRUE"
-// synthesis attribute IOB     of i_idi_10      is "TRUE"
-// synthesis attribute IOB     of i_idi_11      is "TRUE"
-// synthesis attribute NODELAY of i_sync_alt_d0 is "TRUE"
-// synthesis attribute NODELAY of i_idi_0       is "TRUE"
-// synthesis attribute NODELAY of i_idi_1       is "TRUE"
-// synthesis attribute NODELAY of i_idi_2       is "TRUE"
-// synthesis attribute NODELAY of i_idi_3       is "TRUE"
-// synthesis attribute NODELAY of i_idi_4       is "TRUE"
-// synthesis attribute NODELAY of i_idi_5       is "TRUE"
-// synthesis attribute NODELAY of i_idi_6       is "TRUE"
-// synthesis attribute NODELAY of i_idi_7       is "TRUE"
-// synthesis attribute NODELAY of i_idi_8       is "TRUE"
-// synthesis attribute NODELAY of i_idi_9       is "TRUE"
-// synthesis attribute NODELAY of i_idi_10      is "TRUE"
-// synthesis attribute NODELAY of i_idi_11      is "TRUE"
-// synthesis attribute NODELAY of i_ihact       is "TRUE"
-// synthesis attribute NODELAY of i_ivact       is "TRUE"
+
 reg  [1:0] shact_zero; // shact was zero (inactive), sync to gclk_data
   always @ (posedge gclk_idata) if (en_idata) begin
     idi14[13:4] <= idi[11:2];
