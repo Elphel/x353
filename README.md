@@ -72,3 +72,7 @@ Even Google does not know what to do about this Xilinx XST feature:
 
 So we'try to find other ways to re-formulate old timing constraints preserving the same meaning and try
 again to run tools. Until then I'll have to mention again ***this project is valid for simulation only!***
+
+Update: Not yet tested with the real hardware, but the project was modified to work with ISE 14.7 (physical
+constraints were changed to parameters from the old style synthesis attributes, and the tools genereted a
+bitfile and even original timing constraints (after changing to uppercase) were met.

@@ -94,7 +94,6 @@ NET "SDRAS"              LOC = "M6" ;
 NET "SDLDM"              LOC = "M8" ;
 NET "SDUDM"              LOC = "T8" ;
 
-#NET "SDCLK"              LOC = "R2" | IOSTANDARD = "DIFF_SSTL2_I" ; 
 NET "SDCLK"              LOC = "R2" ; 
 NET "SDCLK_FB"           LOC = "R3" ; 
 NET "SDNCLK"             LOC = "R1" ; 
@@ -191,14 +190,9 @@ NET "CLK1" CLOCK_DEDICATED_ROUTE = FALSE; #phase is not critical, just clock gen
 NET "CLK0" CLOCK_DEDICATED_ROUTE = FALSE; #phase is not critical, just clock generator
 PIN "i_dcm333/i_dcm2.CLK90" CLOCK_DEDICATED_ROUTE = FALSE;
 
-#TIMESPEC "TS_CLK0" = PERIOD "CLK0" 7.25  ns HIGH 50 %; #03534018B
-#TIMESPEC "TS_CLK0" = PERIOD "CLK0" 7.15  ns HIGH 50 %; #reports "N/A" but is needed for derivative signals
 TIMESPEC "TS_CLK0" = PERIOD "CLK0" 7.1  ns HIGH 50 %;
 
 TIMESPEC "TS_CLK1" = PERIOD "CLK1" 10.4 ns HIGH 50 %; #96MHz
-#TIMESPEC "TS_CLK1" = PERIOD "CLK1" 10.6 ns HIGH 50 %; #trying to meet other
-
-#TIMESPEC "TS_CLK1" = PERIOD "CLK1" 18.4 ns HIGH 50 %; #TEMPORARY TO FIND A PROBLEM
 
 TIMEGRP "CPU_ADDR" =   PADS("A<*>");
 TIMEGRP "CPU_ADDRCE" = "CPU_ADDR"  PADS("CE*");
@@ -211,13 +205,9 @@ TIMEGRP "ALLPADS"=     PADS("*");
 
 NET "idack0" TPTHRU = "IDACK0_TP";
 NET "idack1" TPTHRU = "IDACK1_TP";
-#NET "idreq0" TPTHRU = "IDREQ0_TP";va
-#NET "idreq1" TPTHRU = "IDREQ1_TP";
-#TIMESPEC "TS_DACK_DREQ0" = FROM "DACK_PAD" THRU "IDACK0_TP" THRU "IDREQ0_TP" TO "DREQ_PAD" 9.5 ns;
-#TIMESPEC "TS_DACK_DREQ1" = FROM "DACK_PAD" THRU "IDACK1_TP" THRU "IDREQ1_TP" TO "DREQ_PAD" 9.5 ns;
 NET "*/cwr" TNM_NET = "TNM_CWR";
 TIMEGRP "TG_CWRDEST" =   "TNM_CWR" except LATCHES ("*"); # RAMS, FFS
-###MARK1# TIMEGRP "TG_LATCHES_A" =  LATCHES ("i_sysinterface/i_a*");
+
 NET "DACK*" TNM_NET = "DACK";
 NET "SDA0*" TNM_NET = "SDA0";
 NET "sclk0" TNM_NET = "TNM_CLK0";
@@ -229,8 +219,6 @@ NET "i_sensorpads/i_sensor_phase/en_idata" TNM_NET = "TNM_EN_IDATA";
 
 TIMESPEC "TS_PCLK_GCLK_IDATA" = FROM "TNM_PCLK" TO "TNM_GCLK_IDATA" TIG;
 TIMESPEC "TS_GCLK_IDATA_PCLK" = FROM "TNM_GCLK_IDATA" TO "TNM_PCLK" TIG;
-
-#TIMESPEC "TS_GCLK_IDATA_PERIOD" = PERIOD "TNM_GCLK_IDATA" "TS_CLK1" / 2;
 
 TIMESPEC "TS_DOUBLECYC_IDATA" = FROM "TNM_EN_IDATA" TO "TNM_EN_IDATA" "TS_CLK1";
 
@@ -244,27 +232,17 @@ NET "cb_*" TIG;
 TIMEGRP "TG_CLK1" =   PADS("CLK1");
 TIMEGRP "TG_DCLK" =   PADS("DCLK");
 
-#TIMESPEC "TS_SENSORCLOCK" = FROM  "TG_CLK1" TO "TG_DCLK" 14.0 ns;
-
-#######TIMESPEC "TS_OE_TO_DATA" = FROM "OE" TO "CPU_DATA" 10.3 ns; # temporary, with proxies
-#TIMESPEC "TS_OE_TO_DATA" = FROM "OE" TO "CPU_DATA" 14.0ns ; # with DRIVE = 4 ; # default
 TIMESPEC "TS_OE_TO_DATA" = FROM "OE" TO "CPU_DATA" 12.0ns ; # with DRIVE = 8 
 
 #normal
-#######TIMESPEC "TS_AXIS_READ" = FROM "CPU_ADDRCE" TO "CPU_DATA" 16 ns; #17.5 ns;
+
 #TIMESPEC "TS_AXIS_READ" = FROM "CPU_ADDRCE" TO "CPU_DATA" 19 ns; # with DRIVE = 4 ; # default
 TIMESPEC "TS_AXIS_READ" = FROM "CPU_ADDRCE" TO "CPU_DATA" 17 ns; # with DRIVE = 8
 
-###MARK1#TIMESPEC "TS_WR_ADDR" = FROM "TG_LATCHES_A" TO "TG_CWRDEST" 9.7 ns; #temporary, with proxies
 TIMESPEC "TS_WR_DATA" = FROM "CPU_DATA" TO "TG_CWRDEST" 9 ns; # temporary, with proxies
 TIMESPEC "TS_WE" = FROM "WE" TO "TNM_CWR" 11.5 ns; #
 
-#########TIMESPEC "TS_DACK0" = FROM "DACK" TO "ALLPADS" 15 ns;
 TIMESPEC "TS_DACK0" = FROM "DACK" TO "ALLPADS" 17 ns;
-#NET "*dcr<*>" TIG;  # new freedom
-
- # new freedom
- 
  
 TIMEGRP "TG_ALL_SYNC"=      FFS RAMS MULTS;
 TIMEGRP "TG_DOUBLECYCS2"= FFS("i_mcontr/i_descrproc/seq_par*")
@@ -312,7 +290,6 @@ TIMEGRP "TG_DOUBLEDEST3"= FFS("i_mcontr/i_descrproc/seq_par*")
                           MULTS("i_mcontr/i_descrproc/linAddr*");
 TIMESPEC "TS_DOUBLECYCS3" = FROM "TG_SLOW_SRC3" TO "TG_DOUBLEDEST3" "TS_CLK0" * 2;
 ## Next - redundant?
-##TIMESPEC "TS_DOUBLECYCS4" =  FROM FFS("*i_chArbit/chNum*") TO  "TG_DOUBLEDEST3" TS_CLK0*2;
 TIMEGRP "TG_HUFFRAMS"=    RAMS        ("*i_huffman*") ;
 
 #FIXME: Constraint <TIMEGRP "TG_HUFFFFS" ... does not match any design objects.
@@ -321,16 +298,10 @@ TIMEGRP "TG_HUFFFFS"=     FFS         ("*i_huffman*")
 								  
 TIMEGRP "TG_HUFFLATCHES"= LATCHES     ("*i_huffman*") ;
 # some registers in Huffman module are isolated from others through latches too - never used?
-##TIMEGRP  "TG_HUFFFFS_ISOLOUT" =  FFS         ("*i_huff_fifo/load_q");
 
 TIMEGRP  "TG_STUFFER_WAS_READY_EARLY" = LATCHES ("i_compressor/i_huffman/i_stuffer_was_rdy_early") ;
 TIMEGRP  "TG_HUFF_FIFO_LOAD_Q"        = FFS     ("i_compressor/i_huffman/i_huff_fifo/load_q") ;
 TIMEGRP  "TG_COMPRESSOR"=               FFS     ("*i_compressor*") ;
-### THe two below constraints are not needed, they are covered by "TS_HUFFLATCHES" and "TS_HUFFLATCHESI"
-## TIMESPEC "TS_HUFF_FIFO_LOAD_Q"=         FROM "TG_STUFFER_WAS_READY_EARLY"  TO   "TG_HUFFFFS" "TS_CLK0" * 0.625;
-## TIMESPEC "TS_STUFFER_WAS_READY_EARLY"=  FROM "TG_HUFFFFS" TO   "TG_STUFFER_WAS_READY_EARLY" "TS_CLK0" * 0.7;
-
-
 
 TIMESPEC "TS_HUFFRAMS" = FROM "TG_HUFFRAMS" TO "TG_HUFFLATCHES" "TS_CLK0" * 0.85;
 TIMESPEC "TS_HUFFLATCHES" = FROM "TG_HUFFLATCHES" TO "TG_HUFFFFS" "TS_CLK0" * 0.625;
@@ -353,16 +324,8 @@ NET "i_rtc353/corr*" TIG;
 #needed?
 NET "i_camsync/ts_rcv_sec*" TIG;
 NET "i_camsync/ts_rcv_usec*" TIG;
-#NET "i_imu_logger/imu_in_word*" TIG;
 NET "i_rtc353/psec*" TIG;
 NET "i_rtc353/pusec*" TIG;
-#NET "i_rtc353/esec*" TIG;
-#NET "i_rtc353/eusec*" TIG;
-#INST "i_imu_logger/i_buffer*" TIG;
-#INST "i_imu_logger/config*" TIG;
-#INST "i_imu_logger/enable*" TIG;
-
-
 
 INST "*_tig_*" TIG;
 
@@ -371,7 +334,6 @@ INST "*_tig_*" TIG;
 #NET "???"     TNM_NET = "TNM_PCLK";
 NET "pclk2x"   TNM_NET = "TNM_PCLK2X";
 TIMESPEC "TS_PCLK_PCLK2X" = FROM "TNM_PCLK" TO "TNM_PCLK2X" TIG;
-#TIMESPEC "TS_PCLK2X_PCLK" = FROM "TNM_PCLK2X" TO "TNM_PCLK" TIG;
 
 
 
