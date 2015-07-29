@@ -9,9 +9,9 @@ This repository is created as a reference for simulation of image acquisition, p
 in the new NC393 camera that includes functionality of the previous one, so the same input image (on one of
 the 4 channels) should generate the same intermediate and final compressed files on both cameras.
 
-Project is modified to work with the current (and the last!) version of Xilinx ISE - 14.7,
-not tested enough, but the generated bitstream proved to be operational on just one camera. It is not yet safe
-to replace the x353.bit camera unless you have experience in reflashing "bricked" camera as described in
+Project is modified to work with the current (and the last!) version of Xilinx ISE - 14.7, result bit file
+is not tested enough, but it works in at least one camera. It is not yet safe to just replace the x353.bit
+in camera unless you have experience in reflashing "bricked" camera as described in
 [http://wiki.elphel.com/index.php?title=Netboot_firmware_upgrade] as it is easy to accidentally make a camera
 non-bootable.
 
