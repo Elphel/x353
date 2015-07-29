@@ -2,7 +2,8 @@ x353
 =====
 
 FPGA code for the current Elphel NC353 camera (and other products such as Eyesis4pi based on the same
-10353E system board ), updated to work with [VDT plugin](https://github.com/Elphel/vdt-plugin)
+10353E system board ), updated to work with [VDT plugin](https://github.com/Elphel/vdt-plugin) for
+Eclipse IDE and is compatible with Xilinx ISE 14.7 tools.
 
 This repository is created as a reference for simulation of image acquisition, processing and compression
 in the new NC393 camera that includes functionality of the previous one, so the same input image (on one of
