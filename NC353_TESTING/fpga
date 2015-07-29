@@ -1,0 +1,407 @@
+#!/bin/sh
+#********************************************************************************
+# FILE NAME  : fpga
+# DESCRIPTION: fpgas configuration script
+# Copyright (C) 2012 Elphel, Inc
+# -----------------------------------------------------------------------------**
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  The four essential freedoms with GNU GPL software:
+#  * the freedom to run the program for any purpose
+#  * the freedom to study how the program works and change it to make it do what you wish
+#  * the freedom to redistribute copies so you can help your neighbor
+#  * the freedom to distribute copies of your modified versions to others
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# -----------------------------------------------------------------------------**
+
+. /etc/init.d/functions.sh
+FPGA_IMAGE="/etc/x353.bit"
+FPGA_10359_IMAGE="/etc/x359.bit"
+FPGA_10347_IMAGE="/etc/x347.bit"
+FPGAFREQ=160
+CABLECORR=450 #ps  for 30 mm cable to sensor (or 10359 board, 10359-> sensor cables are set lower) ~15ps/mm, increase for longer cables. delete /etc/autocampars.xml to use new values.
+
+FPGA_ONE_TIME_IMAGE="/etc/x353_experimental.bit"
+FPGA_TMP_IMAGE="/var/tmp/x353_experimental.bit"
+if [ -f $FPGA_ONE_TIME_IMAGE ] ; then
+  echo "Moving $FPGA_ONE_TIME_IMAGE to /var/tmp"
+  mv $FPGA_ONE_TIME_IMAGE /var/tmp
+  sync
+  FPGA_IMAGE=$FPGA_TMP_IMAGE
+fi
+echo "For testing unsafe experimental bitsteam images:"
+echo "Name this file as $FPGA_ONE_TIME_IMAGE - it will be 'deleted before used'"
+echo "so next boot will use the original (safe) bitstream file"
+
+# if it was just after "init 3" from "init 4", flash was not mounted
+if [ ! -n "`mount | grep /mnt/flash`" ] ; then
+  begin "Mounting /dev/part/rwfsblock as /mnt/flash"
+  mount -t jffs2 /dev/part/rwfsblock /mnt/flash
+  end $?
+fi
+fpcf -gwpd 7 $CABLECORR  >/dev/null;
+## Uncomment the next line to use system clock for the 10359-connected sensors. When commented - local (to 10359) oscillator is used
+#fpcf -gwpd 23 1 >/dev/null; # disable on-board clock generator - mooved to 10359 branch below
+
+#fpcf -gwpx 2 10000  >/dev/null; #debug mask
+#fpcf -gwpx 2 2000019  >/dev/null; #debug mask for troubleshooting startup with less sensors
+#fpcf -gwpx 2 A  >/dev/null; #debug mask
+#fpcf -gwpx 2 B  >/dev/null; #debug mask
+#fpcf -gwpx 2 8  >/dev/null; #debug mask
+#fpcf -gwpx 2 1000000  >/dev/null; #debug mask for SDRAM phase debug
+
+
+#echo "killall klogd"
+#killall klogd
+#echo "sleep 5"
+#sleep 5
+#echo "echo 1 > /proc/sys/kernel/printk"
+#echo 1 > /proc/sys/kernel/printk
+#echo "cat /proc/kmsg >/var/html/klog.txt"
+#cat /proc/kmsg >/var/html/klog.txt &
+
+#fpcf -gwpx 2 48  >/dev/null; #debug mask
+#fpcf -gwpx 2 148  >/dev/null; #debug mask
+#fpcf -gwpx 2 14c  >/dev/null; #debug mask
+
+#fpcf -gwpx 2 8  >/dev/null; #debug mask
+#fpcf -gwpx 2 14c  >/dev/null; #debug mask
+
+FPGAPHASECORR=-8;  # 0353301b: -44/+28 
+begin "Setting FPGA master clock to $FPGAFREQ MHz" 
+fpcf -X 0 $FPGAFREQ >/dev/null
+end $?
+begin "Programming FPGA with $FPGA_IMAGE"
+cat $FPGA_IMAGE >/dev/fpgaconfjtag
+end $?
+# later will make default FPGA code not to turn on sensor clock at startup
+# turn off clcock to sensor board (float the pin) before configuring as x347 - with the clock long sensor cable does not work
+# it induces signal on "run" output of FPGA 
+#   fpcf -c 13 2
+# #define  X353DCR1__DCLKMODE__BITNM    4
+# #define   X313_WA_DCR1      0x4f
+   fpcf -w 4f 30 >/dev/null # set clock from sensor (safe)
+
+begin "Loaded FPGA rev"
+FPGA_REV=`fpcf -r 13`
+if [ "$?" = 0 ]; then
+  echo -e "${OKPOS}${BRACKET}[ ${GOOD}$FPGA_REV${BRACKET} ]${NORMAL}"
+else
+  echo -e "${FAILPOS}${BRACKET}[ ${BAD}fail${BRACKET} ]${NORMAL}"
+fi
+
+
+case "$FPGA_REV" in
+     '3534017')
+       FPGAPHASECORR=-4;  #
+#       fpcf -gwpd 8 2580 >/dev/null; #2580 ps 
+#       fpcf -gwpd 8 1620 >/dev/null; #1620 ps -17E
+#       fpcf -gwpd 8 3500 >/dev/null;  measured , Xilinx 4824 
+        fpcf -gwpd 8 1620 >/dev/null; #1793 ps -17D - from Xilinx (x1.38)
+
+      ;;
+     '3534018')
+       FPGAPHASECORR=-4;  #
+#        fpcf -gwpd 8 3500 >/dev/null;
+#        fpcf -gwpd 8 2950 >/dev/null; #3615 ps -18D (C?) - from Xilinx (x1.225)
+#        fpcf -gwpd 8 1400 >/dev/null; #1464 ps -18D - from Xilinx (x1.225)
+        fpcf -gwpd 8 2940 >/dev/null; #3864 ps -18F (x1.314)
+      ;;
+     '3534019')
+       FPGAPHASECORR=-4;  #
+        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '353401a')
+       FPGAPHASECORR=-4;  #
+        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '353401b')
+       FPGAPHASECORR=-4;  #
+        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '353401c')
+       FPGAPHASECORR=-4;  #
+#        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '353401d')
+       FPGAPHASECORR=-4;  #
+#        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '353401e')
+       FPGAPHASECORR=-4;  #
+#        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '353401f')
+       FPGAPHASECORR=-4;  #
+#        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '3534020')
+       FPGAPHASECORR=-4;  #
+#        fpcf -gwpd 8 3556  >/dev/null; #4004 - 19 (x1.125)
+      ;;
+     '3534021')
+       FPGAPHASECORR=-2;  #
+        fpcf -gwpd 8 1587  >/dev/null; #1.587 ns, sensor phase 0xffcc
+      ;;
+     '3534022')
+       FPGAPHASECORR=-2;  #
+        fpcf -gwpd 8 3724  >/dev/null; #sen sensor phase ff84
+      ;;
+     '3534024')
+       FPGAPHASECORR=-2;  #
+        fpcf -gwpd 8 1932  >/dev/null; #sensor phase fff0  (decreased by 450ps of the cable)
+      ;;
+     '3534025')
+       FPGAPHASECORR=-2;  #
+        fpcf -gwpd 8 1160  >/dev/null; #sensor phase 0xffcd
+      ;;
+     '353402a')
+       FPGAPHASECORR=-9;  #
+        fpcf -gwpd 8 1160  >/dev/null; #sensor phase 0xffcd
+      ;;
+     '353402b')
+       FPGAPHASECORR=-9;  #
+        fpcf -gwpd 8 1160  >/dev/null; #sensor phase 0xffcd
+      ;;
+     *)
+     echo "**** Unknown FPGA revision ****"
+     FPGAPHASECORR=-1; # does not work with "0" !!! (No "manually corrected")
+     echo "Setting phase correction - always needed fro the new FPGA image."
+     echo "Procedure to set the correct shift:"
+     echo "1 - manually set the phase with "
+     echo "fpcf -phase -65 63 <phase_correction_value>"
+     echo "    # setting 90-degrees with fpcf -w 8 c; repeating fpcf -w 8 8 as needed"
+     echo "# 2 - test SDRAM, whatch for errors"
+     echo "# 3 - find margins for the phase_correction_value (repeating steps 1 and 2), select average between low and high ones"
+     echo "# 4 - update code below"
+     ;;
+esac
+# Setting phase correction - always needed fro the new FPGA image.
+# Procedure to set the correct shift:
+# 1 - manually set the phase with 
+#   fpcf -phase -65 63 <phase_correction_value> # setting 90-degrees with fpcf -w 8 c; repeating fpcf -w 8 8 as needed
+# 2 - test SDRAM, whatch for errors
+# 3 - find margins for the phase_correction_value (repeating steps 1 and 2), select average between low and high ones
+# 4 - update code below
+
+begin "Adjusting DDR SDRAM clock phase"
+fpcf -phase -65 63 $FPGAPHASECORR > /var/log/fpga_sdram_phase # for 3533017 @ 160MHz (one failed at 69)
+if [ "$?" = 0 ]; then
+  SDRAMPHASE=`cat /var/log/fpga_sdram_phase | grep "manually" | sed -e 's/manually corrected optimal phase = \([-0-9]*\).*/\1/'`
+  echo -e "${OKPOS}${BRACKET}[ ${GOOD}PH 0/${SDRAMPHASE}${BRACKET} ]${NORMAL}"
+else
+  fpcf -w 8 8 >/dev/null
+  fpcf -phase -65 63 $FPGAPHASECORR > /var/log/fpga_sdram_phase
+  if [ "$?" = 0 ]; then
+    SDRAMPHASE=`cat /var/log/fpga_sdram_phase | grep "manually" | sed -e 's/manually corrected optimal phase = \([-0-9]*\).*/\1/'`
+    echo -e "${OKPOS}${BRACKET}[ ${GOOD}PH 90/${SDRAMPHASE}${BRACKET} ]${NORMAL}"
+  else
+    fpcf -w 8 8 >/dev/null
+    fpcf -phase -65 63 $FPGAPHASECORR > /var/log/fpga_sdram_phase
+    if [ "$?" = 0 ]; then
+      SDRAMPHASE=`cat /var/log/fpga_sdram_phase | grep "manually" | sed -e 's/manually corrected optimal phase = \([-0-9]*\).*/\1/'`
+      echo -e "${OKPOS}${BRACKET}[ ${GOOD}PH 180/${SDRAMPHASE}${BRACKET} ]${NORMAL}"
+    else
+      fpcf -w 8 8 >/dev/null
+      fpcf -phase -65 63 $FPGAPHASECORR > /var/log/fpga_sdram_phase
+      if [ "$?" = 0 ]; then
+        SDRAMPHASE=`cat /var/log/fpga_sdram_phase | grep "manually" | sed -e 's/manually corrected optimal phase = \([-0-9]*\).*/\1/'`
+        echo -e "${OKPOS}${BRACKET}[ ${GOOD}PH 270/${SDRAMPHASE}${BRACKET} ]${NORMAL}"
+      else
+        echo -e "${FAILPOS}${BRACKET}[ ${BAD}fail${BRACKET} ]${NORMAL}"
+      fi
+    fi
+  fi
+fi
+
+#worked with +10..+60 - ?
+#fpcf -phase -60 80 35 > /var/log/fpga_sdram_phase
+#end $?
+ 
+#begin "Writing Huffman tables from /etc/huffman.dat"
+#fpcf -table 200 /etc/huffman.dat >/dev/null
+#end $?
+#begin "Writing default JPEG header from /etc/header.jpeg"
+#cat /etc/header.jpeg >/dev/ccam_dma.raw
+#end $?
+#echo "writing precalculated gamma tables from /etc/gamma.dat"
+#fpcf -gamma /etc/gamma.dat
+
+
+begin "Turn on xtall output (12MHz) to FPGA" 
+fpcf -X 3 12.0 >/dev/null
+end $?
+
+
+# set correction to 0
+fpcf -w 46 0 >/dev/null
+#set microseconds to 0
+fpcf -w 44 0 >/dev/null
+#set seconds to 0
+fpcf -w 45 0 >/dev/null
+
+#for now - start here (on port 81)
+#lighttpd -f /etc/lighttpd.conf -m /lib
+
+#exit 0;
+
+#program 10347/10359 FPGA if it is not a sensor board
+SENSOR_FPGA=""
+#line below identifies CMOS sensor (10318, 10338) attached directly to 353. It is still possible
+# to have it connected through 10359
+if [ $(( $(echo "0x`fpcf -r 74`") & 0x10000)) -ne 0 ] ; then
+#looking for additional boards connected to the sensor port (currently - 10347, 10359)
+  begin "Looking for sensor FPGA"
+  SENSOR_FPGA=`php -q /usr/html/bdetect.php`
+#  SENSOR_FPGA="10359"
+  if [ "$?" = 0 ]; then
+    echo -e "${OKPOS}${BRACKET}[ ${GOOD}$SENSOR_FPGA${BRACKET} ]${NORMAL}"
+    case "$SENSOR_FPGA" in
+     '10347')
+#program 10347 sensor
+  #turn off clcock to sensor board (float the pin) before configuring as x347
+#      fpcf -c 13 2 #already
+  # set 14-bit input pixel data
+#      fpcf -c 14 2
+#//PXD14 - 1 - 14-bit data from sensor 
+##define  X353DCR1__PXD14__BITNM       6
+##define  X353DCR1__PXD14__WIDTH       1
+
+      fpcf -w 4f c0 >/dev/null # set PXD14 (14-bit mode) on
+
+
+  # set pixel clock source to external
+#      fpcf -c 18 2
+#// source of pixel clock. Now 0 - internal (CLK1), 1,2,3 - external (bpf)
+##define  X353DCR1__PCLKSRC__BITNM    11
+##define  X353DCR1__PCLKSRC__WIDTH     2
+      fpcf -w 4f 280 >/dev/null # set clock source to "01" - external
+
+      begin "Programming 10347 board FPGA with $FPGA_10347_IMAGE"
+      cat $FPGA_10347_IMAGE >/dev/sfpgaconfjtag
+      end $?
+
+      begin "initializing 10347 registers"
+      php -q /usr/html/init347.php >/dev/null
+      end $?
+#reset sensor DCM
+#      fpcf -w 8 f0 # not really needed
+#not understood so far, was not needed with older software revision
+      begin "running idle CCD acquisition" 
+       fpcf -i2cw16 1014 0
+      end $?
+#make it so that that state file reflects success/failure
+      echo "$FPGA_10347_IMAGE" > /var/state/$SENSOR_FPGA
+      echo "ctype=\"CCD\"" > /var/state/ctype
+      ;;
+     '10359')
+#program 10359 fpga
+      begin "Programming 10359 board FPGA with $FPGA_10359_IMAGE"
+      cat $FPGA_10359_IMAGE >/dev/sfpgaconfjtag
+      end $?
+      echo "$FPGA_10359_IMAGE" > /var/state/$SENSOR_FPGA
+
+#reenable clock to sensor
+#      fpcf -c 13 1
+      fpcf -w 4f 20 >/dev/null # set clock from FPGA to sensor
+
+      echo "Setting temporary mode resetting DMA/compressor when detecting  sensor"
+      fpcf -gwpx 3 1; # setting bit 0 - controls reset during sensordetect
+
+#define G_DEBUG         (FRAMEPAR_GLOBALS + 2) /// Each bit turns on/off some debug outputs
+#define G_TEST_CTL_BITS (FRAMEPAR_GLOBALS + 3) /// turn some features on/off in the drivers for debuggin purposes
+
+
+      fpcf -gwpd 11 3800  >/dev/null; # output delay in 10359 board (clock to out) in ps, signed ->1ffd0 (need 1ffec)
+
+
+#10359 FPFGA internal delays, may depend on bitstream (x359.bit) file:
+
+      fpcf -gwpd 12 3902  >/dev/null; # delay in 10359 board sensor port 1 (clock to sensor - clock to DCM) in ps,
+      fpcf -gwpd 13 3836  >/dev/null; # delay in 10359 board sensor port 2 (clock to sensor - clock to DCM) in ps,
+      fpcf -gwpd 14 4122  >/dev/null; # delay in 10359 board sensor port 3 (clock to sensor - clock to DCM) in ps,
+
+#cable dealys - approximately 12-15ps/mm 
+      fpcf -gwpd 15 1800  >/dev/null; # cable delay in sensor port 1 in ps, signed (120mm cable)
+      fpcf -gwpd 16 1800  >/dev/null; # cable delay in sensor port 2 in ps, signed (120mm cable)
+      fpcf -gwpd 17 1800  >/dev/null; # cable delay in sensor port 3 in ps, signed (120mm cable)
+
+
+#define G_DLY359_OUT    (FRAMEPAR_GLOBALS + 11) /// output delay in 10359 board (clock to out) in ps, signed
+#define G_DLY359_P1     (FRAMEPAR_GLOBALS + 12) /// delay in 10359 board sensor port 1 (clock to sensor - clock to DCM) in ps, signed
+#define G_DLY359_P2     (FRAMEPAR_GLOBALS + 13) /// delay in 10359 board sensor port 2 (clock to sensor - clock to DCM) in ps, signed
+#define G_DLY359_P3     (FRAMEPAR_GLOBALS + 14) /// delay in 10359 board sensor port 3 (clock to sensor - clock to DCM) in ps, signed
+#define G_DLY359_C1     (FRAMEPAR_GLOBALS + 15) /// cable delay in sensor port 1 in ps, signed
+#define G_DLY359_C2     (FRAMEPAR_GLOBALS + 16) /// cable delay in sensor port 2 in ps, signed
+#define G_DLY359_C3     (FRAMEPAR_GLOBALS + 17) /// cable delay in sensor port 3 in ps, signed
+
+#      fpcf -gwpx 17 2  >/dev/null; # +1 - use system clock, +2 - delay i2c to 10359, +4 - send i2c to 10359 before sensor (after frame sync)
+      fpcf -gwpx 17 0  >/dev/null; # +1 - use system clock, +2 - delay i2c to 10359, +4 - send i2c to 10359 before sensor (after frame sync)
+
+
+#define G_MULTI_CFG     (FRAMEPAR_GLOBALS + 23) /// Additional configuration options for 10359 board.
+  #define G_MULTI_CFG_SYSCLK 0 /// Bit 0 - use 10353 system clock, not the local one (as on 10359 rev 0)
+  #define G_MULTI_CFG_DLYI2C 1 /// Bit 1 - delay 10359 i2c commands with respect to sesnor ones (in multi_pgm_window)
+  #define G_MULTI_CFG_BEFORE 2 /// Bit 2 - send 10359 i2c commands first (to be sent after frame sync, 0 - sesnor commands first)
+
+
+
+
+#uncomment next line to use CMOS+10359
+#     echo "ctype=CMOS" > /var/state/ctype
+      echo "ctype=\"10359\"" > /var/state/ctype
+      ;;
+     *)
+     echo "**** Other FPGA-based sensor board (should not get here) ****"
+     ;;
+    esac
+
+  else
+    echo -e "${FAILPOS}${BRACKET}[ ${BAD}none${BRACKET} ]${NORMAL}"
+    echo "ctype=\"NONE\"" > /var/state/ctype
+  fi
+
+else
+ begin "Some CMOS-based sensor board attached"
+ echo -e "${OKPOS}${BRACKET}[ ${WARN}assuming 10338${BRACKET} ]${NORMAL}"
+#enable clock to sensor
+# fpcf -c 13 1
+ fpcf -w 4f 20 >/dev/null # set clock from FPGA to sensor
+
+# end 1 "assuming 10338"
+#	. /etc/init.d/conf_353.sh
+  echo "ctype=\"CMOS\"" > /var/state/ctype
+#  echo "starting autocampars daemon: /usr/local/sbin/autocampars &"
+#  /usr/local/sbin/autocampars &
+#  echo "starting autoexposure daemon: /usr/local/sbin/autoexposure &"
+#  /usr/local/sbin/autoexposure &
+#  echo "initializing camera/sensor parameters: /usr/html/autocampars.php --init"
+#  /usr/html/autocampars.php --init
+
+#last thing - trying to start 354 camera if code available (later will fix that
+#   begin "trying model 354"
+#   php -q /usr/html/init354.php
+#   end $?
+
+fi
+#for now - start here (on port 81)
+#moved to /usr/local to be able to modify just it
+# /usr/local/sbin/lighttpd -f /etc/lighttpd.conf -m /usr/local/lib
+# begin "Everything in /etc/init.d/fpga is done"
+# end 0
+if [ `fpcf -req_io` != 1 ]; then
+ echo "Disabling FPGA I/O pins conrol as there is no 10369 I/O board"
+ fpcf -w 70 aa000000
+fi
+sync
+exit 0

@@ -8,71 +8,20 @@ This repository is created as a reference for simulation of image acquisition, p
 in the new NC393 camera that includes functionality of the previous one, so the same input image (on one of
 the 4 channels) should generate the same intermediate and final compressed files on both cameras.
 
-We will also try to make it possible to generate functional bitstream files compatible with the existing
-NC353 camera (so others will be able to modify their camera code with the current version of Xilinx tools),
-but we are not there yet - ***this project is valid for simulation only!***
+Project is modified to work with the current (and the last!) version of Xilinx ISE - 14.7,
+not tested enough, but the generated bitstream proved to be operational on just one camera. It is not yet safe
+to replace the x353.bit camera unless you have experience in reflashing "bricked" camera as described in
+[http://wiki.elphel.com/index.php?title=Netboot_firmware_upgrade] as it is easy to accidentally make a camera
+non-bootable.
 
-Here is what makes it difficult:
+**NC353_TESTING** sub-directory contains description how to make such testing reasonably safe, together with
+the 'fpga' init script (automatically executed at boot time) that should be replaced in the camera file system.
 
-1. Xilinx abandoned support for the older devices in the current software called "Vivado".
-2. Last verion of the ISE (it is ISE 14.7) can not use the older code "as is"
-3. We were able to modify the Verilog code to be parsed by the current XST, but it does not
-recognize some statements in the *.xcf constraints file (I had to rename original *.ucf to *.xcf).
-4. Attempt to try old parser (suggested by XST itself as the new parser is not the default for
-the Spartan 3e): 
-```
-WARNING:Xst:3152 - You have chosen to run a version of XST which is not the default
-   solution for the specified device family. You are free to use it in order to take
-   advantage of its enhanced HDL parsing/elaboration capabilities. However,
-   please be aware that you may be impacted by  language support differences.
-   This version may also result in circuit performance and device utilization
-   differences for your particular design. You can always revert back to the
-   default XST solution by setting the "use_new_parser" option to value "no" 
-   on the XST command line or in the XST process properties panel.
-```
-also failed. After I added recommended options:
+**ISE_10_1_03_files** directory contains files from the original design that relied on ancient ISE 10.1.03.
 
-```
-run  -use_new_parser no -ifn  x353.prj  -ofn x353.ngc  -top x353  -p xc3s1200eft256  -uc x353.xcf  -opt_mode speed  -opt_level 1 
-```
+**ISE_14_7_results** includes log and results from the current tools
+ 
+You may follow instructions in the README.md for the [VDT plugin](https://github.com/Elphel/vdt-plugin) , 
+just use this (x353) project instead of the eddr3 mentioned in the documentation. And you will need to use
+Xilinx ISE (not Xilinx Vivado) for this Spartan3e FPGA.
 
-and ISE noticed that:
-
-```
-WARNING:Xst:1583 - You are using an internal switch '-use_new_parser'.
-```
-
-It still repeated the same  WARNING:Xst:3152 (see above) disregarding its own suggestion.
-
-So we will need to find a way how to replace lines in the *xst file that cause errors in XST:
-
-```
-204 TIMEGRP "CPU_ADDR" =   pads("A<*>");
-205 TIMEGRP "CPU_ADDRCE" = "CPU_ADDR"  pads("CE*");
-206 TIMEGRP "CPU_DATA" =   pads("D<*>");
-207 TIMEGRP "WE" =         pads("WE");
-208 TIMEGRP "OE" =         pads("OE");
-209 TIMEGRP "DACK_PAD"=    pads("DACK*");
-209 TIMEGRP "DREQ_PAD"=    pads("DREQ*");
-210 TIMEGRP "ALLPADS"=     pads("*");
-```
-
-```
-ERROR:Xst:1888 - Processing TIMEGRP CPU_ADDR: User group 'pads("A<*>")' defined from
-                 other user group pattern not supported.
-```
-
-Even Google does not know what to do about this Xilinx XST feature:
-
-> No results found for "ERROR:Xst:1888".
->
-> Results for ERROR:Xst:1888 (without quotes):
->
-> ...
-
-So we'try to find other ways to re-formulate old timing constraints preserving the same meaning and try
-again to run tools. Until then I'll have to mention again ***this project is valid for simulation only!***
-
-Update: Not yet tested with the real hardware, but the project was modified to work with ISE 14.7 (physical
-constraints were changed to parameters from the old style synthesis attributes, and the tools genereted a
-bitfile and even original timing constraints (after changing to uppercase) were met.
