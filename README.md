@@ -20,7 +20,7 @@ the 'fpga' init script (automatically executed at boot time) that should be repl
 
 **ISE_10_1_03_files** directory contains files from the original design that relied on ancient ISE 10.1.03.
 
-**ISE_14_7_results** includes log and results from the current tools
+**ISE_14_7_results** includes log and results from the current tools.
  
 You may follow instructions in the README.md for the [VDT plugin](https://github.com/Elphel/vdt-plugin) , 
 just use this (x353) project instead of the eddr3 mentioned in the documentation. And you will need to use

@@ -70,8 +70,8 @@ A sample bitstream file is in the ISE_14_7_results directory, with the default p
 the new generated bitstream files will be in the ise_results subdirectory.
 
 It is a good idea to telnet to the camera and issue a 'sync' command (equivalent to the
-"safely remove" for the flash cards). Or just open [http://<your_camera_ip>/phpshell.php?command=sync]
-in the browser. 
+"safely remove" for the flash cards). Or just open [http://192.168.0.9/phpshell.php?command=sync]
+in the browser (you'll need to modify IP if it was changed from the default one). 
 
 Good hacking!
 
