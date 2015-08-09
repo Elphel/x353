@@ -976,8 +976,14 @@ rtc353 i_rtc353            (.mclk(sclk0),           // system clock (negedge)
                             .psec(psec[31:0]),      // [31:0] seconds counter output
                             .usec(running_usec[19:0]), // [19:0] running usec output
                             .sec(running_sec[31:0]));  //[31:0] running seconds counter output
+// AF2015 - delaying to match
+reg ihact_d;
+reg ihact_ts_d;
 
-
+always @ (posedge pclk) begin
+    ihact_d <=    ihact;
+    ihact_ts_d <= ihact_ts;
+end
 timestamp353 i_timestamp353(.mclk(sclk0),    // system clock (negedge)
                             .pre_we(da_timestamp),  // 1 cycle ahead of writing data
                             .wd(idi[1:0]),      // [31:0] data to write, valid 1 cycle after pre_we, wa
@@ -985,7 +991,8 @@ timestamp353 i_timestamp353(.mclk(sclk0),    // system clock (negedge)
                             .pxdi(ipxd[15:0]),  // [9:0] pixel data from sensor
                             .pxdo(ipxd_ts[15:0]),  // [9:0] data to replace pxdi (next cycle)
                             .vacts(vacts_every), // vertical sync (actual sensor)
-                            .hacti(ihact), // hact input
+//                            .hacti(ihact), // hact input
+                            .hacti(ihact_d), // hact input
                             .hacto(ihact_ts), // hact output (next cycle)
                             .sec(ts_sync_sec[31:0]),    // [31:0] number of seconds
                             .usec(ts_sync_usec[19:0]),    // [19:0] number of microseconds
@@ -1305,7 +1312,9 @@ sensorpix   i_sensorpix(
                    .hact_out(line_run),
 
 // sensor interface
-                   .hact(ihact_ts),       // line active
+//AF2015                   .hact(ihact_ts),       // line active
+                   .hact(ihact_ts_d),       // line active
+                   
                    .pxd(ipxd_ts[15:0]),      // [9:0] - 10 bit pixel data
 // channel 0 (data->SDRAM) interface
                    .dwe(sens_we),         // WE to SDRAM buffer

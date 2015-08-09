@@ -52,7 +52,7 @@
 		<link>
 			<name>ise_logs/ISExst.log</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_logs/ISExst-20150728152838290.log</location>
+			<location>/home/andrey/git/x353/ise_logs/ISExst-20150729134023977.log</location>
 		</link>
 		<link>
 			<name>ise_state/x353-map.tgz</name>
@@ -72,7 +72,7 @@
 		<link>
 			<name>ise_state/x353-synth.tgz</name>
 			<type>1</type>
-			<location>/home/andrey/git/x353/ise_state/x353-synth-20150728152838290.tgz</location>
+			<location>/home/andrey/git/x353/ise_state/x353-synth-20150729134023977.tgz</location>
 		</link>
 	</linkedResources>
 </projectDescription>

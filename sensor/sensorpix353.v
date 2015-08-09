@@ -419,13 +419,25 @@ module sensorpix(  pclk,                  // clock (==pclk)
       .SSRB(1'b0),                              // Port B Synchronous Set/Reset Input
       .WEB(1'b1)                                // Port B Write Enable Input
    );
+   
+   /// AF2015 *************** Fixing old bug - moved outside ******************
+/*   
+   reg [1:0] newline_d;
+   reg [1:0] linerun_d;
+   always @ (posedge pclk) begin
+       newline_d <= {newline_d[0],hact & ~hact_d[0]};
+       linerun_d <= {linerun_d[0],hact_d[1]};
+   end
+*/   
 lens_flat i_lens_flat(.sclk(sclk),                   /// system clock @negedge
                       .wen(we_lensff),               /// write LSW from di
                       .di(wd[15:0]),                 /// [15:0] data in
                       .pclk(pclk),                   /// pixel clock (@pclk)
                       .fstart(en && !en_d),          /// frame start - single clock (will have frame latency as coefficients are written after the fstart)
                       .newline(hact & ~hact_d[0]),    /// start of scan line  - ahead of linerun
+//                      .newline(newline_d[1]),    /// start of scan line  - ahead of linerun
                       .linerun(hact_d[1]),           /// active pixel output - latency will be = 3 clocks
+//                      .linerun(linerun_d[1]),           /// active pixel output - latency will be = 3 clocks
                       .bayer(bayer[1:0]),
                       .pixdi(pd_lenscorr_in[15:0]),  /// pixel data in,16 bit (normal data is positive, 15 bits)
                       .pixdo(pd_lenscorr_out[15:0])  /// pixel data out, same format as input

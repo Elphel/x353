@@ -1,9 +1,13 @@
-com.elphel.store.context.iverilog=iverilog_100_TopModulesOther<-@\#\#@->iverilog_102_ExtraFiles<-@\#\#@->iverilog_103_IncludeDir<-@\#\#@->iverilog_117_GTKWaveSavFile<-@\#\#@->iverilog_96_Param_Exe<-@\#\#@->iverilog_97_VVP_Exe<-@\#\#@->iverilog_98_GtkWave_Exe<-@\#\#@->iverilog_108_ShowNoProblem<-@\#\#@->iverilog_111_SaveLogsPreprocessor<-@\#\#@->iverilog_112_SaveLogsSimulator<-@\#\#@->
+com.elphel.store.context.iverilog=iverilog_100_TopModulesOther<-@\#\#@->iverilog_102_ExtraFiles<-@\#\#@->iverilog_103_IncludeDir<-@\#\#@->iverilog_117_GTKWaveSavFile<-@\#\#@->iverilog_96_Param_Exe<-@\#\#@->iverilog_97_VVP_Exe<-@\#\#@->iverilog_98_GtkWave_Exe<-@\#\#@->iverilog_108_ShowNoProblem<-@\#\#@->iverilog_111_SaveLogsPreprocessor<-@\#\#@->iverilog_112_SaveLogsSimulator<-@\#\#@->iverilog_109_ShowNoProblem<-@\#\#@->iverilog_101_TopModulesOther<-@\#\#@->iverilog_103_ExtraFiles<-@\#\#@->iverilog_104_IncludeDir<-@\#\#@->
 eclipse.preferences.version=1
 iverilog_100_TopModulesOther=glbl<-@\#\#@->
+iverilog_101_TopModulesOther=glbl<-@\#\#@->
 iverilog_102_ExtraFiles=glbl.v<-@\#\#@->
+iverilog_103_ExtraFiles=glbl.v<-@\#\#@->
 iverilog_103_IncludeDir=${verilog_project_loc}/ddr<-@\#\#@->
+iverilog_104_IncludeDir=${verilog_project_loc}/ddr<-@\#\#@->
 iverilog_108_ShowNoProblem=true
+iverilog_109_ShowNoProblem=true
 iverilog_111_SaveLogsPreprocessor=true
 iverilog_112_SaveLogsSimulator=true
 iverilog_117_GTKWaveSavFile=${verilog_project_loc}/x353_1.sav

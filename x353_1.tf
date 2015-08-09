@@ -48,7 +48,7 @@ module testbench353();
     `include "IVERILOG_INCLUDE.v"
 `else
     initial $display("IVERILOG is not defined");
-    parameter lxtname = "x353_1.lxt";
+    parameter fstname = "x353_1.fst";
 `endif
 
 `ifdef SYNC_COMPRESS
@@ -513,8 +513,8 @@ defparam i_sensor12bits.trigdly = TRIG_LINES;   // delay between trigger input a
 
 
         initial begin
-//    $dumpfile("x353.lxt");
-    $dumpfile(lxtname);
+//    $dumpfile("x353.fst");
+    $dumpfile(fstname);
     $dumpvars(0,testbench353); //testbench353 cannot be resolved to a signal or parameter //SuppressThisWarning Veditor
             TTRIG = 1;
             CLK3 = 0;
@@ -964,7 +964,11 @@ end
 
 
 
-   cpu_wr('h4c,'h1);   // time stamp mode 1 (
+//AF2015   cpu_wr('h4c,'h1);   // time stamp mode 1 (
+   cpu_wr('h4c,'h0);   // time stamp mode off (not supported in 393!) (
+
+
+
 // +++++++++++ photofinish mode ++++++++++
 //   init_chan (0,0,1,1,'h200000,'h07,'h1f);  // 
 //   cpu_wr('h48,'h2);   //  time stamp mode 2
@@ -1136,7 +1140,7 @@ $display ("saturation=2");
 */
 
 
-
+// Lens flat field correction
    cpu_wr('h62,'h31000000); // [AX] => 0x0
    cpu_wr('h62,'h31080000); // [AY] => 0
    cpu_wr('h62,'h31108000); // [C] => 0x8000
