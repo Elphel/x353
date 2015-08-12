@@ -1124,7 +1124,7 @@ $display ("saturation=2");
   cpu_wr('h62,'h0c000006); // mode - single
   cpu_wr('h62, 'h4e000000 | 'h4 );// bayer=0
 //AF2015  cpu_wr('h64, 'h4e000000 | 'h5 );// bayer=1
-  cpu_wr('h65, 'h4e000000 | 'h5 );// bayer=1 AF2015 - make it later to compare with 393
+  cpu_wr('h66, 'h4e000000 | 'h5 );// bayer=1 AF2015 - make it later to compare with 393
 
 /*
           AX(0x000000): writing 0x000000 to 0x31

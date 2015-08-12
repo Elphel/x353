@@ -65,8 +65,8 @@ module	histogram  (pclk,             // pixel clock (posedge, only some input si
   input			 di_vld_a;
   input  [ 1:0] bayer_phase;
   
-  parameter correct_bayer=2'b11; //AF2015: Correct Bayer to have histogram [2'b00] matcsh even row, even column data
-
+  parameter correct_bayer=2'b10; // 11; //AF2015: Correct Bayer to have histogram [2'b00] match even row, even column data
+// for bayer_phase=0 correct_bayer=2'b10
   wire [17:0]   hist_do0;
   
 // extra layer of registers
