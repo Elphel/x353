@@ -1,30 +1,30 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Sun Aug  9 03:27:09 2015
+[*] Wed Aug 12 02:48:35 2015
 [*]
-[dumpfile] "/home/andrey/git/x353/simulation/x353_1-20150808211805694.fst"
-[dumpfile_mtime] "Sun Aug  9 03:23:39 2015"
-[dumpfile_size] 21847559
+[dumpfile] "/home/andrey/git/x353/simulation/x353_1-20150811203732083.fst"
+[dumpfile_mtime] "Wed Aug 12 02:43:52 2015"
+[dumpfile_size] 21019007
 [savefile] "/home/andrey/git/x353/x353_1.sav"
-[timestart] 584523000
+[timestart] 496214500
 [size] 1823 1180
-[pos] 1917 0
-*-19.677540 584994800 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 0 0
+*-14.654496 496288000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench353.
 [treeopen] testbench353.i_x353.
 [treeopen] testbench353.i_x353.i_sensorpads.i_sensor_phase.
 [treeopen] testbench353.i_x353.i_sensorpix.
 [treeopen] testbench353.i_x353.i_sensorpix.i_lens_flat.
 [treeopen] testbench353.i_x353.i_sysinterface.i_we.
-[sst_width] 335
+[sst_width] 317
 [signals_width] 322
 [sst_expanded] 1
-[sst_vpaned_height] 625
+[sst_vpaned_height] 624
 @820
 testbench353.TEST_TITLE[639:0]
 @800200
 -sensor_in
-@800022
+@c00022
 testbench353.PXD[11:0]
 @28
 (0)testbench353.PXD[11:0]
@@ -39,13 +39,13 @@ testbench353.PXD[11:0]
 (9)testbench353.PXD[11:0]
 (10)testbench353.PXD[11:0]
 (11)testbench353.PXD[11:0]
-@1001200
+@1401200
 -group_end
 @28
 testbench353.i_x353.HACT
 testbench353.i_x353.VACT
 testbench353.DCLK
-@c00023
+@c00022
 >-128600
 testbench353.i_x353.ipxd[15:0]
 @28
@@ -66,7 +66,7 @@ testbench353.i_x353.ipxd[15:0]
 (13)testbench353.i_x353.ipxd[15:0]
 (14)testbench353.i_x353.ipxd[15:0]
 (15)testbench353.i_x353.ipxd[15:0]
-@1401201
+@1401200
 -group_end
 @c00022
 >-149600
@@ -132,9 +132,8 @@ testbench353.i_x353.i_timestamp353.use_ts
 -
 @1000200
 -timestamp353
-@800200
--lens_flat
 @c00200
+-lens_flat
 -line_xy
 @22
 testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.A0[18:0]
@@ -186,7 +185,64 @@ testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.preERR[23:0]
 -line_y
 @200
 -
-@800022
+@28
+testbench353.i_x353.i_sensorpix.i_lens_flat.fstart
+@200
+-
+@800200
+-i_fy
+@22
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.A0[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.A2X[23:1]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.A[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.ApB[23:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.B0[20:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.ERR0[23:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.ERR[23:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.F0[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.F1[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.F[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.dF[10:0]
+@28
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.first
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.first_d
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.inc[1:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.next
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.next_d
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.pclk
+@22
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fy.preERR[23:0]
+@1000200
+-i_fy
+@c00200
+-i_fxy
+@22
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.A0[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.A2X[23:1]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.A[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.ApB[23:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.B0[20:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.ERR0[23:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.ERR[23:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.F0[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.F1[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.F[18:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.dF[10:0]
+@28
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.first
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.first_d
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.inc[1:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.next
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.next_d
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.pclk
+@22
+testbench353.i_x353.i_sensorpix.i_lens_flat.i_fxy.preERR[23:0]
+@1401200
+-i_fxy
+@28
+testbench353.i_x353.i_sensorpix.i_lens_flat.wen
+testbench353.i_x353.i_sensorpix.i_lens_flat.linerun
+@c00022
 testbench353.i_x353.i_sensorpix.i_lens_flat.pixdi[15:0]
 @28
 (0)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdi[15:0]
@@ -205,9 +261,11 @@ testbench353.i_x353.i_sensorpix.i_lens_flat.pixdi[15:0]
 (13)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdi[15:0]
 (14)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdi[15:0]
 (15)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdi[15:0]
-@1001200
+@1401200
 -group_end
-@800022
+@28
+(0)testbench353.i_x353.i_sensorpix.i_lens_flat.lens_corr_out[4:0]
+@c00022
 testbench353.i_x353.i_sensorpix.i_lens_flat.pixdo[15:0]
 @28
 (0)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdo[15:0]
@@ -226,8 +284,14 @@ testbench353.i_x353.i_sensorpix.i_lens_flat.pixdo[15:0]
 (13)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdo[15:0]
 (14)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdo[15:0]
 (15)testbench353.i_x353.i_sensorpix.i_lens_flat.pixdo[15:0]
-@1001200
+@1401200
 -group_end
+@22
+testbench353.i_x353.i_sensorpix.i_lens_flat.mult_first_res[35:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.mult_first_scaled[17:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.mult_second_res[35:0]
+@200
+-
 @28
 testbench353.i_x353.i_sensorpix.i_lens_flat.pclk
 testbench353.i_x353.i_sensorpix.i_lens_flat.fstart
@@ -236,7 +300,6 @@ testbench353.i_x353.i_sensorpix.i_lens_flat.linerun
 @800022
 testbench353.i_x353.i_sensorpix.i_lens_flat.lens_corr_out[4:0]
 @28
-(0)testbench353.i_x353.i_sensorpix.i_lens_flat.lens_corr_out[4:0]
 (1)testbench353.i_x353.i_sensorpix.i_lens_flat.lens_corr_out[4:0]
 (2)testbench353.i_x353.i_sensorpix.i_lens_flat.lens_corr_out[4:0]
 (3)testbench353.i_x353.i_sensorpix.i_lens_flat.lens_corr_out[4:0]
@@ -273,6 +336,7 @@ testbench353.i_x353.i_sensorpix.i_lens_flat.lens_corr_out[4:0]
 testbench353.i_x353.i_sensorpix.i_lens_flat.linerun
 @22
 testbench353.i_x353.i_sensorpix.i_lens_flat.mult_first_res[35:0]
+testbench353.i_x353.i_sensorpix.i_lens_flat.pix_zero[17:0]
 testbench353.i_x353.i_sensorpix.i_lens_flat.mult_first_scaled[17:0]
 testbench353.i_x353.i_sensorpix.i_lens_flat.mult_second_res[35:0]
 @28
@@ -298,7 +362,7 @@ testbench353.i_x353.i_sensorpix.i_lens_flat.we_post_scale
 testbench353.i_x353.i_sensorpix.i_lens_flat.we_scales
 testbench353.i_x353.i_sensorpix.i_lens_flat.wen
 testbench353.i_x353.i_sensorpix.i_lens_flat.wen_d[1:0]
-@1000200
+@1401200
 -lens_flat
 @c00200
 -sensor12b
@@ -317,9 +381,9 @@ testbench353.i_sensor12bits.state[3:0]
 testbench353.i_sensor12bits.stated[3:0]
 @1401200
 -sensor12b
-@800200
+@c00200
 -debug_sensorpads
-@1000200
+@1401200
 -debug_sensorpads
 @200
 -
@@ -591,10 +655,10 @@ testbench353.i_x353.i_sensorpads.pxdi[11:0]
 testbench353.i_x353.i_sensorpads.xpgmen_d[1:0]
 @1401200
 -sensorpads
-@200
--
-@800200
+@c00200
 -sensorpix
+@28
+testbench353.i_x353.i_sensorpix.hact
 @c00022
 testbench353.i_x353.i_sensorpix.pxd[15:0]
 @28
@@ -616,6 +680,47 @@ testbench353.i_x353.i_sensorpix.pxd[15:0]
 (15)testbench353.i_x353.i_sensorpix.pxd[15:0]
 @1401200
 -group_end
+@28
+testbench353.i_x353.i_sensorpix.bayer[1:0]
+testbench353.i_x353.i_sensorpix.en
+testbench353.i_x353.i_sensorpix.bayer_nset
+testbench353.i_x353.i_sensorpix.bayer0_latched
+@c00022
+testbench353.i_x353.i_sensorpix.color[1:0]
+@28
+(0)testbench353.i_x353.i_sensorpix.color[1:0]
+(1)testbench353.i_x353.i_sensorpix.color[1:0]
+@1401200
+-group_end
+@200
+-
+@28
+testbench353.i_x353.i_sensorpix.hact_outp
+testbench353.i_x353.i_sensorpix.hact_out
+@22
+testbench353.i_x353.i_sensorpix.pd_lenscorr_out[15:0]
+testbench353.i_x353.i_sensorpix.i_cstableh.ADDRA[10:0]
+testbench353.i_x353.i_sensorpix.table_base_w[9:0]
+testbench353.i_x353.i_sensorpix.table_diff_w[7:0]
+testbench353.i_x353.i_sensorpix.table_base[9:0]
+@200
+-
+@22
+testbench353.i_x353.i_sensorpix.pd_lenscorr_out_d[7:0]
+testbench353.i_x353.i_sensorpix.table_diff[10:0]
+testbench353.i_x353.i_sensorpix.table_mult[35:0]
+testbench353.i_x353.i_sensorpix.table_mult_r[17:7]
+testbench353.i_x353.i_sensorpix.table_base_r[9:0]
+testbench353.i_x353.i_sensorpix.interp_data[9:0]
+testbench353.i_x353.i_sensorpix.cdata[7:0]
+@200
+-
+@22
+testbench353.i_x353.i_sensorpix.do[15:0]
+@28
+testbench353.i_x353.i_sensorpix.dwe
+@200
+-
 @28
 testbench353.i_x353.i_sensorpix.twce_d
 testbench353.i_x353.i_sensorpix.i_cstableh.DIPB
@@ -769,8 +874,159 @@ testbench353.i_x353.i_sensorpix.we_lensff
 testbench353.i_x353.i_sensorpix.wfpn
 testbench353.i_x353.i_sensorpix.wpage
 testbench353.i_x353.i_sensorpix.wthrsh
-@1000200
+@1401200
 -sensorpix
+@200
+-
+@800200
+-histogram
+@28
+testbench353.i_x353.i_histogram.bayer_phase[1:0]
+@c00023
+testbench353.i_x353.i_histogram.hist_seq[5:0]
+@29
+(0)testbench353.i_x353.i_histogram.hist_seq[5:0]
+(1)testbench353.i_x353.i_histogram.hist_seq[5:0]
+(2)testbench353.i_x353.i_histogram.hist_seq[5:0]
+(3)testbench353.i_x353.i_histogram.hist_seq[5:0]
+(4)testbench353.i_x353.i_histogram.hist_seq[5:0]
+(5)testbench353.i_x353.i_histogram.hist_seq[5:0]
+@1401201
+-group_end
+@c00022
+testbench353.i_x353.i_histogram.bayer[1:0]
+@28
+(0)testbench353.i_x353.i_histogram.bayer[1:0]
+(1)testbench353.i_x353.i_histogram.bayer[1:0]
+@1401200
+-group_end
+@22
+testbench353.histogram_count[9:0]
+testbench353.histogram_total
+testbench353.i_x353.i_histogram.di_a[15:0]
+@28
+testbench353.i_x353.i_histogram.di_vld_a
+testbench353.i_x353.i_histogram.line_start
+testbench353.i_x353.i_histogram.line_started
+testbench353.i_x353.i_histogram.line_ended
+testbench353.i_x353.i_histogram.line_run
+testbench353.i_x353.i_histogram.frame_started
+testbench353.i_x353.i_histogram.frame_ended
+testbench353.i_x353.i_histogram.last_line
+testbench353.i_x353.i_histogram.line_start_posl_zero
+testbench353.i_x353.i_histogram.window_on
+@22
+testbench353.i_x353.i_histogram.pos_left[13:1]
+testbench353.i_x353.i_histogram.pos_top[13:1]
+testbench353.i_x353.i_histogram.size_width[13:1]
+testbench353.i_x353.i_histogram.size_height[13:1]
+@28
+testbench353.i_x353.i_histogram.hist_ena
+testbench353.i_x353.i_histogram.hist_wea
+@22
+testbench353.i_x353.i_histogram.hist_waddr[9:0]
+testbench353.i_x353.i_histogram.hist_waddr_hold1[9:0]
+testbench353.i_x353.i_histogram.hist_waddr_hold2[9:0]
+testbench353.i_x353.i_histogram.hist_dia[17:0]
+testbench353.i_x353.i_histogram.hist_doa[17:0]
+@28
+testbench353.i_x353.i_histogram.same_waddr
+@200
+-
+@22
+testbench353.i_x353.i_histogram.di[15:0]
+@28
+testbench353.i_x353.i_histogram.bayer[1:0]
+testbench353.i_x353.i_histogram.bayer_en
+testbench353.i_x353.i_histogram.bayer_phase[1:0]
+testbench353.i_x353.i_histogram.bayer_phase_latched[1:0]
+@22
+testbench353.i_x353.i_histogram.di2x[15:0]
+testbench353.i_x353.i_histogram.di[15:0]
+testbench353.i_x353.i_histogram.di_a[15:0]
+@28
+testbench353.i_x353.i_histogram.di_vld
+testbench353.i_x353.i_histogram.di_vld_a
+@22
+testbench353.i_x353.i_histogram.dvld2x[3:0]
+@28
+testbench353.i_x353.i_histogram.end_hist_init
+testbench353.i_x353.i_histogram.frame_ended
+testbench353.i_x353.i_histogram.frame_run
+testbench353.i_x353.i_histogram.frame_run_s[2:0]
+testbench353.i_x353.i_histogram.frame_start
+testbench353.i_x353.i_histogram.frame_started
+testbench353.i_x353.i_histogram.hist_bank
+@22
+testbench353.i_x353.i_histogram.hist_dia[17:0]
+testbench353.i_x353.i_histogram.hist_do0[17:0]
+testbench353.i_x353.i_histogram.hist_do[31:0]
+testbench353.i_x353.i_histogram.hist_doa[17:0]
+@28
+testbench353.i_x353.i_histogram.hist_ena
+@22
+testbench353.i_x353.i_histogram.hist_init_cntr[9:0]
+testbench353.i_x353.i_histogram.hist_post[17:0]
+testbench353.i_x353.i_histogram.hist_pre[17:0]
+testbench353.i_x353.i_histogram.hist_raddr[9:0]
+testbench353.i_x353.i_histogram.hist_seq[5:0]
+testbench353.i_x353.i_histogram.hist_waddr[9:0]
+testbench353.i_x353.i_histogram.hist_waddr_hold1[9:0]
+testbench353.i_x353.i_histogram.hist_waddr_hold2[9:0]
+@28
+testbench353.i_x353.i_histogram.hist_wea
+testbench353.i_x353.i_histogram.init_hist
+testbench353.i_x353.i_histogram.init_hist_d
+testbench353.i_x353.i_histogram.last_line
+@22
+testbench353.i_x353.i_histogram.line_cntr[13:1]
+@28
+testbench353.i_x353.i_histogram.line_end
+testbench353.i_x353.i_histogram.line_ended
+testbench353.i_x353.i_histogram.line_run
+testbench353.i_x353.i_histogram.line_run_a
+testbench353.i_x353.i_histogram.line_run_s[2:0]
+testbench353.i_x353.i_histogram.line_start
+testbench353.i_x353.i_histogram.line_start_posl_nzero
+testbench353.i_x353.i_histogram.line_start_posl_zero
+testbench353.i_x353.i_histogram.line_started
+@22
+testbench353.i_x353.i_histogram.minus_pos_left[13:1]
+@28
+testbench353.i_x353.i_histogram.odd_line
+testbench353.i_x353.i_histogram.pclk
+testbench353.i_x353.i_histogram.pclk2x
+@22
+testbench353.i_x353.i_histogram.pix_cntr[13:1]
+testbench353.i_x353.i_histogram.pos_left[13:1]
+@28
+testbench353.i_x353.i_histogram.pos_left_is_zero
+@22
+testbench353.i_x353.i_histogram.pos_top[13:1]
+@28
+testbench353.i_x353.i_histogram.pre_di_vld
+testbench353.i_x353.i_histogram.pre_same_addr
+testbench353.i_x353.i_histogram.rd_hist
+testbench353.i_x353.i_histogram.rnext
+testbench353.i_x353.i_histogram.same_waddr
+testbench353.i_x353.i_histogram.sclk
+@22
+testbench353.i_x353.i_histogram.size_height[13:1]
+testbench353.i_x353.i_histogram.size_width[13:1]
+@28
+testbench353.i_x353.i_histogram.wa[2:0]
+@22
+testbench353.i_x353.i_histogram.wd[15:0]
+testbench353.i_x353.i_histogram.wdd[15:0]
+@28
+testbench353.i_x353.i_histogram.we_addr
+testbench353.i_x353.i_histogram.we_addr_d
+testbench353.i_x353.i_histogram.we_pos[1:0]
+testbench353.i_x353.i_histogram.we_size[1:0]
+testbench353.i_x353.i_histogram.wen
+testbench353.i_x353.i_histogram.window_on
+@1000200
+-histogram
 @c00200
 -sdram
 @22

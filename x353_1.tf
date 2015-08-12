@@ -35,7 +35,8 @@ module testbench353();
   parameter SYNC_BIT_LENGTH=8-1; /// 7 pixel clock pulses
   parameter FPGA_XTRA_CYCLES= 1500; // 1072+;
   parameter HISTOGRAM_LEFT=  0; //2;   // left   
-  parameter HISTOGRAM_TOP =  2;   // top
+//  parameter HISTOGRAM_TOP =  2;   // top
+  parameter HISTOGRAM_TOP =  8;   // top - otherwise no time to erase
   parameter HISTOGRAM_WIDTH= 6;  // width
   parameter HISTOGRAM_HEIGHT=6;  // height
   parameter CLK0_PER = 6.25;   //160MHz
@@ -1122,7 +1123,8 @@ $display ("saturation=2");
 //  cpu_wr('h62,'h0c002400); // JP46 - mode 2
   cpu_wr('h62,'h0c000006); // mode - single
   cpu_wr('h62, 'h4e000000 | 'h4 );// bayer=0
-  cpu_wr('h64, 'h4e000000 | 'h5 );// bayer=1
+//AF2015  cpu_wr('h64, 'h4e000000 | 'h5 );// bayer=1
+  cpu_wr('h65, 'h4e000000 | 'h5 );// bayer=1 AF2015 - make it later to compare with 393
 
 /*
           AX(0x000000): writing 0x000000 to 0x31
@@ -1141,11 +1143,13 @@ $display ("saturation=2");
 
 
 // Lens flat field correction
-   cpu_wr('h62,'h31000000); // [AX] => 0x0
-   cpu_wr('h62,'h31080000); // [AY] => 0
+//   cpu_wr('h62,'h31000000); // [AX] => 0x0
+//   cpu_wr('h62,'h31080000); // [AY] => 0
    cpu_wr('h62,'h31108000); // [C] => 0x8000
-   cpu_wr('h62,'h31200000); // [BX] => 0
-   cpu_wr('h62,'h31400000); // [BY] => 0
+   cpu_wr('h62,'h31380000); // [BX] => 0x180000; // 0
+   cpu_wr('h62,'h31580000); // [BY] => 0x180000; // 0
+//   cpu_wr('h62,'h31200000); // [BX] => 0x180000; // 0
+//   cpu_wr('h62,'h31400000); // [BY] => 0x180000; // 0
 
    cpu_wr('h62,'h31608000); // [scales0] => 32768
    cpu_wr('h62,'h31628000); // [scales1] => 32768
@@ -1155,11 +1159,14 @@ $display ("saturation=2");
    cpu_wr('h62,'h31690000); // [fatzero_out] => 0
    cpu_wr('h62,'h316a0001); // [post_scale] => 3 - X
 
-   cpu_wr('h63,'h31020000); // [AX] => 0x20000
-   cpu_wr('h63,'h310a0000); // [AY] => 0x20000
+//   cpu_wr('h63,'h31020000); // [AX] => 0x20000
+//   cpu_wr('h63,'h310a0000); // [AY] => 0x20000
+   cpu_wr('h62,'h31020000); // [AX] => 0x20000
+   cpu_wr('h62,'h310a0000); // [AY] => 0x20000
 
-   cpu_wr('h64,'h31200000); // [BX] => 0x180000
-   cpu_wr('h64,'h31400000); // [BY] => 0x180000
+   // TODO: move to 'h62 (together with 393)
+//   cpu_wr('h64,'h31200000); // [BX] => 0x180000
+//   cpu_wr('h64,'h31400000); // [BY] => 0x180000
 
 `ifdef CONTINUOUS_COMPRESSION
     TEST_TITLE = "START_CONTINUOUS_COMPRESSION";

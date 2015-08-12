@@ -229,6 +229,7 @@ module sensorpix(  pclk,                  // clock (==pclk)
   assign       interp_data[9:0] = table_base_r[9:0]+table_mult_r[17:8]+table_mult_r[7]; //round
   assign       cdata[7:0] = interp_data[9:2]; //truncate
 
+  reg [7:0] pd_lenscorr_out_d2; // AF2015 
   always @ (posedge pclk) begin
     table_base[9:0]  <= table_base_w[9:0];
     table_diff[10:0] <= table_diff_w[7]?
@@ -236,6 +237,7 @@ module sensorpix(  pclk,                  // clock (==pclk)
                           {{4{table_diff_w[6]}},table_diff_w[6:0]}; 
 ///    dsat_r[7:0]      <= dsat[7:0];
     pd_lenscorr_out_d[7:0] <= pd_lenscorr_out[7:0];
+    pd_lenscorr_out_d2 <= pd_lenscorr_out_d; // AF2015 - one more cycle delay
     table_mult_r[17:7] <= table_mult[17:7];
     table_base_r[ 9:0] <= table_base[ 9:0];
   end
@@ -244,7 +246,8 @@ module sensorpix(  pclk,                  // clock (==pclk)
    MULT18X18 i_table_mult (
       .P(table_mult),    // 36-bit multiplier output
       .A({{7{table_diff[10]}},table_diff[10:0]}),    // 18-bit multiplier input
-      .B({10'b0,pd_lenscorr_out_d[7:0]})     // 18-bit multiplier input
+//      .B({10'b0,pd_lenscorr_out_d[7:0]})     // 18-bit multiplier input
+      .B({10'b0,pd_lenscorr_out_d2[7:0]})     // 18-bit multiplier input // AF2015 - one more cycle delay
    );
 
 
@@ -360,7 +363,8 @@ module sensorpix(  pclk,                  // clock (==pclk)
 /// NOTE: adding 5 cycles here
   SRL16 i_hact_dly3  (.Q(hact_dly3), .A0(1'b1), .A1(1'b1), .A2(1'b1), .A3(1'b0), .CLK(pclk), .D(hact_m));   // dly=2+1+5
   SRL16 i_en_out     (.Q(en_out),    .A0(1'b0), .A1(1'b1), .A2(1'b0), .A3(1'b1), .CLK(pclk), .D(en));       // dly=5+1+5
-  SRL16 i_hact_outp  (.Q(hact_outp), .A0(1'b0), .A1(1'b1), .A2(1'b0), .A3(1'b1), .CLK(pclk), .D(hact_m));   // dly=5+1+5
+//AF2015  SRL16 i_hact_outp  (.Q(hact_outp), .A0(1'b0), .A1(1'b1), .A2(1'b0), .A3(1'b1), .CLK(pclk), .D(hact_m));   // dly=5+1+5
+  SRL16 i_hact_outp  (.Q(hact_outp), .A0(1'b1), .A1(1'b0), .A2(1'b0), .A3(1'b1), .CLK(pclk), .D(hact_m));   // dly=5+1+5
   assign incbwa= (dwe && (wa[7:0]==8'hff)) || (|wa[7:0] && !hact_out);
   always @ (posedge pclk) begin
     wpage <= incbwa;

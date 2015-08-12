@@ -65,6 +65,7 @@ module	histogram  (pclk,             // pixel clock (posedge, only some input si
   input			 di_vld_a;
   input  [ 1:0] bayer_phase;
   
+  parameter correct_bayer=2'b11; //AF2015: Correct Bayer to have histogram [2'b00] matcsh even row, even column data
 
   wire [17:0]   hist_do0;
   
@@ -210,7 +211,7 @@ module	histogram  (pclk,             // pixel clock (posedge, only some input si
    if (hist_seq[3]) hist_waddr_hold2[9:0] <= hist_waddr_hold1[9:0];
 // we need to clear all histogram at the begining of a frame (will not work if the window is too small)   
    if      (init_hist)   hist_waddr[9:0] <= hist_init_cntr[9:0]; // to clear histogram memory
-   else if (hist_seq[0]) hist_waddr[9:0] <= {bayer[1:0]^bayer_phase_latched[1:0],di2x[7:0]};
+   else if (hist_seq[0]) hist_waddr[9:0] <= {bayer[1:0]^bayer_phase_latched[1:0] ^ correct_bayer,di2x[7:0]};
    else if (hist_seq[5]) hist_waddr[9:0] <= {hist_waddr_hold2[9:0]};
    
 /*   same_waddr <= hist_seq[0] && // next cycle - read from memory
@@ -256,7 +257,8 @@ module	histogram  (pclk,             // pixel clock (posedge, only some input si
    else if ((line_start && frame_started && last_line) || (frame_run_s[2] && ! frame_run_s[1])) frame_ended <= 1'h1;
 //	frame_ended_d <= frame_ended;
 //   window_on <= (line_start_posl_zero || line_started) && !line_ended && frame_started && !frame_ended;
-   window_on <= (line_start_posl_zero || (line_started && !line_ended)) && frame_started && !frame_ended;
+//AF2015   window_on <= (line_start_posl_zero || (line_started && !line_ended)) && frame_started && !frame_ended;
+   window_on <= (line_start_posl_zero || (line_started && !line_ended)) && frame_started && !frame_ended && !(line_start && last_line) ;
    
  end
 
