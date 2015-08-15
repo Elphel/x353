@@ -1198,7 +1198,9 @@ task program_compressor;
 //  program_compressor ('h65,0,0,0, 2, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  5 (jp46),    shift 0 quality=100?
 //AF2015  program_compressor ('h65,0,0,0, 2, 1,1,3); //focus mode 0 - sub dc, repetitive, mode  5 (jp46),    shift 0 quality=70?
 // tile mode = 1 (center of 20x20
-  program_compressor ('h65,0,0,1, 1, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  15 (jpeg),    shift 0 quality=100, JPEG
+//  program_compressor ('h65,0,0,1, 1, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  15 (jpeg),    shift 0 quality=100, JPEG
+  // Add bayer shift to compensate for tile shift
+  program_compressor ('h65,0,3,1, 1, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  15 (jpeg),    shift 0 quality=100, JPEG
 `else
   program_compressor ('h64,0,0,0, 2, 1,0,2); //focus mode 0 - sub dc, single,     mode  7 (jp46),    shift 0 quality=100?
   program_compressor ('h65,0,0,0, 2, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  5 (jp46),    shift 0 quality=100?

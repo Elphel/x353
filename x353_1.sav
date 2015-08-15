@@ -1,21 +1,22 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Fri Aug 14 23:43:33 2015
+[*] Sat Aug 15 18:13:23 2015
 [*]
-[dumpfile] "/home/andrey/git/x353/simulation/x353_1-20150811225618852.fst"
-[dumpfile_mtime] "Wed Aug 12 05:02:46 2015"
-[dumpfile_size] 21007837
+[dumpfile] "/home/andrey/git/x353/simulation/x353_1-20150814211921232.fst"
+[dumpfile_mtime] "Sat Aug 15 03:24:38 2015"
+[dumpfile_size] 21848049
 [savefile] "/home/andrey/git/x353/x353_1.sav"
-[timestart] 0
-[size] 1823 1180
-[pos] -1 -1
-*-26.540974 530600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 508514000
+[size] 1920 1180
+[pos] -1921 -1
+*-18.518841 509690625 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench353.
 [treeopen] testbench353.i_x353.
 [treeopen] testbench353.i_x353.i_compressor.
 [treeopen] testbench353.i_x353.i_compressor.i_color_proc.
-[sst_width] 308
-[signals_width] 238
+[treeopen] testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.
+[sst_width] 301
+[signals_width] 323
 [sst_expanded] 1
 [sst_vpaned_height] 568
 @22
@@ -58,7 +59,7 @@ testbench353.SDA[14:0]
 testbench353.SDD[15:0]
 @1000200
 -SDRAM
-@800200
+@c00200
 -color_proc
 @28
 testbench353.i_x353.i_compressor.i_color_proc.clk
@@ -87,9 +88,8 @@ testbench353.i_x353.i_compressor.i_color_proc.last
 testbench353.i_x353.i_compressor.i_color_proc.inc_sdrama
 @200
 -
-@23
-testbench353.i_x353.i_compressor.cmprs_mode[3:0]
 @22
+testbench353.i_x353.i_compressor.cmprs_mode[3:0]
 testbench353.i_x353.i_compressor.converter_type[2:0]
 @c00022
 testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
@@ -97,21 +97,121 @@ testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
 (0)testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
 (1)testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
 (2)testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
-@1401202
+@1401200
 -group_end
-@1000200
+@28
+testbench353.i_x353.i_compressor.i_color_proc.tile_shift[2:0]
+testbench353.i_x353.i_compressor.i_color_proc.tile_margin_r[1:0]
+@22
+testbench353.i_x353.i_compressor.i_color_proc.sdrama_top_left[8:0]
+@1401200
 -color_proc
-@800200
+@28
+testbench353.i_x353.i_compressor.bayer_phase[1:0]
+testbench353.i_x353.i_compressor.bayer_shift[1:0]
+@22
+testbench353.i_x353.i_compressor.cmprs_bayer_this[1:0]
+testbench353.i_x353.i_compressor.i_color_proc.bayer_phase[1:0]
+testbench353.i_x353.i_compressor.i_color_proc.bayer_phase_r[1:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.ywe
+@22
+testbench353.i_x353.i_compressor.i_color_proc.yaddrw[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.y_in[8:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.cwe
+@22
+testbench353.i_x353.i_compressor.i_color_proc.caddrw[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.c_in[8:0]
+@200
+-
+@22
+testbench353.i_x353.i_compressor.i_color_proc.avr[8:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.ds
+testbench353.i_x353.i_compressor.i_color_proc.dv
+@22
+testbench353.i_x353.i_compressor.i_color_proc.pre_do[9:0]
+testbench353.i_x353.i_compressor.i_color_proc.do[9:0]
+testbench353.i_x353.i_compressor.i_color_proc.tn[2:0]
+@c00200
 -csconvert18
+@22
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.m_cb[9:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.m_cr[9:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.pre_first_in
+@22
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.bayer_phase[1:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.odd_line
+@22
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.odd_pix
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.k1[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.k2[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.k3[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.m1[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.m2[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.m3[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.mm1[15:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.mm2[15:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.mm3[15:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.strt
 @22
 testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.din[7:0]
 @28
-testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.pre_first_in
 testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.pre_first_out
 @22
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.yaddr[7:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.ywe
+@22
 testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.signed_y[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.caddr[6:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.cwe
+@22
 testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.q[8:0]
-@1000200
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.cbcr[10:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.sub_y
+@22
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.cbcrmultr[10:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.cbcrmulto[17:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.cbcrmult1[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.cbcrmult2[9:0]
+@1401200
 -csconvert18
+@800200
+-xdct
+@28
+testbench353.i_x353.i_compressor.i_xdct.clk
+testbench353.i_x353.i_compressor.i_xdct.en
+testbench353.i_x353.i_compressor.i_xdct.start
+@22
+testbench353.i_x353.i_compressor.i_xdct.xin[9:0]
+@28
+testbench353.i_x353.i_compressor.i_xdct.tm_we
+@22
+testbench353.i_x353.i_compressor.i_xdct.tm_wa[6:0]
+testbench353.i_x353.i_compressor.i_xdct.tm_di[15:0]
+@200
+-
+@28
+testbench353.i_x353.i_compressor.i_xdct.stage1_done
+testbench353.i_x353.i_compressor.i_xdct.tm_page
+@22
+testbench353.i_x353.i_compressor.i_xdct.tm_ra[6:0]
+testbench353.i_x353.i_compressor.i_xdct.tm_out[15:0]
+@28
+testbench353.i_x353.i_compressor.i_xdct.pre_first_out
+testbench353.i_x353.i_compressor.i_xdct.dv
+@22
+testbench353.i_x353.i_compressor.i_xdct.d_out[12:0]
+@29
+testbench353.i_x353.i_compressor.i_xdct.last_in
+@1000200
+-xdct
 [pattern_trace] 1
 [pattern_trace] 0
