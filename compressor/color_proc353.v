@@ -668,5 +668,23 @@ assign conv20_pre_first_out= conv18_pre_first_out;
       .SSRB(1'b0),                              // Port B Synchronous Set/Reset Input
       .WEB(1'b0)                                // Port B Write Enable Input
    );
+
+
+`ifdef SIMULATION
+     reg [8:0] sim_dout_cntr;
+     reg sim_dav;
+     //converter_type_r
+     always @(posedge clk)  begin
+        if (  inc_sdrama && ! sim_dav) $display("CMPRS INPUT converter type=  %x @ %t",converter_type_r, $time);
+        sim_dav <= inc_sdrama;
+        if (!sim_dav) sim_dout_cntr <= 0;
+        else sim_dout_cntr <= sim_dout_cntr + 1;
+        if (sim_dav) begin
+            $display("CMPRS INPUT %x:%x @ %t",sim_dout_cntr, di, $time);
+        end
+     end
+`endif    
+    
+   
 endmodule
 

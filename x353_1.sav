@@ -1,6 +1,6 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Wed Aug 12 20:04:28 2015
+[*] Fri Aug 14 23:43:33 2015
 [*]
 [dumpfile] "/home/andrey/git/x353/simulation/x353_1-20150811225618852.fst"
 [dumpfile_mtime] "Wed Aug 12 05:02:46 2015"
@@ -8,11 +8,12 @@
 [savefile] "/home/andrey/git/x353/x353_1.sav"
 [timestart] 0
 [size] 1823 1180
-[pos] -4 -4
-*-26.540974 518000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-26.540974 530600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench353.
 [treeopen] testbench353.i_x353.
 [treeopen] testbench353.i_x353.i_compressor.
+[treeopen] testbench353.i_x353.i_compressor.i_color_proc.
 [sst_width] 308
 [signals_width] 238
 [sst_expanded] 1
@@ -26,6 +27,7 @@ testbench353.PXD[11:0]
 @28
 testbench353.VACT
 testbench353.HACT
+testbench353.DCLK
 @1000200
 -sensor_in
 @c00200
@@ -68,10 +70,12 @@ testbench353.i_x353.i_compressor.i_color_proc.en
 testbench353.i_x353.i_compressor.i_color_proc.go
 testbench353.i_x353.i_compressor.i_color_proc.eot
 testbench353.i_x353.i_compressor.i_color_proc.sdram_next
-@29
 testbench353.i_x353.i_compressor.i_color_proc.sdram_rdy
 @22
 testbench353.i_x353.i_compressor.i_color_proc.sdram_a[10:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.first_pixel
+@22
 testbench353.i_x353.i_compressor.i_color_proc.di[7:0]
 testbench353.i_x353.i_compressor.i_color_proc.do[9:0]
 @28
@@ -80,7 +84,34 @@ testbench353.i_x353.i_compressor.i_color_proc.ds
 testbench353.i_x353.i_compressor.i_color_proc.tn[2:0]
 testbench353.i_x353.i_compressor.i_color_proc.first
 testbench353.i_x353.i_compressor.i_color_proc.last
+testbench353.i_x353.i_compressor.i_color_proc.inc_sdrama
+@200
+-
+@23
+testbench353.i_x353.i_compressor.cmprs_mode[3:0]
+@22
+testbench353.i_x353.i_compressor.converter_type[2:0]
+@c00022
+testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
+@28
+(0)testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
+(1)testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
+(2)testbench353.i_x353.i_compressor.i_color_proc.converter_type_r[2:0]
+@1401202
+-group_end
 @1000200
 -color_proc
+@800200
+-csconvert18
+@22
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.din[7:0]
+@28
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.pre_first_in
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.pre_first_out
+@22
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.signed_y[7:0]
+testbench353.i_x353.i_compressor.i_color_proc.i_csconvert18.q[8:0]
+@1000200
+-csconvert18
 [pattern_trace] 1
 [pattern_trace] 0
