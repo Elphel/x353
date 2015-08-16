@@ -658,16 +658,15 @@ end
 //   assign p2b_all = addsub2b_comp * memory2a[15:0];
 //   assign p3b_all = addsub3b_comp * memory3a[15:0];
 //   assign p4b_all = addsub4b_comp * memory4a[15:0];
-///AF2015: 
-//     assign p1b_all = addsub1b_comp[15:0] * memory1a[15:0];
-//     assign p2b_all = addsub2b_comp[15:0] * memory2a[15:0];
-//     assign p3b_all = addsub3b_comp[15:0] * memory3a[15:0];
-//     assign p4b_all = addsub4b_comp[15:0] * memory4a[15:0];
+     assign p1b_all = addsub1b_comp[15:0] * memory1a[15:0];
+     assign p2b_all = addsub2b_comp[15:0] * memory2a[15:0];
+     assign p3b_all = addsub3b_comp[15:0] * memory3a[15:0];
+     assign p4b_all = addsub4b_comp[15:0] * memory4a[15:0];
 
-     assign p1b_all = addsub1b_comp * memory1a;
-     assign p2b_all = addsub2b_comp * memory2a;
-     assign p3b_all = addsub3b_comp * memory3a;
-     assign p4b_all = addsub4b_comp * memory4a;
+//     assign p1b_all = addsub1b_comp * memory1a;
+//     assign p2b_all = addsub2b_comp * memory2a;
+//     assign p3b_all = addsub3b_comp * memory3a;
+//     assign p4b_all = addsub4b_comp * memory4a;
 
 always @ (posedge clk)
   begin
