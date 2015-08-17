@@ -1121,7 +1121,8 @@ $display ("saturation=2");
   cpu_wr('h62,'h0c000040); // quality page 0
   cpu_wr('h62,'h0c002200); // color - mode 1
 //  cpu_wr('h62,'h0c002400); // JP46 - mode 2
-  cpu_wr('h62,'h0c000006); // mode - single
+///  cpu_wr('h62,'h0c000006); // mode - single
+  cpu_wr('h63,'h0c000006); // mode - single // do it one frame later?
   cpu_wr('h62, 'h4e000000 | 'h4 );// bayer=0
 //AF2015  cpu_wr('h64, 'h4e000000 | 'h5 );// bayer=1
   cpu_wr('h66, 'h4e000000 | 'h5 );// bayer=1 AF2015 - make it later to compare with 393
