@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Sun Aug 16 23:33:47 2015
+[*] Mon Sep 21 20:21:42 2015
 [*]
-[dumpfile] "/home/andrey/git/x353/simulation/x353_1-20150816112317596.fst"
-[dumpfile_mtime] "Sun Aug 16 17:28:24 2015"
-[dumpfile_size] 21892213
+[dumpfile] "/home/andrey/git/x353/simulation/x353_1-20150921123233419.fst"
+[dumpfile_mtime] "Mon Sep 21 18:38:42 2015"
+[dumpfile_size] 21155088
 [savefile] "/home/andrey/git/x353/x353_1.sav"
-[timestart] 550176500
+[timestart] 449400000
 [size] 1920 1180
 [pos] -1921 -1
-*-14.653227 550243750 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-24.653227 529365625 512715625 529365625 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench353.
 [treeopen] testbench353.i_x353.
 [treeopen] testbench353.i_x353.i_compressor.
@@ -63,7 +63,7 @@ testbench353.SDA[14:0]
 testbench353.SDD[15:0]
 @1000200
 -SDRAM
-@c00200
+@800200
 -color_proc
 @28
 testbench353.i_x353.i_compressor.i_color_proc.clk
@@ -108,7 +108,7 @@ testbench353.i_x353.i_compressor.i_color_proc.tile_shift[2:0]
 testbench353.i_x353.i_compressor.i_color_proc.tile_margin_r[1:0]
 @22
 testbench353.i_x353.i_compressor.i_color_proc.sdrama_top_left[8:0]
-@1401200
+@1000200
 -color_proc
 @c00200
 -colorproc_dbg
@@ -388,7 +388,7 @@ testbench353.i_x353.i_compressor.i_xdct.i_dct_stage2.xb7_reg[15:0]
 -xdct_stage2
 @1401200
 -xdct
-@c00200
+@800200
 -quantizer
 @28
 testbench353.i_x353.i_compressor.i_quantizator.clk
@@ -436,6 +436,23 @@ testbench353.i_x353.i_compressor.i_quantizator.coring_num[2:0]
 testbench353.i_x353.i_compressor.i_quantizator.dc_tdo[15:0]
 @28
 testbench353.i_x353.i_compressor.i_quantizator.dv
+@200
+-
+@22
+testbench353.i_x353.i_compressor.i_quantizator.tba[9:0]
+testbench353.i_x353.i_compressor.i_quantizator.i_quant_table.ADDRA[9:0]
+testbench353.i_x353.i_compressor.i_quantizator.tdo[15:0]
+testbench353.i_x353.i_compressor.i_quantizator.tdor[15:0]
+testbench353.i_x353.i_compressor.i_quantizator.d3[12:0]
+testbench353.i_x353.i_compressor.i_quantizator.qmul[27:0]
+testbench353.i_x353.i_compressor.i_quantizator.qmulr[20:0]
+testbench353.i_x353.i_compressor.i_quantizator.qdo0[12:0]
+@28
+testbench353.i_x353.i_compressor.i_quantizator.coring_range
+@22
+testbench353.i_x353.i_compressor.i_quantizator.i_coring_table.ADDRA[11:0]
+testbench353.i_x353.i_compressor.i_quantizator.tdco[3:0]
+testbench353.i_x353.i_compressor.i_quantizator.qdo[12:0]
 @c00200
 -quantizer_all
 @22
@@ -539,6 +556,7 @@ testbench353.i_x353.i_compressor.i_quantizator.zwa[5:0]
 testbench353.i_x353.i_compressor.i_quantizator.zwe
 @1401200
 -quantizer_all
+@1000200
 -quantizer
 @c00200
 -focus_sharp
@@ -883,6 +901,25 @@ testbench353.i_x353.i_compressor.i_huffman.will_read
 -huffman
 @800200
 -stuffer
+-other_scopes
+@23
+testbench353.i_x353.stuffer_do[15:0]
+@22
+testbench353.i_x353.i_compressor.q[15:0]
+@28
+testbench353.i_x353.i_compressor.qv
+@22
+testbench353.i_x353.i_compressor.stuffer_do_p[15:0]
+testbench353.i_x353.i_compressor.stuffer_do[15:0]
+testbench353.i_x353.D[31:0]
+@28
+testbench353.i_x353.DACK0
+@1000200
+-other_scopes
+@22
+testbench353.i_x353.i_compressor.i_stuffer.size_count[23:0]
+testbench353.i_x353.i_compressor.i_stuffer.sec[31:0]
+testbench353.i_x353.i_compressor.i_stuffer.usec[19:0]
 @28
 testbench353.i_x353.i_compressor.i_stuffer.clk
 testbench353.i_x353.i_compressor.i_stuffer.en
@@ -917,7 +954,6 @@ testbench353.i_x353.i_compressor.i_stuffer.size_out[2:0]
 testbench353.i_x353.i_compressor.i_stuffer.size_out_over
 @28
 testbench353.i_x353.i_compressor.i_stuffer.start_time_out
-@29
 testbench353.i_x353.i_compressor.i_stuffer.start_sizeout
 @200
 -
@@ -1196,5 +1232,108 @@ testbench353.i_x353.i_camsync.wen[3:0]
 -camsync_all
 @1401200
 -camsync
+@200
+-
+@c00200
+-i2c_writeonly
+@28
+testbench353.i_x353.i_i2c_writeonly.reset_cmd
+@22
+testbench353.i_x353.i_i2c_writeonly.reset_on
+testbench353.i_x353.i_i2c_writeonly.wpage0[2:0]
+@28
+testbench353.i_x353.i_i2c_writeonly.pre_wpage0_inc
+testbench353.i_x353.i_i2c_writeonly.wpage0_inc
+testbench353.i_x353.i_i2c_writeonly.wpage0_inc_d
+testbench353.i_x353.i_i2c_writeonly.we_fifo_wp
+testbench353.i_x353.i_i2c_writeonly.wen
+testbench353.i_x353.i_i2c_writeonly.sda_en
+testbench353.i_x353.i_i2c_writeonly.scl_en
+testbench353.i_x353.i_i2c_writeonly.sda
+testbench353.i_x353.i_i2c_writeonly.scl
+@200
+-
+@22
+testbench353.i_x353.i_i2c_writeonly.busy
+testbench353.i_x353.i_i2c_writeonly.busy_cntr[2:0]
+testbench353.i_x353.i_i2c_writeonly.byte_number[1:0]
+testbench353.i_x353.i_i2c_writeonly.byte_sending[1:0]
+testbench353.i_x353.i_i2c_writeonly.bytes_cmd
+testbench353.i_x353.i_i2c_writeonly.bytes_left[1:0]
+testbench353.i_x353.i_i2c_writeonly.di[15:0]
+testbench353.i_x353.i_i2c_writeonly.di_1[15:0]
+testbench353.i_x353.i_i2c_writeonly.di_2[15:0]
+testbench353.i_x353.i_i2c_writeonly.di_3[15:0]
+testbench353.i_x353.i_i2c_writeonly.dly_cmd
+testbench353.i_x353.i_i2c_writeonly.dly_cntr[7:0]
+testbench353.i_x353.i_i2c_writeonly.fifo_wr_pointers_outr[5:0]
+testbench353.i_x353.i_i2c_writeonly.fifo_wr_pointers_outr_r[5:0]
+testbench353.i_x353.i_i2c_writeonly.fifo_wr_pointers_outw[5:0]
+testbench353.i_x353.i_i2c_writeonly.fifo_wr_pointers_outw_r[5:0]
+testbench353.i_x353.i_i2c_writeonly.frame_no[2:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_bit_last
+testbench353.i_x353.i_i2c_writeonly.i2c_byte_start[1:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_bytes[1:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_cmd_wa[9:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_cmd_we
+testbench353.i_x353.i_i2c_writeonly.i2c_data[7:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_dataseq_done
+testbench353.i_x353.i_i2c_writeonly.i2c_dataseq_last
+testbench353.i_x353.i_i2c_writeonly.i2c_dly[7:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_dly_over
+testbench353.i_x353.i_i2c_writeonly.i2c_dly_pre2_over
+testbench353.i_x353.i_i2c_writeonly.i2c_dly_pre_over
+testbench353.i_x353.i_i2c_writeonly.i2c_done
+testbench353.i_x353.i_i2c_writeonly.i2c_enrun
+testbench353.i_x353.i_i2c_writeonly.i2c_is_ackn
+testbench353.i_x353.i_i2c_writeonly.i2c_is_data
+testbench353.i_x353.i_i2c_writeonly.i2c_is_start
+testbench353.i_x353.i_i2c_writeonly.i2c_is_stop
+testbench353.i_x353.i_i2c_writeonly.i2c_run
+testbench353.i_x353.i_i2c_writeonly.i2c_sr[8:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_sr_shift
+testbench353.i_x353.i_i2c_writeonly.i2c_start
+testbench353.i_x353.i_i2c_writeonly.i2c_startseq_last
+testbench353.i_x353.i_i2c_writeonly.i2c_state[5:0]
+testbench353.i_x353.i_i2c_writeonly.i2c_stop_start
+testbench353.i_x353.i_i2c_writeonly.i2c_stopseq_last
+testbench353.i_x353.i_i2c_writeonly.is_abs
+testbench353.i_x353.i_i2c_writeonly.is_ctl
+testbench353.i_x353.i_i2c_writeonly.page_r[2:0]
+testbench353.i_x353.i_i2c_writeonly.page_r_inc[1:0]
+testbench353.i_x353.i_i2c_writeonly.pre_wpage0_inc
+testbench353.i_x353.i_i2c_writeonly.req_clr
+testbench353.i_x353.i_i2c_writeonly.reset_cmd
+testbench353.i_x353.i_i2c_writeonly.reset_on
+testbench353.i_x353.i_i2c_writeonly.rpointer[5:0]
+testbench353.i_x353.i_i2c_writeonly.run_cmd
+testbench353.i_x353.i_i2c_writeonly.scl
+testbench353.i_x353.i_i2c_writeonly.scl_0
+testbench353.i_x353.i_i2c_writeonly.scl_en
+testbench353.i_x353.i_i2c_writeonly.scl_en_soft
+testbench353.i_x353.i_i2c_writeonly.scl_hard
+testbench353.i_x353.i_i2c_writeonly.scl_soft
+testbench353.i_x353.i_i2c_writeonly.sclk
+testbench353.i_x353.i_i2c_writeonly.sda
+testbench353.i_x353.i_i2c_writeonly.sda_0
+testbench353.i_x353.i_i2c_writeonly.sda_en
+testbench353.i_x353.i_i2c_writeonly.sda_en_hard
+testbench353.i_x353.i_i2c_writeonly.sda_en_soft
+testbench353.i_x353.i_i2c_writeonly.sda_hard
+testbench353.i_x353.i_i2c_writeonly.sda_soft
+testbench353.i_x353.i_i2c_writeonly.sync
+testbench353.i_x353.i_i2c_writeonly.wa[3:0]
+testbench353.i_x353.i_i2c_writeonly.wad[3:0]
+testbench353.i_x353.i_i2c_writeonly.we_fifo_wp
+testbench353.i_x353.i_i2c_writeonly.wen
+testbench353.i_x353.i_i2c_writeonly.wen_d[3:0]
+testbench353.i_x353.i_i2c_writeonly.wen_i2c_soft
+testbench353.i_x353.i_i2c_writeonly.wpage0[2:0]
+testbench353.i_x353.i_i2c_writeonly.wpage0_inc
+testbench353.i_x353.i_i2c_writeonly.wpage0_inc_d
+testbench353.i_x353.i_i2c_writeonly.wpage7[2:0]
+testbench353.i_x353.i_i2c_writeonly.wpage_w[2:0]
+@1401200
+-i2c_writeonly
 [pattern_trace] 1
 [pattern_trace] 0

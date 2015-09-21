@@ -1118,7 +1118,9 @@ $display ("saturation=2");
 `endif
 
 /// instead of the combined command above, trying separate ones
-  cpu_wr('h62,'h0c000040); // quality page 0
+//  cpu_wr('h62,'h0c000040); // quality page 0 quantization table
+  cpu_wr('h62,'h0c000048); // quality page 1 quantization table
+  
   cpu_wr('h62,'h0c002200); // color - mode 1
 //  cpu_wr('h62,'h0c002400); // JP46 - mode 2
 ///  cpu_wr('h62,'h0c000006); // mode - single
@@ -1201,10 +1203,13 @@ task program_compressor;
 // tile mode = 1 (center of 20x20
 //  program_compressor ('h65,0,0,1, 1, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  15 (jpeg),    shift 0 quality=100, JPEG
   // Add bayer shift to compensate for tile shift
-  program_compressor ('h65,0,3,1, 1, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  15 (jpeg),    shift 0 quality=100, JPEG
+//  program_compressor ('h65,0,3,1, 1, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  15 (jpeg),    shift 0 quality=100, JPEG
+  program_compressor ('h65,0,3,1, 1, 1,1,3); //focus mode 0 - sub dc, repetitive, mode  15 (jpeg),    shift 0 quality=70?, JPEG
 `else
-  program_compressor ('h64,0,0,0, 2, 1,0,2); //focus mode 0 - sub dc, single,     mode  7 (jp46),    shift 0 quality=100?
-  program_compressor ('h65,0,0,0, 2, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  5 (jp46),    shift 0 quality=100?
+//  program_compressor ('h64,0,0,0, 2, 1,0,2); //focus mode 0 - sub dc, single,     mode  7 (jp46),    shift 0 quality=100?
+//  program_compressor ('h65,0,0,0, 2, 1,0,3); //focus mode 0 - sub dc, repetitive, mode  5 (jp46),    shift 0 quality=100?
+  program_compressor ('h64,0,0,0, 2, 1,1,2); //focus mode 0 - sub dc, single,     mode  7 (jp46),    shift 0 quality=70?
+  program_compressor ('h65,0,0,0, 2, 1,1,3); //focus mode 0 - sub dc, repetitive, mode  5 (jp46),    shift 0 quality=70?
   program_compressor ('h66,0,0,0, 2, 1,1,3); //focus mode 0 - sub dc, repetitive, mode  2 (jp46),   shift 0 quality=70?
 `endif
 
